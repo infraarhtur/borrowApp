@@ -1,0 +1,88 @@
+
+
+  <mat-sidenav-container class="sidenav-container"  [hasBackdrop]="true">
+
+    <mat-sidenav
+      #drawer
+      class="sidenav"
+      fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="'side'"
+      [opened]="(isHandset$ | async) === false"
+    >
+      <div >
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg ">
+              <div *ngIf="dataUser.photoURL != null" >
+                <img class="image-profile" [src]="this.dataUser.photoURL" alt="">
+              </div>
+              <div *ngIf="dataUser.photoURL == null" >
+                <img class="image-profile" alt="">
+              </div>
+          </div>
+      </div>
+      <div class="center-xs center-sm center-md center-lg">
+        <p>{{dataUser.displayName}}</p>
+        <p>{{dataUser.email}}</p>
+
+      </div>
+      <mat-divider></mat-divider>
+      <div routerLinkActive="active-link" *ngIf="this.identity === 'Administrator'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
+          <a routerLink="/Admin/list">Vehiculos</a>
+      </div>
+      <mat-divider></mat-divider>
+      <div routerLink="/Catalogue" routerLinkActive="active-link" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
+          <a>Catalogo</a>
+      </div>
+      <!-- este es el menu clasico -->
+      <!-- <mat-nav-list class="sidebar-menu"> -->
+
+
+        <!-- <app-menu-list-items
+
+          *ngFor="let item of navItems"
+          [item]="item"
+        ></app-menu-list-items> -->
+      <!-- </mat-nav-list> -->
+    </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar  class="menu">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <fa-icon class="mat-icon-singOut" [icon]="faBars"></fa-icon>
+      </button>
+      <!-- <img style="height: 100px; width: 200px;" src="../../../../assets/svg/LasDosRuedasBlanco.png" alt=""> -->
+      <span class="division-titulo"></span>
+      <span class="example-spacer"></span>
+     <span style="color:white; margin-right: 3px;"> {{this.identity}}</span>
+      <button *ngIf="this.isIdentity"
+      mat-button
+        (click)="logUp()">
+      <span>
+        Salir
+
+        <fa-icon class="fa fa-arrow-right" [icon]="faArrowRight" style="margin-left: 5px;" aria-hidden="true"></fa-icon>
+
+      </span>
+      </button>
+      <div >
+
+        <button *ngIf="!this.isIdentity"
+        mat-button
+        matTooltip="Cerrar sesión"
+          (click)="logUp()">
+          <fa-icon  [icon]="faSignOut"  aria-hidden="true"></fa-icon>
+
+        </button>
+      </div>
+    </mat-toolbar>
+
+
+    <ng-content> </ng-content>
+    <!-- <app-footer></app-footer> -->
+
+  </mat-sidenav-content>
+  </mat-sidenav-container>
+
+

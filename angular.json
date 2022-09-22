@@ -17,6 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "angular-highcharts",
+              "highcharts/highstock",
+              "highcharts",
+              "highcharts/highmaps",
+              "lodash",
+              "lottie-web"
+            ],
             "outputPath": "dist/borrow-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,6 +36,9 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/flexboxgrid/dist/flexboxgrid.min.css",
+              "src/custom.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -96,6 +107,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -103,5 +115,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ed3daa4a-cd59-4327-b37f-34a83b824e49"
   }
 }

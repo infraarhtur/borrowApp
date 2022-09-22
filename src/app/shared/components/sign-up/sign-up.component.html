@@ -1,0 +1,60 @@
+<form [formGroup]="formSignUp" (ngSubmit)="signUp()">
+  <mat-card>
+    <mat-card-header class="encabezado">
+      <mat-card-title>{{description}}</mat-card-title>
+      <mat-card-subtitle>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+
+
+      <mat-form-field color="accent" appearance="outline" class="text-full">
+        <mat-label>Digite su Email <mat-icon>alternate_email</mat-icon>
+        </mat-label>
+        <input matInput type="email" class="form-control" formControlName="email" required>
+        <mat-hint>Email ha registrar en la aplicación</mat-hint>
+        <mat-error *ngIf="errorHandling('email', 'required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="errorHandling('email', 'minlength')" class="invalid-tooltip">
+          Minimo 6 caracteres
+        </mat-error>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="outline" class="text-full">
+        <mat-label>Contraseña <mat-icon>lock</mat-icon>
+        </mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password"
+          class="form-control" maxlength="50">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint>Contraseña para registrar sesión</mat-hint>
+        <mat-error *ngIf="errorHandling('password', 'required')">
+          Campo obligatorio
+        </mat-error>
+
+        <mat-error *ngIf="errorHandling('password', 'minlength')">
+          Minimo 6 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+      <div>
+        <button class="btn-google" type="submit" mat-raised-button (click)="authService.GoogleAuth()">
+          <img class="google-icon" src="../../../../assets/svg/google_icon.png" alt="">
+          <span> Ingresa con Google </span>
+        </button>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button mat-dialog-close (click)="close()">Cerrar</button>
+      <button mat-button cdkFocusInitial type="submit" [disabled]="!formSignUp.valid">Registrarse
+
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
