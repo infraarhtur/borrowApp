@@ -19,7 +19,6 @@ import { RegisterComponent } from './shared/components/register/register.compone
 //
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { environment } from 'src/environments/environment';
 import {appReducers} from './app.reducer';
 
 import { AngularFireModule} from '@angular/fire/compat';
@@ -31,8 +30,10 @@ import { DashboardComponent } from './shared/components/dashboard/dashboard.comp
 import { SignInComponent } from './shared/components/sign-in/sign-in.component';
 import { SignUpComponent } from './shared/components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './shared/components/verify-email/verify-email.component';
 import { AuthService } from './services/shared/auth.service';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,7 @@ import { AuthService } from './services/shared/auth.service';
     DashboardComponent,
     SignInComponent,
     SignUpComponent,
-    ForgotPasswordComponent,
-    VerifyEmailComponent
+    ForgotPasswordComponent
 
   ],
   imports: [
@@ -70,6 +70,8 @@ import { AuthService } from './services/shared/auth.service';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
 
 
   ],

@@ -1,6 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../../models/shared/user';
-import * as auth from 'firebase/auth';
+import { Auth,
+  createUserWithEmailAndPassword,
+   signInWithEmailAndPassword,
+   signOut, signInWithPopup, GoogleAuthProvider} from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -22,6 +25,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _snackBar: MatSnackBar,
+    private auth:Auth
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -37,8 +41,7 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
+    return signInWithEmailAndPassword(this.auth, email, password)
       .then((result) => {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
@@ -58,10 +61,8 @@ export class AuthService {
   }
   // Sign up with email/password
   SignUp(email: string, password: string) {
-
-
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
+    debugger
+    return createUserWithEmailAndPassword(this.auth,email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
@@ -111,11 +112,12 @@ export class AuthService {
   }
   // Sign in with Google
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-      localStorage.setItem('IsIdentity', 'true');
-      location.pathname = '/dashboard';
-    });
-  }
+    return signInWithPopup(this.auth, new GoogleAuthProvider ())
+    .then((res: any) => {
+        localStorage.setItem('IsIdentity', 'true');
+        location.pathname = '/dashboard';
+      });
+      }
   // Auth logic to run auth providers
   AuthLogin(provider: any) {
     return this.afAuth
@@ -126,7 +128,6 @@ export class AuthService {
       })
       .catch((error) => {
         this._snackBar.open(error)
-        // window.alert(error);
       });
   }
 
@@ -150,7 +151,7 @@ export class AuthService {
   }
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
+    return signOut(this.auth).then(() => {
       localStorage.removeItem('user');
       localStorage.clear();
       window.localStorage.clear();

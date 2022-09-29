@@ -37,9 +37,10 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(){
+    debugger;
     if (this.formSignUp.invalid) { return; }
     const {email, password} = this.formSignUp.value;
-    this.authService.SignUp(email.value, password.value)
+    this.authService.SignUp(email, password)
 
     this.close();
   }
