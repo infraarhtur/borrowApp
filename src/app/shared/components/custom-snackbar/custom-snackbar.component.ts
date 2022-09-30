@@ -33,7 +33,7 @@ export class CustomSnackbarComponent implements OnInit {
       }
       case 'ok': {
         data.icon = 'check_circle',
-        data.color = 'green'
+        data.color = '#3BFE02'
          break;
       }
       default: {

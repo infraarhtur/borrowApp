@@ -143,7 +143,7 @@ customSnackbar(){
   this._snackBar.openFromComponent(CustomSnackbarComponent, {duration:2000,
     data:{
       message: 'este es un ejemplo con el info ',
-      type: 'ok'
+      type: 'info'
   }})
 }
 
@@ -153,7 +153,7 @@ warningSnackbar(){
     data:{
 
       message: 'este es un ejemplo un mensaje',
-      type: 'error'
+      type: 'warning'
   }})
 }
 }
