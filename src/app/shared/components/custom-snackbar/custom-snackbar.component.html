@@ -1,0 +1,11 @@
+<span>
+  <span style='color:{{ data?.color }}'>
+    <mat-icon > {{ data?.icon }}</mat-icon>
+  </span>
+  <span style="vertical-align: super !important;margin-left: 10px;">  {{ data?.message }}
+
+    <span mat-icon-button (click)="snackBarRef.dismiss()" style="vertical-align: middle; float: right;" class="dismiss">
+      <mat-icon>close</mat-icon>
+    </span>
+  </span>
+</span>

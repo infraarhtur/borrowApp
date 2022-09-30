@@ -34,6 +34,7 @@ import { AuthService } from './services/shared/auth.service';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
+import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
     DashboardComponent,
     SignInComponent,
     SignUpComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    CustomSnackbarComponent
 
   ],
   imports: [

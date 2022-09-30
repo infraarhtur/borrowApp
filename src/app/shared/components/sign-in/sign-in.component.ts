@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Inject, } from '@angular/core';
 import { AuthService } from 'src/app/services/shared/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
 import { ResetPasswordModalComponent } from '../reset-password-modal/reset-password-modal.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
+import { CustomSnackbarComponent } from '../custom-snackbar/custom-snackbar.component';
 
 
 @Component({
@@ -137,4 +138,23 @@ signUpModalOpen(){
   const dialogRef = this.dialog.open(SignUpComponent, dialogComponent);
   dialogRef.disableClose = true;
 }
+
+customSnackbar(){
+  this._snackBar.openFromComponent(CustomSnackbarComponent, {duration:2000,
+    data:{
+      message: 'este es un ejemplo con el info ',
+      type: 'ok'
+  }})
 }
+
+warningSnackbar(){
+  this._snackBar.openFromComponent(CustomSnackbarComponent, {
+    duration:4000,
+    data:{
+
+      message: 'este es un ejemplo un mensaje',
+      type: 'error'
+  }})
+}
+}
+
