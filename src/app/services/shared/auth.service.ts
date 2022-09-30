@@ -10,8 +10,7 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ThisReceiver } from '@angular/compiler';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class AuthService {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
-    private _snackBar: MatSnackBar,
+    private _snackBarServices: SnackbarService,
     private auth:Auth
   ) {
     this.afAuth.authState.subscribe((user) => {
@@ -41,23 +40,21 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password)
-      .then((result) => {
-        this.SetUserData(result.user);
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
-            console.log('user', user);
-            localStorage.setItem('IsIdentity', 'true');
-            this._snackBar.open('Bienvenido', 'Undo', {
-              duration: 3000,
-            });
-            location.pathname = '/dashboard';
-          }
-        });
-      })
-      .catch((error) => {
-        this.snackBarMessage(error.message);
+    return signInWithEmailAndPassword(this.auth, email, password) .then((result) => {
+      this.SetUserData(result.user);
+      this.afAuth.authState.subscribe((user) => {
+        if (user) {
+          console.log('user', user);
+          localStorage.setItem('IsIdentity', 'true');
+          this._snackBarServices.customSnackbar('Bienvendo!!', 'info', 5000)
+          location.pathname = '/dashboard';
+        }
       });
+    })
+    .catch((error) => {
+       this.snackBarMessage(error.message);
+    });
+
   }
   // Sign up with email/password
   SignUp(email: string, password: string) {
@@ -71,8 +68,9 @@ export class AuthService {
         this.SetUserData(result.user);
       })
       .catch((error) => {
-        debugger;
-        window.alert(error.message);
+
+        this._snackBarServices.customSnackbar(error.message,'error')
+
       });
   }
 
@@ -81,8 +79,7 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        alert('Verifica tu email')
-        // this.router.navigate(['verify-email-address']);
+        this._snackBarServices.customSnackbar('Verifica tu email', 'info', 10000);
       });
   }
   // Reset Forggot password
@@ -98,10 +95,12 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail, actionCodeSettings)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
+        this._snackBarServices.customSnackbar('Password reset email sent, check your inbox.', 'info');
+
       })
       .catch((error) => {
-        window.alert(error);
+        this._snackBarServices.customSnackbar(error, 'info')
+
       });
   }
 
@@ -127,7 +126,7 @@ export class AuthService {
         this.SetUserData(result.user);
       })
       .catch((error) => {
-        this._snackBar.open(error)
+        this._snackBarServices.customSnackbar(error,'error')
       });
   }
 
@@ -165,18 +164,25 @@ export class AuthService {
   snackBarMessage(error) {
 
     if (error.includes('auth/invalid-email')) {
-      this._snackBar.open('invalid-email', 'valid');
+      this._snackBarServices.customSnackbar('invalid-email','error',10000);
+
     } else if (error.includes('auth/network-request-failed')) {
-      this._snackBar.open('network-request-failed', 'valid');
+      this._snackBarServices.customSnackbar('network-request-failed','error', 10000);
+
     } else if (error.includes('password')) {
-      this._snackBar.open('wrong-password', 'valid');
+
+      this._snackBarServices.customSnackbar('wrong-password','error', 10000);
     } else {
-      this._snackBar.open(error, 'valid');
+      this._snackBarServices.customSnackbar(error,'error', 10000);
+
     }
   }
 
   getDataUser(){
      return JSON.parse(localStorage.getItem('user')!)
   }
+
+
+
 
 }

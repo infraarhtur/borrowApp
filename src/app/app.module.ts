@@ -13,7 +13,7 @@ import { MainComponent } from './shared/components/main/main.component';
 import { HomeComponent } from './shared/components/home/home.component';
 //#region proveedores externos
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ModalLogInComponent } from './shared/components/modal-log-in/modal-log-in.component';
+
 import { ResetPasswordModalComponent } from './shared/components/reset-password-modal/reset-password-modal.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 //
@@ -41,7 +41,6 @@ import { CustomSnackbarComponent } from './shared/components/custom-snackbar/cus
     AppComponent,
     MainComponent,
     HomeComponent,
-    ModalLogInComponent,
     ResetPasswordModalComponent,
     RegisterComponent,
     DashboardComponent,

@@ -12,6 +12,7 @@ import { AppState } from '../../../app.reducer';
 import { ResetPasswordModalComponent } from '../reset-password-modal/reset-password-modal.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { CustomSnackbarComponent } from '../custom-snackbar/custom-snackbar.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Component({
@@ -27,10 +28,10 @@ export class SignInComponent implements OnInit, OnDestroy {
   returnToken: any;
   hide: boolean = true;
   messageErr: string = '';
-  forgotPasswordModal:ResetPasswordModalComponent;
-  signUpModal:SignUpComponent;
+  forgotPasswordModal: ResetPasswordModalComponent;
+  signUpModal: SignUpComponent;
   uiSubscription: Subscription;
-
+  userData: any;
 
   constructor(
     public authService: AuthService,
@@ -40,8 +41,22 @@ export class SignInComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     public store: Store<AppState>,
-    private criptoService: CryptoJsService
+    private criptoService: CryptoJsService,
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+
   ) {
+
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
+      }
+    });
+
 
     this.objlogin = { user: '', password: '' };
     this.frmSesion = this.formBuilder.group({
@@ -61,100 +76,76 @@ export class SignInComponent implements OnInit, OnDestroy {
         this.cargando = ui.isLoading;
       });
   }
-ngOnInit(): void {
+  ngOnInit(): void {
 
-}
-
-ngOnDestroy(){
-  if (this.uiSubscription) {
-    this.uiSubscription.unsubscribe();
   }
-}
 
-openSnackBarError(message: string, action: string) {
-  this._snackBar.open(message, action, {
-    panelClass: ["snack-bar-error"]
-  });
-}
-
-// tslint:disable-next-line: typedef
-validaciones() {
-  this.frmSesion = this.formBuilder.group({
-    user: this.formBuilder.control('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    password: this.formBuilder.control('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-  });
-}
-
-iniciarSesionFireAuth() {
-  this._snackBar.open('Bienvenido a Las Dos Ruedas', 'Cerrar');
-  if (this.frmSesion.invalid) { return; }
-}
-
-    public errorHandling = (control: string, error: string) => {
-  return this.frmSesion.controls[control].hasError(error);
-}
-
-SignIn(){
-  if (this.frmSesion.invalid) { return; }
-
-  this.authService.SignIn(this.frmSesion.controls['user'].value,
-    this.frmSesion.controls['password'].value)
-}
-
-
-
-GoogleAuth(){
-  this.authService.GoogleAuth()
-  setTimeout(() => {
-    if (localStorage.getItem('IsIdentity') === 'true') {
-
-      this.eventoSesion.emit(false);
-      this.router.navigate(['dashboard']);
+  ngOnDestroy() {
+    if (this.uiSubscription) {
+      this.uiSubscription.unsubscribe();
     }
+  }
 
-  }, 3000);
-}
 
-forgotPasswordModalOpen(){
-  const dialogComponent = new MatDialogConfig();
-  dialogComponent.autoFocus = true;
-  dialogComponent.disableClose = true;
-  dialogComponent.data = '';
-  const dialogRef = this.dialog.open(ResetPasswordModalComponent, dialogComponent);
-  dialogRef.disableClose = true;
-}
 
-signUpModalOpen(){
-  const dialogComponent = new MatDialogConfig();
-  dialogComponent.autoFocus = true;
-  dialogComponent.disableClose = true;
-  dialogComponent.data = '';
-  const dialogRef = this.dialog.open(SignUpComponent, dialogComponent);
-  dialogRef.disableClose = true;
-}
+  // tslint:disable-next-line: typedef
+  validaciones() {
+    this.frmSesion = this.formBuilder.group({
+      user: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      password: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+    });
+  }
 
-customSnackbar(){
-  this._snackBar.openFromComponent(CustomSnackbarComponent, {duration:2000,
-    data:{
-      message: 'este es un ejemplo con el info ',
-      type: 'info'
-  }})
-}
 
-warningSnackbar(){
-  this._snackBar.openFromComponent(CustomSnackbarComponent, {
-    duration:4000,
-    data:{
+  public errorHandling = (control: string, error: string) => {
+    return this.frmSesion.controls[control].hasError(error);
+  }
 
-      message: 'este es un ejemplo un mensaje',
-      type: 'warning'
-  }})
-}
+  SignIn() {
+    if (this.frmSesion.invalid) { return; }
+
+    this.authService.SignIn(this.frmSesion.controls['user'].value,
+      this.frmSesion.controls['password'].value);
+
+  }
+
+
+
+  GoogleAuth() {
+    this.authService.GoogleAuth()
+    setTimeout(() => {
+      if (localStorage.getItem('IsIdentity') === 'true') {
+
+        this.eventoSesion.emit(false);
+        this.router.navigate(['dashboard']);
+      }
+
+    }, 3000);
+  }
+
+  forgotPasswordModalOpen() {
+    const dialogComponent = new MatDialogConfig();
+    dialogComponent.autoFocus = true;
+    dialogComponent.disableClose = true;
+    dialogComponent.data = '';
+    const dialogRef = this.dialog.open(ResetPasswordModalComponent, dialogComponent);
+    dialogRef.disableClose = true;
+  }
+
+  signUpModalOpen() {
+    const dialogComponent = new MatDialogConfig();
+    dialogComponent.autoFocus = true;
+    dialogComponent.disableClose = true;
+    dialogComponent.data = '';
+    const dialogRef = this.dialog.open(SignUpComponent, dialogComponent);
+    dialogRef.disableClose = true;
+  }
+
 }
 
