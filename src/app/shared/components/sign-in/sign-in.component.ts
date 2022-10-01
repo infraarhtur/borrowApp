@@ -45,7 +45,8 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ) {
 
-    this.clearLocalstorage();
+    this.clearSession();
+
 
     this.objlogin = { user: '', password: '' };
     this.frmSesion = this.formBuilder.group({
@@ -75,10 +76,10 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
   }
 
-  clearLocalstorage(){
-    localStorage.removeItem('user');
-    localStorage.clear();
-    window.localStorage.clear();
+  clearSession(){
+    if(localStorage.getItem('user') !== 'null'){
+      this.authService.SignOut();
+    }
   }
 
 

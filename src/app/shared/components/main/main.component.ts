@@ -22,6 +22,7 @@ import { faBars,faUser,faArrowRight,faSignOut } from '@fortawesome/free-solid-sv
 
 
 import { AuthService } from 'src/app/services/shared/auth.service';
+import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
 @Component({
   selector: 'app-main',
@@ -68,7 +69,8 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     public router:Router,
     public dialog: MatDialog,
-    public authService: AuthService
+    public authService: AuthService,
+    private _snackBarService:SnackbarService
   ) {
 
 
@@ -85,6 +87,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(){
+    this._snackBarService.customSnackbar('prueba de como se ve un mensaje','ok',5000)
 
   }
 
