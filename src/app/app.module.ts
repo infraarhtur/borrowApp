@@ -35,7 +35,12 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 
+export function playerFactory() {
+  return player;
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,8 +62,6 @@ import { CustomSnackbarComponent } from './shared/components/custom-snackbar/cus
     MaterialModule,
     FormsModule,
     FontAwesomeModule,
-    //firebase
-    AngularFireModule.initializeApp(environment.firebase),
 
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -71,9 +74,11 @@ import { CustomSnackbarComponent } from './shared/components/custom-snackbar/cus
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    //firebase
+    AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-
+    LottieModule.forRoot({ player: playerFactory })
 
   ],
   providers: [MaterialModule, AuthService],

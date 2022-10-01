@@ -24,6 +24,9 @@ import { faBars,faUser,faArrowRight,faSignOut } from '@fortawesome/free-solid-sv
 import { AuthService } from 'src/app/services/shared/auth.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
+import { AnimationOptions } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -61,6 +64,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   showSubmenuEjemplos: boolean = false;
   panelOpenState = false;
 
+  lottielogoutOptions: AnimationOptions = {
+    path: '../../../../assets/lottie/logout.json',
+  };
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -102,5 +108,11 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   logUp(){
     this.authService.SignOut();
   }
+
+  animationCreated(animationItem: AnimationItem): void {
+    animationItem.playSpeed = 1.0,
+    animationItem
+  }
+
 
 }
