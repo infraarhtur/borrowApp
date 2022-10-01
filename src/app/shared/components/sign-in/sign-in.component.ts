@@ -11,7 +11,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducer';
 import { ResetPasswordModalComponent } from '../reset-password-modal/reset-password-modal.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
-import { CustomSnackbarComponent } from '../custom-snackbar/custom-snackbar.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
@@ -46,17 +45,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ) {
 
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
-      } else {
-        localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
-      }
-    });
-
+    this.clearLocalstorage();
 
     this.objlogin = { user: '', password: '' };
     this.frmSesion = this.formBuilder.group({
@@ -86,6 +75,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
   }
 
+  clearLocalstorage(){
+    localStorage.removeItem('user');
+    localStorage.clear();
+    window.localStorage.clear();
+  }
 
 
   // tslint:disable-next-line: typedef
