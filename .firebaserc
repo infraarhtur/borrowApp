@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "borrow-app-913d1"
+  },
+  "targets": {
+    "borrow-app-913d1": {
+      "hosting": {
+        "borrowApp": [
+          "borrow-app-913d1"
+        ]
+      }
+    }
+  }
+}

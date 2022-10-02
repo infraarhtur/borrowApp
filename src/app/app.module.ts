@@ -37,6 +37,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { CustomSnackbarComponent } from './shared/components/custom-snackbar/custom-snackbar.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 export function playerFactory() {
   return player;
@@ -76,8 +77,11 @@ export function playerFactory() {
     //firebase
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+
     provideAuth(() => getAuth()),
-    LottieModule.forRoot({ player: playerFactory })
+    LottieModule.forRoot({ player: playerFactory }),
+
 
   ],
   providers: [MaterialModule, AuthService],

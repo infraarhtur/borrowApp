@@ -112,6 +112,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "borrowApp:build:production",
+            "firebaseProject": "borrow-app-913d1",
+            "firebaseHostingSite": "borrow-app-913d1"
+          }
         }
       }
     }
