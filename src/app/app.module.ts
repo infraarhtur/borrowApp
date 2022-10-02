@@ -15,7 +15,7 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ResetPasswordModalComponent } from './shared/components/reset-password-modal/reset-password-modal.component';
-import { RegisterComponent } from './shared/components/register/register.component';
+
 //
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
@@ -47,7 +47,6 @@ export function playerFactory() {
     MainComponent,
     HomeComponent,
     ResetPasswordModalComponent,
-    RegisterComponent,
     DashboardComponent,
     SignInComponent,
     SignUpComponent,

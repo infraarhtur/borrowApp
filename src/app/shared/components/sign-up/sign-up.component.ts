@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/shared/auth.service';
 import { UsersInterface } from 'src/app/models/shared/users.interface';
+import { CustomValidators } from 'src/app/functions/custom-validators';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class SignUpComponent implements OnInit {
   formSignUp: FormGroup;
   description = 'Registro ';
   hide: boolean = true;
+  hideConfirm: boolean = true;
   constructor(
     private _builders: FormBuilder,
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -56,7 +58,21 @@ formValidations() {
       Validators.required,
       Validators.minLength(5),
     ]),
+    confirmPassword: this._builders.control('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
+  },  {
+
+      validators: [CustomValidators.match('password', 'confirmPassword')],
+
   });
+}
+
+validationPassword(formGroup: FormGroup) {
+  const { value: password } = formGroup.get('password');
+  const { value: confirmPassword } = formGroup.get('confirmPassword');
+  return password === confirmPassword ? null : { passwordNotMatch: true };
 }
 
 

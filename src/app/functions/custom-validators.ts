@@ -10,24 +10,31 @@ export class CustomValidators {
             // if control is empty return no error
             return null;
           }
-      
+
           // test the value of the control against the regexp supplied
           const valid = regex.test(control.value);
-      
+
           // if true, return no error (no error), else return error passed in the second parameter
           return valid ? null : error;
         };
       }
 
+      static match(controlName: string, checkControlName: string): ValidatorFn {
+        return (controls: AbstractControl) => {
+          const control = controls.get(controlName);
+          const checkControl = controls.get(checkControlName);
 
-      static passwordMatchValidator(control: AbstractControl) {
-        const password: string = control.get('pwd').value; // get password from our password form control
-        const confirmPassword: string = control.get('confirmPwd').value; // get password from our confirmPassword form control
-        // compare is the password math
-        if (password !== confirmPassword) {
-          // if they don't match, set an error in our confirmPassword form control
-          control.get('confirmPwd').setErrors({ NoPassswordMatch: true });
-        }
+          if (checkControl?.errors && !checkControl.errors['matching']) {
+            return null;
+          }
+
+          if (control?.value !== checkControl?.value) {
+            controls.get(checkControlName)?.setErrors({ matching: true });
+            return { matching: true };
+          } else {
+            return null;
+          }
+        };
       }
 
 }
