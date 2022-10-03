@@ -1,7 +1,11 @@
 export interface User {
-  uid: string;
+  uid?: string;
   email: string;
-  displayName: string;
-  photoURL: string;
-  emailVerified: boolean;
+  nickname: string;
+  phoneNumber:string;
+  indicative:string;
+  isTermsConditions:boolean;
+  rol:string;
+  emailVerified:boolean;
+  photoURL : string;
 }

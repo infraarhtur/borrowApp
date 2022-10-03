@@ -21,6 +21,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 //#endregion
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -67,7 +68,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule
   ],
   exports: [
     MatSliderModule,
@@ -105,7 +107,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatCheckboxModule,MatTooltipModule
+    MatCheckboxModule,MatTooltipModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

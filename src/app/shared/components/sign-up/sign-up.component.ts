@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(){
-    debugger;
+
     if (this.formSignUp.invalid) { return; }
     const {email, password} = this.formSignUp.value;
     this.authService.SignUp(email, password)
@@ -68,13 +68,6 @@ formValidations() {
 
   });
 }
-
-validationPassword(formGroup: FormGroup) {
-  const { value: password } = formGroup.get('password');
-  const { value: confirmPassword } = formGroup.get('confirmPassword');
-  return password === confirmPassword ? null : { passwordNotMatch: true };
-}
-
 
   public errorHandling = (control: string, error: string) => {
     return this.formSignUp.controls[control].hasError(error);

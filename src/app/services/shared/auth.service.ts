@@ -1,9 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
 import { User } from '../../models/shared/user';
-import { Auth,
+import {
+  Auth,
   createUserWithEmailAndPassword,
-   signInWithEmailAndPassword,
-   signOut, signInWithPopup, GoogleAuthProvider} from '@angular/fire/auth';
+  signInWithEmailAndPassword,
+  signOut, signInWithPopup, GoogleAuthProvider
+} from '@angular/fire/auth';
+
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -11,6 +14,9 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { SnackbarService } from './snackbar.service';
+import { UserService } from './user.service';
+import { UserModel } from 'src/app/models/shared/user.model';
+import { getDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +30,8 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _snackBarServices: SnackbarService,
-    private auth:Auth
+    private auth: Auth,
+    private _userService: UserService
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -40,8 +47,8 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password) .then((result) => {
-      this.SetUserData(result.user);
+    return signInWithEmailAndPassword(this.auth, email, password).then((result) => {
+      // this.SetUserData(result.user);
       this.afAuth.authState.subscribe((user) => {
         if (user) {
           console.log('user', user);
@@ -51,25 +58,34 @@ export class AuthService {
         }
       });
     })
-    .catch((error) => {
-       this.snackBarMessage(error.message);
-    });
+      .catch((error) => {
+        this.snackBarMessage(error.message);
+      });
 
   }
   // Sign up with email/password
   SignUp(email: string, password: string) {
-    debugger
-    return createUserWithEmailAndPassword(this.auth,email, password)
+
+    return createUserWithEmailAndPassword(this.auth, email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign
-        up and returns promise */
-        debugger;
+
+        const user: User = {
+          uid: result.user.uid,
+          email: result.user.email,
+          nickname: null,
+          phoneNumber: result.user.phoneNumber,
+          indicative: null,
+          isTermsConditions: false,
+          rol: 'Client',
+          emailVerified: result.user.emailVerified,
+          photoURL: result.user.photoURL
+        }
         this.SendVerificationMail();
-        this.SetUserData(result.user);
+        this._userService.addUser(user)
       })
       .catch((error) => {
 
-        this._snackBarServices.customSnackbar(error.message,'error')
+        this._snackBarServices.customSnackbar(error.message, 'error')
 
       });
   }
@@ -110,45 +126,37 @@ export class AuthService {
     return user !== null && user.emailVerified !== false ? true : false;
   }
   // Sign in with Google
-  GoogleAuth() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider ())
-    .then((res: any) => {
-        localStorage.setItem('IsIdentity', 'true');
-        location.pathname = '/dashboard';
-      });
+  async GoogleAuth() {
+    const result = await signInWithPopup(this.auth, new GoogleAuthProvider());
+    const docSnap = await this._userService.getInfoDoc(result.user.uid);
+
+    if (!docSnap.exists()) {
+      const user: User = {
+        uid: result.user.uid,
+        email: result.user.email,
+        nickname: result.user.displayName,
+        phoneNumber: result.user.phoneNumber,
+        indicative: null,
+        isTermsConditions: false,
+        rol: 'Client',
+        emailVerified: result.user.emailVerified,
+        photoURL:result.user.photoURL
       }
-  // Auth logic to run auth providers
-  AuthLogin(provider: any) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.router.navigate(['dashboard']);
-        this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        this._snackBarServices.customSnackbar(error,'error')
-      });
+debugger;
+      const isCreated = await this._userService.addUser(user)
+
+    }
+
+
+    localStorage.setItem('IsIdentity', 'true');
+    location.pathname = '/dashboard';
+
+
+
   }
 
-  /* Setting up user data when sign in with username/password,
-    sign up with username/password and sign in with social auth
-    provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-  // Sign out
+
+
   SignOut() {
     return signOut(this.auth).then(() => {
       localStorage.removeItem('user');
@@ -164,22 +172,22 @@ export class AuthService {
   snackBarMessage(error) {
 
     if (error.includes('auth/invalid-email')) {
-      this._snackBarServices.customSnackbar('invalid-email','error',10000);
+      this._snackBarServices.customSnackbar('invalid-email', 'error', 10000);
 
     } else if (error.includes('auth/network-request-failed')) {
-      this._snackBarServices.customSnackbar('network-request-failed','error', 10000);
+      this._snackBarServices.customSnackbar('network-request-failed', 'error', 10000);
 
     } else if (error.includes('password')) {
 
-      this._snackBarServices.customSnackbar('wrong-password','error', 10000);
+      this._snackBarServices.customSnackbar('wrong-password', 'error', 10000);
     } else {
-      this._snackBarServices.customSnackbar(error,'error', 10000);
+      this._snackBarServices.customSnackbar(error, 'error', 10000);
 
     }
   }
 
-  getDataUser(){
-     return JSON.parse(localStorage.getItem('user')!)
+  getDataUser() {
+    return JSON.parse(localStorage.getItem('user')!)
   }
 
 

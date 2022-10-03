@@ -63,15 +63,19 @@
         <mat-error *ngIf="errorHandling('confirmPassword', 'matching')">
           Confirmar contraseña no coincide
         </mat-error>
-
       </mat-form-field>
 
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-button mat-dialog-close (click)="close()">Cerrar</button>
-      <button mat-button cdkFocusInitial type="submit" [disabled]="!formSignUp.valid">Registrarse
-
+      <button mat-button cdkFocusInitial type="submit" [disabled]="!formSignUp.valid">
+        Registrarse
       </button>
+
     </mat-card-actions>
+
+    <mat-card-footer>
+      <mat-progress-bar mode="buffer"></mat-progress-bar>
+    </mat-card-footer>
   </mat-card>
 </form>

@@ -14,6 +14,13 @@ const routes: Routes = [
   { path: 'register-user', component: SignUpComponent },
   { path: 'dashboard', component: DashboardComponent,  canActivate: [AuthGuard]  },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  {
+    path: 'user',
+    canActivate: [
+      AuthGuard
+    ],
+    loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  }
 
 ];
 

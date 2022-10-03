@@ -38,6 +38,7 @@ import { CustomSnackbarComponent } from './shared/components/custom-snackbar/cus
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { UserModule } from './modules/user/user.module';
 
 export function playerFactory() {
   return player;
@@ -52,7 +53,8 @@ export function playerFactory() {
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+
 
   ],
   imports: [
@@ -82,6 +84,7 @@ export function playerFactory() {
     provideAuth(() => getAuth()),
     LottieModule.forRoot({ player: playerFactory }),
 
+    UserModule
 
   ],
   providers: [MaterialModule, AuthService],
