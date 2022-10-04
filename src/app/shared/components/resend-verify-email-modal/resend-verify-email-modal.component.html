@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header class="encabezado">
+    <mat-card-title>Email sin verificar</mat-card-title>
+    <mat-card-subtitle>
+      Tu cuenta está creada, pero no la has verificado
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+    ¿Deseas que te volvamos a enviar el correo de verificación?
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button mat-dialog-close (click)="closeModal()">Cerrar</button>
+    <button mat-button mat-raised-button  color="primary" (click)="sendVerificationEmail()">Enviar correo</button>
+
+  </mat-card-actions>
+</mat-card>

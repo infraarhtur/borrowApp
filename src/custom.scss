@@ -38,6 +38,11 @@ $candy-app-theme: mat-light-theme( ( color: ( primary: $candy-app-primary, accen
     background: rgba(255, 255, 255, 0);
     color: rgba(0, 0, 0, 0);
 }
-    
-  
+
+.custom-modalbox {
+  mat-dialog-container {
+    padding: 0px !important;
+  }
+}
+
 @include angular-material-theme($candy-app-theme);

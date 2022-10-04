@@ -39,6 +39,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { UserModule } from './modules/user/user.module';
+import { ResendVerifyEmailModalComponent } from './shared/components/resend-verify-email-modal/resend-verify-email-modal.component';
 
 export function playerFactory() {
   return player;
@@ -54,6 +55,7 @@ export function playerFactory() {
     SignUpComponent,
     ForgotPasswordComponent,
     CustomSnackbarComponent,
+    ResendVerifyEmailModalComponent,
 
 
   ],

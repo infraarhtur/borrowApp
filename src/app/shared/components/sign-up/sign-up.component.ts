@@ -22,7 +22,6 @@ export class SignUpComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public user: UsersInterface,
     public authService: AuthService
   ) {
-
     this.formValidations();
   }
 

@@ -12,6 +12,7 @@ import { AppState } from '../../../app.reducer';
 import { ResetPasswordModalComponent } from '../reset-password-modal/reset-password-modal.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ResendVerifyEmailModalComponent } from '../resend-verify-email-modal/resend-verify-email-modal.component';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   signUpModal: SignUpComponent;
   uiSubscription: Subscription;
   userData: any;
+  resendEmail:ResendVerifyEmailModalComponent;
 
   constructor(
     public authService: AuthService,
@@ -102,12 +104,16 @@ export class SignInComponent implements OnInit, OnDestroy {
     return this.frmSesion.controls[control].hasError(error);
   }
 
-  SignIn() {
+  async SignIn() {
     if (this.frmSesion.invalid) { return; }
 
-    this.authService.SignIn(this.frmSesion.controls['user'].value,
+   const result = await this.authService.SignIn(
+      this.frmSesion.controls['user'].value,
       this.frmSesion.controls['password'].value);
 
+      if(result !== undefined){
+        this.resendEmailModalOpen(result)
+      }
   }
 
 
@@ -142,5 +148,17 @@ export class SignInComponent implements OnInit, OnDestroy {
     dialogRef.disableClose = true;
   }
 
+  resendEmailModalOpen(user){
+    const dialogComponent = new MatDialogConfig();
+    dialogComponent.autoFocus = true;
+    dialogComponent.disableClose = true;
+    dialogComponent.data = user;
+    dialogComponent.panelClass = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1500ms';
+    dialogComponent.exitAnimationDuration = '1500ms'
+
+    const dialogRef = this.dialog.open(ResendVerifyEmailModalComponent, dialogComponent,);
+    dialogRef.disableClose = true;
+  }
 }
 

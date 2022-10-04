@@ -4,7 +4,7 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut, signInWithPopup, GoogleAuthProvider
+  signOut, signInWithPopup, GoogleAuthProvider, sendEmailVerification
 } from '@angular/fire/auth';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -48,7 +48,9 @@ export class AuthService {
   // Sign in with email/password
   SignIn(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password).then((result) => {
-      // this.SetUserData(result.user);
+      if (!result.user.emailVerified) {
+        return result.user;
+      }
       this.afAuth.authState.subscribe((user) => {
         if (user) {
           console.log('user', user);
@@ -84,9 +86,7 @@ export class AuthService {
         this._userService.addUser(user)
       })
       .catch((error) => {
-
-        this._snackBarServices.customSnackbar(error.message, 'error')
-
+        this._snackBarServices.customSnackbar(error.message, 'error');
       });
   }
 
@@ -95,8 +95,21 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this._snackBarServices.customSnackbar('Verifica tu email', 'info', 10000);
+        this._snackBarServices.customSnackbar('listo! verifica tu email', 'info', 10000);
       });
+  }
+
+  async sendEmailVerificationWithUser(user) {
+    try {
+      const result = await sendEmailVerification(user);
+      if (result === undefined) {
+        this._snackBarServices.customSnackbar('listo! verifica tu email', 'info', 10000);
+      }
+      return true;
+    } catch (error) {
+      this._snackBarServices.customSnackbar('Lo sentimos tuvimos un error enviando el correo', 'error', 10000);
+      return;
+    }
   }
   // Reset Forggot password
   ForgotPassword(passwordResetEmail: string) {
@@ -112,11 +125,9 @@ export class AuthService {
       .sendPasswordResetEmail(passwordResetEmail, actionCodeSettings)
       .then(() => {
         this._snackBarServices.customSnackbar('Password reset email sent, check your inbox.', 'info');
-
       })
       .catch((error) => {
-        this._snackBarServices.customSnackbar(error, 'info')
-
+        this._snackBarServices.customSnackbar(error, 'info');
       });
   }
 
@@ -140,22 +151,14 @@ export class AuthService {
         isTermsConditions: false,
         rol: 'Client',
         emailVerified: result.user.emailVerified,
-        photoURL:result.user.photoURL
+        photoURL: result.user.photoURL
       }
-debugger;
       const isCreated = await this._userService.addUser(user)
 
     }
-
-
     localStorage.setItem('IsIdentity', 'true');
     location.pathname = '/dashboard';
-
-
-
   }
-
-
 
   SignOut() {
     return signOut(this.auth).then(() => {
@@ -189,8 +192,4 @@ debugger;
   getDataUser() {
     return JSON.parse(localStorage.getItem('user')!)
   }
-
-
-
-
 }
