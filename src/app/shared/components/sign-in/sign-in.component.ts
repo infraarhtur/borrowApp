@@ -13,7 +13,8 @@ import { ResetPasswordModalComponent } from '../reset-password-modal/reset-passw
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ResendVerifyEmailModalComponent } from '../resend-verify-email-modal/resend-verify-email-modal.component';
-
+import { AnimationOptions } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'app-sign-in',
@@ -34,10 +35,12 @@ export class SignInComponent implements OnInit, OnDestroy {
   userData: any;
   resendEmail:ResendVerifyEmailModalComponent;
 
+  wallet: AnimationOptions = {
+    path: '../../../../assets/lottie/wallet.json',
+  };
   constructor(
     public authService: AuthService,
     public formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
     public router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
@@ -46,6 +49,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     public afAuth: AngularFireAuth, // Inject Firebase auth service
 
   ) {
+
 
     this.clearSession();
 
@@ -135,6 +139,9 @@ export class SignInComponent implements OnInit, OnDestroy {
     dialogComponent.autoFocus = true;
     dialogComponent.disableClose = true;
     dialogComponent.data = '';
+    dialogComponent.panelClass = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration = '1000ms'
     const dialogRef = this.dialog.open(ResetPasswordModalComponent, dialogComponent);
     dialogRef.disableClose = true;
   }
@@ -144,6 +151,9 @@ export class SignInComponent implements OnInit, OnDestroy {
     dialogComponent.autoFocus = true;
     dialogComponent.disableClose = true;
     dialogComponent.data = '';
+    dialogComponent.panelClass = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration = '1000ms'
     const dialogRef = this.dialog.open(SignUpComponent, dialogComponent);
     dialogRef.disableClose = true;
   }
@@ -154,11 +164,16 @@ export class SignInComponent implements OnInit, OnDestroy {
     dialogComponent.disableClose = true;
     dialogComponent.data = user;
     dialogComponent.panelClass = 'custom-modalbox';
-    dialogComponent.enterAnimationDuration = '1500ms';
-    dialogComponent.exitAnimationDuration = '1500ms'
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration = '1000ms'
 
     const dialogRef = this.dialog.open(ResendVerifyEmailModalComponent, dialogComponent,);
     dialogRef.disableClose = true;
+  }
+
+  animationCreated(animationItem: AnimationItem): void {
+    animationItem.playSpeed = 1.0,
+    animationItem
   }
 }
 

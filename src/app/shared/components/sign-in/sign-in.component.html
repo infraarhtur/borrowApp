@@ -1,7 +1,12 @@
 <div class="contenedor">
   <mat-card class="example-card">
     <mat-card-header class="encabezado">
-      <mat-card-title>borrow APP</mat-card-title>
+      <mat-card-title>borrow APP
+      </mat-card-title>
+      <mat-card-subtitle>
+        <ng-lottie [options]="wallet" width="400px" height="100px" (animationCreated)="animationCreated($event)">
+        </ng-lottie>
+      </mat-card-subtitle>
 
     </mat-card-header>
     <mat-card-content>
@@ -12,45 +17,45 @@
               Nombre de usuario
               <mat-icon>alternate_email</mat-icon>
             </mat-label>
-            <input matInput type="text" placeholder="  Usuario" formControlName="user"
-              class="form-control" maxlength="30">
+            <input matInput type="text" placeholder="  Usuario" formControlName="user" class="form-control"
+              maxlength="30">
             <mat-icon matSuffix>account_circle</mat-icon>
             <mat-hint>Email registrado en la aplicación</mat-hint>
             <mat-error *ngIf="errorHandling('user', 'required')">
               Campo obligatorio
-           </mat-error>
+            </mat-error>
 
-           <mat-error *ngIf="errorHandling('user', 'minlength')" class="invalid-tooltip">
-            Minimo 6 caracteres
-        </mat-error>
+            <mat-error *ngIf="errorHandling('user', 'minlength')" class="invalid-tooltip">
+              Minimo 6 caracteres
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Contraseña <mat-icon>lock</mat-icon>
             </mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password"
-                class="form-control" maxlength="50">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
+              class="form-control" maxlength="50">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-hint>Contraseña para registrar sesión</mat-hint>
             <mat-error *ngIf="errorHandling('password', 'required')">
               Campo obligatorio
-           </mat-error>
+            </mat-error>
 
-           <mat-error *ngIf="errorHandling('password', 'minlength')">
-            Minimo 6 caracteres
-          </mat-error>
+            <mat-error *ngIf="errorHandling('password', 'minlength')">
+              Minimo 6 caracteres
+            </mat-error>
           </mat-form-field>
-          <div  class="center-xs center-sm center-md center-lg ">
+          <div class="center-xs center-sm center-md center-lg ">
             <span (click)="forgotPasswordModalOpen()" class="links">¿Olvidaste tu contraseña?</span>
 
 
           </div>
           <div>
             <button class="sign-in" type="submit" mat-raised-button color="primary" [disabled]="!frmSesion.valid"
-                *ngIf="!cargando">
-                <span> Iniciar sesion </span>
+              *ngIf="!cargando">
+              <span> Iniciar sesion </span>
             </button>
             <button type="button" mat-flat-button color="warn" [disabled]="false" *ngIf="cargando">
               <i class="fa fa-spin fa-sync"></i>
@@ -64,7 +69,7 @@
             </p>
           </div>
           <mat-divider></mat-divider>
-          <div >
+          <div>
             <button class="btn-google" type="submit" mat-raised-button (click)="authService.GoogleAuth()">
               <img class="google-icon" src="../../../../assets/svg/google_icon.png" alt="">
               <span> Ingresa con Google </span>
