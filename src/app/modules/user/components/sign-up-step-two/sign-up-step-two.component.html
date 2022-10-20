@@ -1,7 +1,98 @@
-<p (click)="addUser()">sign-up-step-two works!</p>
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <ng-template matStepLabel>Terminos y condiciones</ng-template>
+    <form [formGroup]="firstFormGroup">
 
-<p (click)="deleteUser()">
-  eliminar usuario
-</p>
+      <mat-accordion class="example-headers-align">
 
-{{this.users | json}}
+        <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Terminos y condiciones
+            </mat-panel-title>
+            <mat-panel-description>
+              {{panelOpenState ? 'Contraer' : 'Expandir'}}
+              <mat-icon>{{panelOpenState ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>punto 1</p>
+          <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y
+            archivos de texto.
+            Lorem Ipsum
+            ha sido el texto de relleno estándar de las industrias desde el año 1500,
+            cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y
+            los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años,
+            sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al
+            original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes
+            de Lorem Ipsum,
+            y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones
+            de Lorem Ipsum.
+          </p>
+          <p>punto 2</p>
+          <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y
+            archivos de texto.
+            Lorem Ipsum
+            ha sido el texto de relleno estándar de las industrias desde el año 1500,
+            cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y
+            los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años,
+            sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al
+            original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes
+            de Lorem Ipsum,
+            y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones
+            de Lorem Ipsum.
+          </p>
+          <p>punto 3</p>
+          <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y
+            archivos de texto.
+            Lorem Ipsum
+            ha sido el texto de relleno estándar de las industrias desde el año 1500,
+            cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y
+            los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años,
+            sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al
+            original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes
+            de Lorem Ipsum,
+            y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones
+            de Lorem Ipsum.
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-checkbox formControlName="acceptTerms">Acepto los terminos y condiciones</mat-checkbox>
+
+
+      <mat-error *ngIf="errorHandling('acceptTerms', 'required')">
+        Para continuar es necesario aceptar los terminos y condiciones
+      </mat-error>
+
+      <div>
+        <button mat-button matStepperNext mat-raised-button color="primary" >Siguiente
+          paso</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>

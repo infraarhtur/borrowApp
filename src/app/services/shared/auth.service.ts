@@ -165,6 +165,7 @@ export class AuthService {
       localStorage.removeItem('user');
       localStorage.clear();
       window.localStorage.clear();
+      location.pathname = '/sign-in';
       this.router.navigate(['sign-in'])
         .then(() => {
           location.reload();

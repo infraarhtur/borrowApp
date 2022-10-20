@@ -32,6 +32,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -69,7 +70,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatStepperModule
   ],
   exports: [
     MatSliderModule,
@@ -108,7 +110,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatPaginatorModule,
     MatDialogModule,
     MatCheckboxModule,MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule { }
