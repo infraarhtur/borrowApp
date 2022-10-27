@@ -236,7 +236,7 @@ pre {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius:50px;
-  background-image: url(../../../../assets/svg/account.svg);
+
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -285,4 +285,9 @@ pre {
 }
 .mat-sidenav-content .mat-drawer-content {
   overflow: initial  !important;
+}
+
+.example-header-image {
+
+  background-size: cover;
 }

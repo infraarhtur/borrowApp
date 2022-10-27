@@ -18,7 +18,9 @@ export class SignUpStepTwoComponent implements OnInit {
     acceptTerms: [false,  Validators.requiredTrue]
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    email: [null, [Validators.required, Validators.email]],
+    numberPhone:[null, [Validators.required, Validators.pattern("[0-9]{10}")]],
+    indicative: [null, [Validators.required,Validators.pattern("[0-9]{2}")]]
   });
   isLinear = true;
 
@@ -38,6 +40,11 @@ export class SignUpStepTwoComponent implements OnInit {
   public errorHandling = (control: string, error: string) => {
     return this.firstFormGroup.controls[control].hasError(error);
   }
+
+  public errorHandling2 = (control: string, error: string) => {
+    return this.formSignUpStep2.controls[control].hasError(error);
+  }
+
 onSumit1(){
   if (this.firstFormGroup.invalid) {
     return;

@@ -6,10 +6,10 @@
 
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg ">
         <div *ngIf="dataUser.photoURL != null">
-          <img class="image-profile" [src]="this.dataUser.photoURL" alt="">
+          <img class="image-profile" [src]="this.dataUser.photoURL" >
         </div>
         <div *ngIf="dataUser.photoURL == null">
-          <img class="image-profile" alt="">
+          <img class="image-profile" src="../../../../assets/svg/account.svg" alt="">
         </div>
       </div>
     </div>

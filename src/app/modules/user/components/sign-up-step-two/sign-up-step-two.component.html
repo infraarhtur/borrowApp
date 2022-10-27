@@ -60,7 +60,9 @@
           </p>
         </mat-expansion-panel>
       </mat-accordion>
-
+      <br>
+      <mat-divider></mat-divider>
+      <br>
       <mat-checkbox formControlName="acceptTerms">Acepto los terminos y condiciones</mat-checkbox>
 
 
@@ -69,18 +71,82 @@
       </mat-error>
 
       <div>
-        <button mat-button matStepperNext mat-raised-button color="primary" >Siguiente
+        <br>
+        <button mat-button matStepperNext mat-raised-button color="primary">Siguiente
           paso</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-      </mat-form-field>
+    <form [formGroup]="secondFormGroup" class="example-form">
+      <ng-template matStepLabel>Información básica</ng-template>
+
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td class="example-full-width" colspan="2">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>email</mat-label>
+              <input matInput formControlName="email" placeholder="email" required>
+
+              <mat-error *ngIf="secondFormGroup.controls.email.errors?.['required']">
+                Campo requerido
+              </mat-error>
+
+              <mat-error *ngIf="secondFormGroup.controls.email.errors?.['email']">
+                Error de formato en el email
+              </mat-error>
+
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field appearance="fill" class="example-full-width">
+              <span matPrefix>+ &nbsp;</span>
+              <mat-label>Indicativo</mat-label>
+              <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país" minlength="2"
+                maxlength="2" required>
+
+              <mat-error *ngIf="secondFormGroup.controls.indicative.errors?.['required']">
+                Campo requerido
+              </mat-error>
+              <mat-error *ngIf="secondFormGroup.controls.indicative.errors?.['pattern']">
+                por favor verifique el indicativo del pais
+              </mat-error>
+
+
+            </mat-form-field>
+          </td>
+          <td>
+
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>Number phone</mat-label>
+              <input type="tel" matInput formControlName="numberPhone" placeholder="555-555-1234" required>
+
+              <mat-error *ngIf="secondFormGroup.controls.numberPhone.errors?.['required']">
+                Campo requerido
+              </mat-error>
+              <mat-error *ngIf="secondFormGroup.controls.numberPhone.errors?.['pattern']">
+                el formato del numero de celular no es correcto
+              </mat-error>
+
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+
+
+      <br>
+
+
+
+
+
+
+
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
