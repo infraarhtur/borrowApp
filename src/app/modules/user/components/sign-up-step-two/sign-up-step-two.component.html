@@ -72,30 +72,36 @@
 
       <div>
         <br>
-        <button mat-button matStepperNext mat-raised-button color="primary">Siguiente
-          paso</button>
+        <mat-action-row>
+          <button mat-button color="warn"  mat-stroked-button >
+            Cancelar y salir
+          </button>
+          <button mat-button matStepperNext mat-stroked-button color="primary" >
+            Siguiente paso
+          </button>
+
+        </mat-action-row>
+
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup" class="example-form">
       <ng-template matStepLabel>Información básica</ng-template>
-
+<br>
       <table class="example-full-width" cellspacing="0">
         <tr>
           <td class="example-full-width" colspan="2">
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>email</mat-label>
               <input matInput formControlName="email" placeholder="email" required>
-
+              <mat-icon matSuffix>email</mat-icon>
               <mat-error *ngIf="secondFormGroup.controls.email.errors?.['required']">
                 Campo requerido
               </mat-error>
-
               <mat-error *ngIf="secondFormGroup.controls.email.errors?.['email']">
                 Error de formato en el email
               </mat-error>
-
             </mat-form-field>
           </td>
         </tr>
@@ -103,27 +109,25 @@
         <tr>
           <td>
             <mat-form-field appearance="fill" class="example-full-width">
-              <span matPrefix>+ &nbsp;</span>
+
+              <mat-icon matPrefix>add</mat-icon>
               <mat-label>Indicativo</mat-label>
               <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país" minlength="2"
                 maxlength="2" required>
-
+                <mat-icon matSuffix>public</mat-icon>
               <mat-error *ngIf="secondFormGroup.controls.indicative.errors?.['required']">
                 Campo requerido
               </mat-error>
               <mat-error *ngIf="secondFormGroup.controls.indicative.errors?.['pattern']">
                 por favor verifique el indicativo del pais
               </mat-error>
-
-
             </mat-form-field>
           </td>
           <td>
-
             <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>Number phone</mat-label>
               <input type="tel" matInput formControlName="numberPhone" placeholder="555-555-1234" required>
-
+              <mat-icon matSuffix>phone_iphone</mat-icon>
               <mat-error *ngIf="secondFormGroup.controls.numberPhone.errors?.['required']">
                 Campo requerido
               </mat-error>
@@ -136,29 +140,18 @@
         </tr>
       </table>
 
+<br>
+      <mat-action-row>
+        <button mat-button color="warn"  mat-stroked-button >Previous</button>
+        <button mat-button color="primary"  mat-stroked-button >Guardar</button>
+      </mat-action-row>
 
-
-      <br>
-
-
-
-
-
-
-
-
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
+      <!-- <div>
+        <button mat-button matStepperNext mat-raised-button color="primary">
+        Guardar
+        </button>
+      </div> -->
     </form>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
-  </mat-step>
+
 </mat-stepper>
