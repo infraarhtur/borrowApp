@@ -94,7 +94,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(){
-    this._snackBarService.customSnackbar('prueba de como se ve un mensaje','ok',5000)
+    this._snackBarService.customSnackbar('Bienvenido a la aplicacion','ok',5000)
 
   }
 

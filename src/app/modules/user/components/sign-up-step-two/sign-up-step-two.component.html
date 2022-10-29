@@ -71,7 +71,7 @@
       <div>
         <br>
         <mat-action-row>
-          <button mat-button color="warn"  mat-stroked-button >
+          <button mat-button color="warn"  mat-stroked-button type="button" (click)="cancelAndOut()" >
             Cancelar y salir
           </button>
           <button mat-button matStepperNext mat-stroked-button color="primary" >
@@ -84,22 +84,22 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup" class="example-form">
+    <form [formGroup]="secondFormGroup" class="example-form" (ngSubmit)="updateInfo()">
       <ng-template matStepLabel>Información básica</ng-template>
 <br>
       <table class="example-full-width" cellspacing="0">
         <tr>
           <td class="example-full-width" colspan="2">
+
+
             <mat-form-field appearance="fill" class="example-full-width">
-              <mat-label>email</mat-label>
-              <input matInput formControlName="email" placeholder="email" required>
-              <mat-icon matSuffix>email</mat-icon>
-              <mat-error *ngIf="secondFormGroup.controls.email.errors?.['required']">
+              <mat-label>nickName</mat-label>
+              <input matInput formControlName="nickName" placeholder="email" [(ngModel)]="nickName" required>
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error *ngIf="secondFormGroup.controls.nickName.errors?.['required']">
                 Campo requerido
               </mat-error>
-              <mat-error *ngIf="secondFormGroup.controls.email.errors?.['email']">
-                Error de formato en el email
-              </mat-error>
+
             </mat-form-field>
           </td>
         </tr>
@@ -138,17 +138,13 @@
         </tr>
       </table>
 
-<br>
+      <br>
       <mat-action-row>
-        <button mat-button color="warn"  mat-stroked-button >Previous</button>
+        <button mat-button color="warn"  mat-stroked-button type="button" (click)="cancelAndOut()" >Cancelar y salir</button>
         <button mat-button color="primary"  mat-stroked-button >Guardar</button>
       </mat-action-row>
 
-      <!-- <div>
-        <button mat-button matStepperNext mat-raised-button color="primary">
-        Guardar
-        </button>
-      </div> -->
+
     </form>
   </mat-step>
 

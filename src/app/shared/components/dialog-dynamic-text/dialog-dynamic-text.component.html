@@ -1,0 +1,17 @@
+
+
+  <mat-card>
+    <mat-card-header  align="center" class="mat-card-title2">
+      <mat-card-title>{{data.title}}</mat-card-title>
+      <mat-card-subtitle>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{data.msj}}</p>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn"  mat-stroked-button  (click)="cancel()">{{data.btnCancel}}</button>
+  <button mat-button  cdkFocusInitial color="primary"  mat-stroked-button  (click)="ok()">{{data.btnOk}}</button>
+    </mat-card-actions>
+  </mat-card>

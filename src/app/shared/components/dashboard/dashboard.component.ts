@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/shared/auth.service';
 
 import { AnimationOptions } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
+import { UserService } from 'src/app/services/shared/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,14 +20,22 @@ export class DashboardComponent implements OnInit {
     path: '../../../../assets/lottie/logout.json',
   };
 
-  constructor(public authService: AuthService) {
+  constructor(
+    public authService: AuthService,
+    private _userService: UserService,
+    public router: Router,
 
-   }
+  ) {
 
-  ngOnInit(): void {
   }
 
-  signOut(){
+  ngOnInit(): void {
+    this._userService.verifyTermns()
+
+
+  }
+
+  signOut() {
     localStorage.setItem('IsIdentity', 'false');
     this.eventoSesion.emit(true);
     this.authService.SignOut();
@@ -33,7 +43,9 @@ export class DashboardComponent implements OnInit {
 
   animationCreated(animationItem: AnimationItem): void {
     animationItem.playSpeed = 1.0,
-    animationItem
+      animationItem
   }
+
+
 
 }

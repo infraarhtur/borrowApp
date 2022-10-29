@@ -7,9 +7,10 @@ import {
   collectionData,
   doc,
   setDoc,
-  deleteDoc, getDoc
+  deleteDoc, getDoc, updateDoc
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -19,7 +20,8 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   constructor(
-    private _firestore: Firestore
+    private _firestore: Firestore,
+    private router: Router,
   ) {
 
   }
@@ -47,7 +49,7 @@ export class UserService {
     return collectionData(userRef, { idField: 'id' }) as Observable<User[]>;
   }
 
-  getUsersById(uid:string){
+  getUsersById(uid: string) {
     const userRef = doc(this._firestore, `users/${uid}`);
     return userRef;
   }
@@ -63,10 +65,45 @@ export class UserService {
     })
   }
 
-  async getInfoDoc(uid:string){
-   return await getDoc(this.getUsersById(uid));
+  async getInfoDoc(uid: string) {
+    return await getDoc(this.getUsersById(uid));
+  }
+
+  async updateInfoUser(idUser, newInfoUser) {
+    let infoUser = this.getUsersById(idUser);
+
+    return await updateDoc(infoUser, newInfoUser)
+
+  }
+
+  async saveDataAditional(uId) {
+    const userInfo = await this.getInfoDoc(uId)
+    debugger
+    console.log(userInfo.data())
+    localStorage.setItem('aditionalInfo', JSON.stringify(userInfo.data()))
+
+  }
+  getAditionalData() {
+    return JSON.parse(localStorage.getItem('aditionalInfo'))
   }
 
 
+
+  async verifyTermns() {
+
+    const isinfoAditional = localStorage.getItem('aditionalInfo');
+
+    if (isinfoAditional === null) {
+      const user = localStorage.getItem('user')
+      const objUser = JSON.parse(user)
+      await this.saveDataAditional(objUser.uid)
+      const aditionalData = this.getAditionalData()
+      if (!aditionalData.isTermsConditions) {
+        this.router.navigate(['user'])
+      }
+
+    }
+
+  }
 
 }

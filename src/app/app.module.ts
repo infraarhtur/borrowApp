@@ -40,6 +40,7 @@ import player from 'lottie-web';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { UserModule } from './modules/user/user.module';
 import { ResendVerifyEmailModalComponent } from './shared/components/resend-verify-email-modal/resend-verify-email-modal.component';
+import { DialogDynamicTextComponent } from './shared/components/dialog-dynamic-text/dialog-dynamic-text.component';
 
 export function playerFactory() {
   return player;
@@ -56,6 +57,7 @@ export function playerFactory() {
     ForgotPasswordComponent,
     CustomSnackbarComponent,
     ResendVerifyEmailModalComponent,
+    DialogDynamicTextComponent,
 
 
   ],
