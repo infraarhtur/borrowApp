@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CryptoJsService } from './crypto-js.service';
 
 
 
@@ -22,6 +23,7 @@ export class UserService {
   constructor(
     private _firestore: Firestore,
     private router: Router,
+    private criptoService: CryptoJsService,
   ) {
 
   }
@@ -80,21 +82,24 @@ export class UserService {
     const userInfo = await this.getInfoDoc(uId)
     debugger
     console.log(userInfo.data())
-    localStorage.setItem('aditionalInfo', JSON.stringify(userInfo.data()))
+    localStorage.setItem('aditionalInfo',this.criptoService.encryptUsingAES256(
+      JSON.stringify(userInfo.data())
+      ));
 
   }
   getAditionalData() {
-    return JSON.parse(localStorage.getItem('aditionalInfo'))
+    return JSON.parse(this.criptoService.decryptUsingAES256(
+      localStorage.getItem('aditionalInfo')));
   }
 
 
 
   async verifyTermns() {
 
-    const isinfoAditional = localStorage.getItem('aditionalInfo');
+    const isinfoAditional = this.criptoService.decryptUsingAES256( localStorage.getItem('aditionalInfo'));
 
     if (isinfoAditional === null) {
-      const user = localStorage.getItem('user')
+      const user = this.criptoService.decryptUsingAES256(localStorage.getItem('user'));
       const objUser = JSON.parse(user)
       await this.saveDataAditional(objUser.uid)
       const aditionalData = this.getAditionalData()

@@ -5,6 +5,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { AnimationItem } from 'lottie-web';
 import { UserService } from 'src/app/services/shared/user.service';
 import { Router } from '@angular/router';
+import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
 
 @Component({
   selector: 'app-dashboard',

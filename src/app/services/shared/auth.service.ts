@@ -17,6 +17,7 @@ import { SnackbarService } from './snackbar.service';
 import { UserService } from './user.service';
 import { UserModel } from 'src/app/models/shared/user.model';
 import { getDoc } from 'firebase/firestore';
+import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +32,14 @@ export class AuthService {
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _snackBarServices: SnackbarService,
     private auth: Auth,
-    private _userService: UserService
+    private _userService: UserService,
+    private criptoService: CryptoJsService,
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+        localStorage.setItem('user',this.criptoService.encryptUsingAES256(JSON.stringify(this.userData)) );
+        JSON.parse(this.criptoService.decryptUsingAES256(localStorage.getItem('user'))!);
 
       } else {
         localStorage.setItem('user', 'null');
@@ -134,7 +136,7 @@ export class AuthService {
 
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(this.criptoService.decryptUsingAES256(localStorage.getItem('user'))!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
   // Sign in with Google
@@ -192,7 +194,7 @@ export class AuthService {
   }
 
   getDataUser() {
-    return JSON.parse(localStorage.getItem('user')!)
+    return JSON.parse(this.criptoService.decryptUsingAES256(localStorage.getItem('user'))!)
   }
 
 
