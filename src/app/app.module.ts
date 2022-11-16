@@ -41,6 +41,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { UserModule } from './modules/user/user.module';
 import { ResendVerifyEmailModalComponent } from './shared/components/resend-verify-email-modal/resend-verify-email-modal.component';
 import { DialogDynamicTextComponent } from './shared/components/dialog-dynamic-text/dialog-dynamic-text.component';
+import { DebtModule } from './modules/debt/debt.module';
+import { ContactModule } from './modules/contact/contact.module';
 
 export function playerFactory() {
   return player;
@@ -87,8 +89,9 @@ export function playerFactory() {
 
     provideAuth(() => getAuth()),
     LottieModule.forRoot({ player: playerFactory }),
-
-    UserModule
+    UserModule,
+    DebtModule,
+    ContactModule
 
   ],
   providers: [MaterialModule, AuthService],

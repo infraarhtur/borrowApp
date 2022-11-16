@@ -49,7 +49,9 @@ export class DashboardComponent implements OnInit {
     animationItem.playSpeed = 1.0,
       animationItem
   }
-
+  redirectToDebt(){
+    this.router.navigate(['debt/create']);
+  }
 
 
 }

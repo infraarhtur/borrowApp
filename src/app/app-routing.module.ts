@@ -20,7 +20,21 @@ const routes: Routes = [
       AuthGuard
     ],
     loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  },{
+    path: 'debt',
+    canActivate: [
+      AuthGuard
+    ],
+    loadChildren: () => import('./modules/debt/debt.module').then(m => m.DebtModule)
   }
+  ,{
+    path: 'contact',
+    canActivate: [
+      AuthGuard
+    ],
+    loadChildren: () => import('./modules/contact/contact.module').then(m => m.ContactModule)
+  }
+
 
 ];
 
