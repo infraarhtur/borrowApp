@@ -1,0 +1,50 @@
+
+
+
+.encabezado{
+  /*  not needed styles to reflect it */
+ //  background: blue;
+  padding: 10px;
+ //  color: white;
+  width: 100%;
+
+  /* needed styles below */
+  display: flex;
+  justify-content: center;
+}
+.mat-card-title{
+width: 100%;
+text-align: center;
+}
+.mat-card-subtitle{
+  display: flex;
+  text-align: left;
+}
+
+.mat-card-header-text {
+  margin: 0 16px;
+  width: 100% !important;
+}
+
+.value-align{
+  vertical-align: super;
+  font-size: x-large;
+
+}
+.valueRed{
+  color:red
+}
+.valueGreen{
+  color:green
+}
+ .backgroundRed{
+  // background-color: #FDCCCA ;
+ }
+
+ .backgroundGreen{
+  // background-color: #CBFDCA ;
+ }
+.hide-value{
+  font-size: xx-large;
+  vertical-align: bottom;
+}

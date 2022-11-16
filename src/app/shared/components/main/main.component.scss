@@ -161,17 +161,8 @@ pre {
   text-align: right;
   padding: 60px;
 }
-.user-toolbar{
-  // border-top: 4px solid lime;
-}
 .icon-size {
   font-size: 35px;
-}
-.sidenav-rut-gas {
-  background:  #01164D;
-  display: inline-flex;
-  // border-bottom: 3px solid lime;
-  background:  #01164D; display: inline-flex;
 }
 
 .sidebar-menu {
@@ -242,10 +233,6 @@ pre {
 }
 
 .menu{
-  background-color: #49108B;
-  // background-color: #1A1A1A;
-  // height: 100px;
-   //background-color: #8A6DF0;
    background-color: #3f51b5;
 }
 
@@ -290,4 +277,8 @@ pre {
 .example-header-image {
 
   background-size: cover;
+}
+
+.icon-style {
+  margin-right: 5px;
 }

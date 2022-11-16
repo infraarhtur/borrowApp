@@ -1,10 +1,55 @@
-<ng-lottie [options]="options" width="100px" height="100px" (animationCreated)="animationCreated($event)"></ng-lottie>
+<mat-card  class="backgroundRed">
+  <mat-card-header  class="encabezado">
+    <mat-card-title>Total prestado</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content  align="center">
+    <p>
+      <mat-icon class="valueRed">attach_money</mat-icon>
+      <span class="value-align valueRed" *ngIf="hideBorrowed">500.000</span>
+      <span class="value-align valueRed hide-value" *ngIf="!hideBorrowed">*******</span>
+
+    </p>
+  </mat-card-content>
 
 
+  <mat-card-actions align="end">
 
-<button mat-button matTooltip="Cerrar sesión">
-  <ng-lottie [options]="options2"
-   width="25px"
-    height="25px"
-     (animationCreated)="animationCreated($event)"></ng-lottie>
-</button>
+    <button mat-icon-button matSuffix color="primary" (click)="hideBorrowed = !hideBorrowed" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
+              [attr.aria-pressed]="hideBorrowed">
+              <mat-icon>{{hideBorrowed ?  'visibility': 'visibility_off' }}</mat-icon>
+            </button>
+  </mat-card-actions>
+</mat-card>
+
+<br>
+
+<mat-card class="backgroundGreen">
+  <mat-card-header class="encabezado">
+    <mat-card-title>Total recaudado</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content  align="center" >
+
+    <p>
+       <mat-icon class="valueGreen">attach_money</mat-icon>
+        <span class="value-align valueGreen" *ngIf="hideCollected">500.000</span>
+        <span class="value-align valueGreen hide-value" *ngIf="!hideCollected">*******</span>
+      </p>
+  </mat-card-content>
+
+
+  <mat-card-actions align="end">
+
+    <button mat-icon-button color="primary" matSuffix (click)="hideCollected = !hideCollected" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
+              [attr.aria-pressed]="hideCollected">
+              <mat-icon>{{hideCollected ?'visibility': 'visibility_off'}}</mat-icon>
+            </button>
+  </mat-card-actions>
+</mat-card>
+<br>
+<div style="text-align: center;">
+
+  <button  mat-button color="primary"  mat-stroked-button > <mat-icon>credit_card</mat-icon> Crear deuda</button>
+</div>
+

@@ -21,6 +21,9 @@ export class DashboardComponent implements OnInit {
     path: '../../../../assets/lottie/logout.json',
   };
 
+  hideBorrowed = false;
+  hideCollected  = false;
+
   constructor(
     public authService: AuthService,
     private _userService: UserService,
