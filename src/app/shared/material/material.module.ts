@@ -33,6 +33,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -71,7 +74,10 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSlideToggleModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   exports: [
     MatSliderModule,
@@ -111,7 +117,10 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatDialogModule,
     MatCheckboxModule,MatTooltipModule,
     MatProgressBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSlideToggleModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ]
 })
 export class MaterialModule { }
