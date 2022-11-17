@@ -74,9 +74,6 @@ export class SignUpStepTwoComponent implements OnInit {
     if (this.secondFormGroup.invalid) {
       return;
     }
-
-
-debugger
     const result = await this._userService.updateInfoUser(
       this.aditionalDta.uid, {
       isTermsConditions: this.firstFormGroup.controls.acceptTerms.value,

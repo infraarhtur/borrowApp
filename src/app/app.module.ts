@@ -43,6 +43,7 @@ import { ResendVerifyEmailModalComponent } from './shared/components/resend-veri
 import { DialogDynamicTextComponent } from './shared/components/dialog-dynamic-text/dialog-dynamic-text.component';
 import { DebtModule } from './modules/debt/debt.module';
 import { ContactModule } from './modules/contact/contact.module';
+import { DatePipe } from '@angular/common';
 
 export function playerFactory() {
   return player;
@@ -94,7 +95,7 @@ export function playerFactory() {
     ContactModule
 
   ],
-  providers: [MaterialModule, AuthService],
+  providers: [MaterialModule, AuthService, DatePipe],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

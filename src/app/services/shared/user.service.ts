@@ -79,8 +79,7 @@ export class UserService {
   }
 
   async saveDataAditional(uId) {
-    const userInfo = await this.getInfoDoc(uId)
-    debugger
+    const userInfo = await this.getInfoDoc(uId);
     console.log(userInfo.data())
     localStorage.setItem('aditionalInfo',this.criptoService.encryptUsingAES256(
       JSON.stringify(userInfo.data())
@@ -109,6 +108,12 @@ export class UserService {
 
     }
 
+  }
+
+  getUserLocal(){
+    const userEncript= localStorage.getItem('user');
+    const userDesencript = this.criptoService.decryptUsingAES256(userEncript);
+    return JSON.parse(userDesencript);
   }
 
 }
