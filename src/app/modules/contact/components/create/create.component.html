@@ -1,1 +1,90 @@
-<p>create works!</p>
+
+<div class="contenedor">
+
+
+    <form [formGroup]="frmCreateContact" (ngSubmit)="createContact()">
+
+  <mat-card>
+    <mat-card-header class="encabezado">
+      <mat-card-title>
+        Crear Contacto
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content align="center">
+      <div class="div-forms" style="margin-bottom: 10px;">
+        <mat-icon class="icon-title">person_add_alt</mat-icon>
+      </div>
+
+      <div class="div-forms">
+        <mat-form-field appearance="fill" class="">
+          <mat-label>Nombre del contacto</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="nickName" type="text"   required>
+          <mat-hint align="end"></mat-hint>
+
+          <mat-error *ngIf="frmCreateContact.controls['nickName'].errors?.['required']">
+            Campo requerido
+          </mat-error>
+
+        </mat-form-field>
+      </div>
+
+      <div class="div-forms">
+        <mat-form-field appearance="fill" class="">
+          <mat-label>Email del contacto</mat-label>
+          <mat-icon matPrefix>contact_maily</mat-icon>
+          <input matInput formControlName="emailContact" type="text"   required>
+          <mat-hint align="end"></mat-hint>
+
+          <mat-error *ngIf="frmCreateContact.controls['emailContact'].errors?.['required']">
+            Campo requerido
+          </mat-error>
+          <!-- <mat-error *ngIf="frmCreateContact.controls['email'].errors?.['email']">
+            email no valido
+          </mat-error> -->
+        </mat-form-field>
+
+      </div>
+
+      <div class="div-forms">
+        <mat-form-field appearance="fill" class="example-full-width">
+
+          <mat-icon matPrefix>add</mat-icon>
+          <mat-label>Indicativo</mat-label>
+          <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país" minlength="2"
+            maxlength="2" required>
+            <mat-icon matSuffix>public</mat-icon>
+          <mat-error *ngIf="frmCreateContact.controls['indicative'].errors?.['required']">
+            Campo requerido
+          </mat-error>
+          <mat-error *ngIf="frmCreateContact.controls['indicative'].errors?.['pattern']">
+            por favor verifique el indicativo del pais
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="div-forms">
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Number phone</mat-label>
+          <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234" required>
+          <mat-icon matSuffix>phone_iphone</mat-icon>
+          <mat-error *ngIf="frmCreateContact.controls['numberPhone'].errors?.['required']">
+            Campo requerido
+          </mat-error>
+          <mat-error *ngIf="frmCreateContact.controls['numberPhone'].errors?.['pattern']">
+            el formato del numero de celular no es correcto
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+
+    </mat-card-content>
+
+    <mat-card-actions align="center">
+      <!-- <button mat-button color="warn"   type="button" mat-stroked-button (click)="test()">test</button> -->
+      <button mat-button color="primary" mat-stroked-button ty>Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+</div>

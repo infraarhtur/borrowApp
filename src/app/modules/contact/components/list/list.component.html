@@ -1,1 +1,25 @@
 <p>list works!</p>
+
+{{contacts | json}}
+
+<div *ngFor="let item of contacts">
+
+<mat-card  matRipple  matRippleCentered = "true"  matRippleRadius ="900" class="ripple-containe">
+  <mat-card-header class="encabezado">
+    <span mat-card-avatar > <mat-icon class="icon-scale2">person_pin</mat-icon></span>
+    <mat-card-title>
+      {{item.nickname}}
+    </mat-card-title>
+    <mat-card-subtitle> {{item.email}}</mat-card-subtitle>
+
+  </mat-card-header>
+  <mat-card-content align="center">
+
+    <p>
+      <mat-icon>monetization_on</mat-icon> <span style="vertical-align: super; margin-left:5px;">5.000</span>
+    </p>
+  </mat-card-content>
+
+</mat-card>
+<mat-divider class = "divider"></mat-divider>
+</div>

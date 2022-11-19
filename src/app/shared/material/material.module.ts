@@ -35,7 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 
 
 
@@ -77,7 +77,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatStepperModule,
     MatSlideToggleModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatRippleModule
   ],
   exports: [
     MatSliderModule,
@@ -120,7 +121,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatStepperModule,
     MatSlideToggleModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatRippleModule
   ]
 })
 export class MaterialModule { }

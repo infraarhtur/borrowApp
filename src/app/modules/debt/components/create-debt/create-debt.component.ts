@@ -58,21 +58,12 @@ export class CreateDebtComponent implements OnInit {
     const objDebt = this.frmCreateDebt.value;
 
     const payDate = objDebt.payDate.getFullYear()+'/'+(objDebt.payDate.getMonth()+1)+'/'+objDebt.payDate.getDate();
-
     objDebt.payDate = payDate;
-    console.log('objeto del validador',this.frmCreateDebt.value, objDebt)
     const user = this.userService.getUserLocal();
-
     const resp = this.debtService.addDebt(user.uid,objDebt);
     debugger;
     alert(resp)
 
-  }
-
-  test(){
-
-   const user = this.userService.getUserLocal();
-  //  this.debtService.addDebt(user.)
   }
 
 }

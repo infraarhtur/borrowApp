@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
+import { getDocs } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -29,16 +30,30 @@ export class ContactService {
   addContact(userId, contact) {
     debugger;
     const guid = uuidv4();
-    const contactRef2 = doc(this._firestore, `/users/6oz0sYjGkVgcx0cnePWTLhJusvf2/contacts/${guid}`);
+    const contactRef2 = doc(this._firestore, `/users/${userId}/contacts/${guid}`);
     const contactTocreate = {
       uid: guid,
-      email: 'pruebacontact@contacto2.com',
-      nickname: 'contacto',
-      phoneNumber: '3208965723',
-      indicative: '+57'
+      email: contact.emailContact,
+      nickname: contact.nickName,
+      phoneNumber: contact.numberPhone,
+      indicative: '+' + contact.indicative
     }
 
     return setDoc(contactRef2, contactTocreate);
 
+  }
+
+
+
+  async getContactsByUserId(userId) {
+    let contacts =[];
+    const querySnapshot = await getDocs(collection(this._firestore,`users/${userId}/contacts`));
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      contacts.push(doc.data())
+      console.log(doc.id, " => ", doc.data());
+    });
+    return contacts;
   }
 }
