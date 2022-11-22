@@ -1,10 +1,9 @@
-<p>list works!</p>
+<p>list contacts!</p>
 
-{{contacts | json}}
 
 <div *ngFor="let item of contacts">
 
-<mat-card  matRipple  matRippleCentered = "true"  matRippleRadius ="900" class="ripple-containe">
+<mat-card  matRipple  matRippleCentered = "true"  matRippleRadius ="900" class="ripple-containe divider">
   <mat-card-header class="encabezado">
     <span mat-card-avatar > <mat-icon class="icon-scale2">person_pin</mat-icon></span>
     <mat-card-title>
@@ -21,5 +20,5 @@
   </mat-card-content>
 
 </mat-card>
-<mat-divider class = "divider"></mat-divider>
+
 </div>

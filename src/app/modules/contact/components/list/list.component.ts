@@ -24,13 +24,16 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    this.contacts = [{ "uid": "7e6f3637-181f-443f-aabe-674614659d1a", "phoneNumber": "3208965792", "nickname": "contacto 1", "indicative": "+57", "email": "infraarhtur@test.com" },
-    { "uid": "7e6f3637-181f-443f-aabe-674614659d1a", "phoneNumber": "3208965783", "nickname": "Luisa bb", "indicative": "+57", "email": "infraarhtur@test.com" }]
+    this.getContacts();
   }
   async getContacts() {
     const user = this.userService.getUserLocal();
-    this.contacts = await this.contactService.getContactsByUserId(user.uid);
+    if (localStorage.getItem('contacts') === null) {
+      this.contacts = await this.contactService.getContactsByUserId(user.uid);
+      this.contactService.contactsEncript(JSON.stringify(this.contacts));
+    } else {
+      this.contacts = this.contactService.contactsDecrypt();
+    }
   }
 
 }

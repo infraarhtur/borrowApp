@@ -56,4 +56,14 @@ export class ContactService {
     });
     return contacts;
   }
+
+  contactsEncript(contacts){
+   const contactsEncrypt = this.criptoService.encryptUsingAES256(contacts);
+   localStorage.setItem('contacts',contactsEncrypt);
+   }
+   contactsDecrypt(){
+    const contactsEncrypt = localStorage.getItem('contacts');
+    const contactsDecrypt = this.criptoService.decryptUsingAES256(contactsEncrypt);
+    return JSON.parse(contactsDecrypt)
+   }
 }
