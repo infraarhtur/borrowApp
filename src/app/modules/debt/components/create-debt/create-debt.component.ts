@@ -3,6 +3,10 @@ import { FormGroup,  Validators ,FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DebtService } from 'src/app/services/business/debt.service';
 import { UserService } from 'src/app/services/shared/user.service';
+import { ContactService } from 'src/app/services/business/contact.service';
+import { typeDebtEnum } from 'src/app/enums/typeDebt.enum';
+import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
 @Component({
   selector: 'app-create-debt',
@@ -11,32 +15,29 @@ import { UserService } from 'src/app/services/shared/user.service';
 })
 export class CreateDebtComponent implements OnInit {
   public frmCreateDebt: FormGroup;
-  contactList = [
-    {value: 'Contacto1', viewValue: 'Contacto 1'},
-    {value: 'Contacto2', viewValue: 'Contacto 2'},
-    {value: 'Contacto3', viewValue: 'Contacto 3'},
-    {value: 'Contacto4', viewValue: 'Contacto 4'}
-  ];
+  userInfo:any;
 
-  typeDebtList =[
-    {value: '1', viewValue: 'Sin intereses'},
-    {value: '2', viewValue: 'Interes fijo'},
-    {value: '3', viewValue: 'Interes fijo por ciclo'},
-    {value: '4', viewValue: 'Interes compuesto'},
-    {value: '5', viewValue: 'Arriendo'},
-    {value: '6', viewValue: 'Clase'}
-  ]
+  typeDebtEnumKeys = [];
+  contactList = [];
+  typeDebtList =[];
 
   constructor(
    private formBuilder: FormBuilder,
    private datePipe: DatePipe,
    private debtService: DebtService,
-   private userService:UserService
+   private userService:UserService,
+   private _contactService:ContactService,
+   public router: Router,
+   private _snackBarService: SnackbarService
+
   ) {
-    this.validations();
+   this.validations();
+   this.getTypeDebt();
+   this.userInfo = this.userService.getUserLocal();
    }
 
   ngOnInit(): void {
+    this.getContacts();
   }
 
   validations(){
@@ -52,18 +53,36 @@ export class CreateDebtComponent implements OnInit {
     })
   }
 
-  createDebit(){
+ async createDebit(){
 
   if(this.frmCreateDebt.invalid){ return;}
     const objDebt = this.frmCreateDebt.value;
-
     const payDate = objDebt.payDate.getFullYear()+'/'+(objDebt.payDate.getMonth()+1)+'/'+objDebt.payDate.getDate();
     objDebt.payDate = payDate;
-    const user = this.userService.getUserLocal();
-    const resp = this.debtService.addDebt(user.uid,objDebt);
-    debugger;
-    alert(resp)
 
+    const resp = await this.debtService.addDebt(this.userInfo.uid,objDebt);
+    if(resp ===  undefined){
+     this._snackBarService .customSnackbar('Deuda creada con exito', 'ok', 5000);
+     this.router.navigate(['dashboard']);
+    }
+  }
+
+ async getContacts(){
+    const contacts =  await this._contactService.getContactsByUserId(this.userInfo.uid);
+
+    contacts.forEach(item => {
+      this.contactList.push({value :item.uid,viewValue :item.nickname});
+    });
+
+    this.contactList.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
+  }
+
+  getTypeDebt() {
+    this.typeDebtEnumKeys = Object.keys(typeDebtEnum).filter(f => f);
+    this.typeDebtEnumKeys.forEach(item  => {
+      this.typeDebtList.push({value: item, viewValue: typeDebtEnum[item]});
+    });
+    this.typeDebtList.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
   }
 
 }

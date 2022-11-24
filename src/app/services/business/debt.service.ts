@@ -32,6 +32,9 @@ export class DebtService {
     debugger;
     const guid = uuidv4();
     const contactRef2 = doc(this._firestore, `/users/${userId}/debts/${guid}`);
+    const today = new Date();
+    const createDate = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+
     const contactTocreate = {
       uid:          guid,
       concept:      debt.concept,
@@ -40,7 +43,8 @@ export class DebtService {
       isFixedFees:  debt.isFixedFees,
       isGroupDebt:  debt.isGroupDebt,
       payDate:      debt.payDate,
-      typeDebt:     debt.typeDebt
+      typeDebt:     debt.typeDebt,
+      createDate:   createDate
     }
 
     return setDoc(contactRef2, contactTocreate);

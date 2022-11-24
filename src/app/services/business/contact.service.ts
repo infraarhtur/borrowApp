@@ -31,12 +31,15 @@ export class ContactService {
     debugger;
     const guid = uuidv4();
     const contactRef2 = doc(this._firestore, `/users/${userId}/contacts/${guid}`);
+    const today = new Date();
+    const createDate = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
     const contactTocreate = {
-      uid: guid,
-      email: contact.emailContact,
-      nickname: contact.nickName,
-      phoneNumber: contact.numberPhone,
-      indicative: '+' + contact.indicative
+      uid:          guid,
+      email:        contact.emailContact,
+      nickname:     contact.nickName,
+      phoneNumber:  contact.numberPhone,
+      indicative:   '+' + contact.indicative,
+      createDate:   createDate
     }
 
     return setDoc(contactRef2, contactTocreate);

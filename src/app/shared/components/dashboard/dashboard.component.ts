@@ -6,6 +6,8 @@ import { AnimationItem } from 'lottie-web';
 import { UserService } from 'src/app/services/shared/user.service';
 import { Router } from '@angular/router';
 import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
+import { ContactService } from 'src/app/services/business/contact.service';
+import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,15 +30,16 @@ export class DashboardComponent implements OnInit {
     public authService: AuthService,
     private _userService: UserService,
     public router: Router,
+    private contactService: ContactService,
+    private _snackBarService: SnackbarService,
 
   ) {
 
   }
 
   ngOnInit(): void {
-    this._userService.verifyTermns()
-
-
+    this._userService.verifyTermns();
+    this.getContacts();
   }
 
   signOut() {
@@ -53,5 +56,12 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['debt/create']);
   }
 
+  async getContacts() {
+    const user = this._userService.getUserLocal();
+    if (localStorage.getItem('contacts') === null) {
+      const contacts = await this.contactService.getContactsByUserId(user.uid);
+      this.contactService.contactsEncript(JSON.stringify(contacts));
+    }
+  }
 
 }

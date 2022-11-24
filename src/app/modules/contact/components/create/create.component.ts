@@ -36,9 +36,9 @@ export class CreateComponent implements OnInit {
 
     this.frmCreateContact = this.formBuilder.group({
       emailContact: [null, [Validators.required]],
-      nickName: [null, [Validators.required]],
-      numberPhone: [null, [Validators.required, Validators.pattern("[0-9]{10}")]],
-      indicative: [null, [Validators.required, Validators.pattern("[0-9]{2}")]]
+      nickName:     [null, [Validators.required]],
+      numberPhone:  [null, [Validators.required, Validators.pattern("[0-9]{10}")]],
+      indicative:   [null, [Validators.required, Validators.pattern("[0-9]{2}")]]
     })
   }
   async createContact() {
@@ -48,6 +48,7 @@ export class CreateComponent implements OnInit {
 
     if (resp === undefined) {
       this._snackBarService.customSnackbar('contacto creado con exito', 'ok', 5000);
+      localStorage.removeItem('contacts');
       this.router.navigate(['contact/list']);
     }
 
