@@ -35,14 +35,17 @@ export class ListComponent implements OnInit {
       this.contactService.contactsEncript(JSON.stringify(this.contacts));
     } else {
       this.contacts = this.contactService.contactsDecrypt();
-      debugger;
       this.contacts.forEach(item => {
-        debugger;
         item.debtTotalValue = this._debtService.getTotalDebtsByidContact(user.uid,item.uid)
       })
-console.log('this.contacts',this.contacts)
     }
   }
 
+  detailContact(idUser){
+    console.log('detailContact')
+    setTimeout(() => {
+      this.router.navigate(['/contact/detail/',idUser] );
+    },500);
+  }
 
 }
