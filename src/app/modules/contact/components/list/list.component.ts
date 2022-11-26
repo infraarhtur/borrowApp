@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContactService } from 'src/app/services/business/contact.service';
+import { DebtService } from 'src/app/services/business/debt.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 
@@ -18,6 +19,7 @@ export class ListComponent implements OnInit {
     private userService: UserService,
     private _snackBarService: SnackbarService,
     public router: Router,
+    public _debtService: DebtService
   ) {
 
   }
@@ -33,7 +35,14 @@ export class ListComponent implements OnInit {
       this.contactService.contactsEncript(JSON.stringify(this.contacts));
     } else {
       this.contacts = this.contactService.contactsDecrypt();
+      debugger;
+      this.contacts.forEach(item => {
+        debugger;
+        item.debtTotalValue = this._debtService.getTotalDebtsByidContact(user.uid,item.uid)
+      })
+console.log('this.contacts',this.contacts)
     }
   }
+
 
 }

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
-
+import { DebtService } from 'src/app/services/business/debt.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -25,6 +25,8 @@ export class DashboardComponent implements OnInit {
 
   hideBorrowed = false;
   hideCollected  = false;
+  user;
+  totalDebt = 0;
 
   constructor(
     public authService: AuthService,
@@ -32,14 +34,17 @@ export class DashboardComponent implements OnInit {
     public router: Router,
     private contactService: ContactService,
     private _snackBarService: SnackbarService,
+    private _debtService: DebtService
 
   ) {
-
+    this.user = this._userService.getUserLocal();
   }
 
   ngOnInit(): void {
     this._userService.verifyTermns();
     this.getContacts();
+    this.getDebts();
+    this.totalDebt = this._debtService.getTotalDebtsByidUser(this.user.uid);
   }
 
   signOut() {
@@ -57,10 +62,16 @@ export class DashboardComponent implements OnInit {
   }
 
   async getContacts() {
-    const user = this._userService.getUserLocal();
     if (localStorage.getItem('contacts') === null) {
-      const contacts = await this.contactService.getContactsByUserId(user.uid);
+      const contacts = await this.contactService.getContactsByUserId(this.user.uid);
       this.contactService.contactsEncript(JSON.stringify(contacts));
+    }
+  }
+
+  async getDebts(){
+    if (localStorage.getItem('debts') === null) {
+      const debts = await this._debtService.getDebtsByIdUser(this.user.uid);
+      this._debtService.debtsEncript(JSON.stringify(debts));
     }
   }
 

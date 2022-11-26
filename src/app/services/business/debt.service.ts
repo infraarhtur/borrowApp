@@ -7,12 +7,13 @@ import {
   collectionData,
   doc,
   setDoc,
-  deleteDoc, getDoc, updateDoc
+  deleteDoc, getDoc, updateDoc, getDocs
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
+import { UserService } from '../shared/user.service';
 
 
 @Injectable({
@@ -21,6 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class DebtService {
 
   constructor(
+    private _userService: UserService,
     private _firestore: Firestore,
     private router: Router,
     private criptoService: CryptoJsService
@@ -29,28 +31,77 @@ export class DebtService {
   }
 
   addDebt(userId, debt) {
-    debugger;
     const guid = uuidv4();
     const contactRef2 = doc(this._firestore, `/users/${userId}/debts/${guid}`);
     const today = new Date();
-    const createDate = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    const createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
 
     const contactTocreate = {
-      uid:          guid,
-      concept:      debt.concept,
-      contacts:     debt.contacts,
-      debtValue:    debt.debtValue,
-      isFixedFees:  debt.isFixedFees,
-      isGroupDebt:  debt.isGroupDebt,
-      payDate:      debt.payDate,
-      typeDebt:     debt.typeDebt,
-      createDate:   createDate
+      uid: guid,
+      concept: debt.concept,
+      contacts: debt.contacts,
+      debtValue: debt.debtValue,
+      isFixedFees: debt.isFixedFees,
+      isGroupDebt: debt.isGroupDebt,
+      payDate: debt.payDate,
+      typeDebt: debt.typeDebt,
+      createDate: createDate
     }
 
     return setDoc(contactRef2, contactTocreate);
 
   }
 
+  async getDebtsByIdUser(userId) {
+    let debts = [];
+    const querySnapshot = await getDocs(collection(this._firestore, `users/${userId}/debts`));
+    querySnapshot.forEach((doc) => {
+      debts.push(doc.data());
+    });
+    return debts;
+  }
+
+  async verifyDebtsByIdUserWithSession(userId) {
+    const user = this._userService.getUserLocal();
+
+    if (localStorage.getItem('debts') === null) {
+      const debts = await this.getDebtsByIdUser(user.uid);
+      this.debtsEncript(JSON.stringify(debts));
+    }
+  }
+  debtsEncript(debts) {
+    const debtsEncrypt = this.criptoService.encryptUsingAES256(debts);
+    localStorage.setItem('debts', debtsEncrypt);
+  }
+
+  debtsDecrypt() {
+    const debtsEncrypt = localStorage.getItem('debts');
+    const debtsDecrypt = this.criptoService.decryptUsingAES256(debtsEncrypt);
+    return JSON.parse(debtsDecrypt)
+  }
+
+  getTotalDebtsByidUser(userId) {
+    let totalDebt = 0;
+    this.verifyDebtsByIdUserWithSession(userId);
+    const debts = this.debtsDecrypt();
+    console.log('debts', debts);
+    debts.forEach(item => {
+      totalDebt += item.debtValue;
+    });
+    return totalDebt;
+  }
 
 
+  getTotalDebtsByidContact(userId, contactId) {
+    let totalDebt = 0;
+    this.verifyDebtsByIdUserWithSession(userId);
+    const debts = this.debtsDecrypt();
+    debts.forEach(item => {
+      if( item.contacts === contactId){
+        totalDebt += item.debtValue;
+      }
+
+    });
+    return totalDebt;
+  }
 }

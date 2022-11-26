@@ -5,8 +5,8 @@
 
   <mat-card-content  align="center">
     <p>
-      <mat-icon class="valueRed">attach_money</mat-icon>
-      <span class="value-align valueRed" *ngIf="hideBorrowed">500.000</span>
+      <mat-icon class="valueRed">payment</mat-icon>
+      <span class="value-align valueRed" *ngIf="hideBorrowed">{{this.totalDebt | currency}}</span>
       <span class="value-align valueRed hide-value" *ngIf="!hideBorrowed">*******</span>
 
     </p>
@@ -32,7 +32,7 @@
   <mat-card-content  align="center" >
 
     <p>
-       <mat-icon class="valueGreen">attach_money</mat-icon>
+       <mat-icon class="valueGreen">payments</mat-icon>
         <span class="value-align valueGreen" *ngIf="hideCollected">500.000</span>
         <span class="value-align valueGreen hide-value" *ngIf="!hideCollected">*******</span>
       </p>

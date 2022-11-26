@@ -28,7 +28,6 @@ export class ContactService {
   }
 
   addContact(userId, contact) {
-    debugger;
     const guid = uuidv4();
     const contactRef2 = doc(this._firestore, `/users/${userId}/contacts/${guid}`);
     const today = new Date();
@@ -54,8 +53,7 @@ export class ContactService {
 
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      contacts.push(doc.data())
-      console.log(doc.id, " => ", doc.data());
+      contacts.push(doc.data());
     });
     return contacts;
   }
