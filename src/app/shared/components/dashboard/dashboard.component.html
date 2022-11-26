@@ -15,7 +15,7 @@
 
   <mat-card-actions align="end">
 
-    <button mat-icon-button matSuffix color="primary" (click)="hideBorrowed = !hideBorrowed" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
+    <button mat-icon-button matSuffix color="primary" (click)="isHideBorrowed()" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
               [attr.aria-pressed]="hideBorrowed">
               <mat-icon>{{hideBorrowed ?  'visibility': 'visibility_off' }}</mat-icon>
             </button>

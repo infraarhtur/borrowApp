@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { AuthService } from 'src/app/services/shared/auth.service';
 
 import { AnimationOptions } from 'ngx-lottie';
@@ -14,7 +14,7 @@ import { DebtService } from 'src/app/services/business/debt.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit,AfterViewInit  {
   @Output() eventoSesion = new EventEmitter();
   options: AnimationOptions = {
     path: '../../../../assets/lottie/motorcycle3.json',
@@ -44,7 +44,10 @@ export class DashboardComponent implements OnInit {
     this._userService.verifyTermns();
     this.getContacts();
     this.getDebts();
-    this.totalDebt = this._debtService.getTotalDebtsByidUser(this.user.uid);
+
+  }
+  ngAfterViewInit(): void{
+
   }
 
   signOut() {
@@ -75,4 +78,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  isHideBorrowed(){
+  this.totalDebt = this._debtService.getTotalDebtsByidUser(this.user.uid);
+   this.hideBorrowed = !this.hideBorrowed;
+  }
 }

@@ -74,16 +74,21 @@ export class DebtService {
     localStorage.setItem('debts', debtsEncrypt);
   }
 
-  debtsDecrypt() {
+  debtsDecrypt(userId) {
     const debtsEncrypt = localStorage.getItem('debts');
-    const debtsDecrypt = this.criptoService.decryptUsingAES256(debtsEncrypt);
-    return JSON.parse(debtsDecrypt)
+    if(debtsEncrypt !== null){
+      const debtsDecrypt = this.criptoService.decryptUsingAES256(debtsEncrypt);
+      return JSON.parse(debtsDecrypt)
+    }else{
+      return this.getDebtsByIdUser(userId);
+    }
+
   }
 
   getTotalDebtsByidUser(userId) {
     let totalDebt = 0;
     this.verifyDebtsByIdUserWithSession(userId);
-    const debts = this.debtsDecrypt();
+    const debts = this.debtsDecrypt(userId);
     console.log('debts', debts);
     debts.forEach(item => {
       totalDebt += item.debtValue;
@@ -95,7 +100,7 @@ export class DebtService {
   getTotalDebtsByidContact(userId, contactId) {
     let totalDebt = 0;
     this.verifyDebtsByIdUserWithSession(userId);
-    const debts = this.debtsDecrypt();
+    const debts = this.debtsDecrypt(userId);
     debts.forEach(item => {
       if( item.contacts === contactId){
         totalDebt += item.debtValue;
