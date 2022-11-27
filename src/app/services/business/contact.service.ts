@@ -40,7 +40,6 @@ export class ContactService {
       indicative: '+' + contact.indicative,
       createDate: createDate
     }
-
     return setDoc(contactRef2, contactTocreate);
 
   }
@@ -77,5 +76,36 @@ export class ContactService {
       }
     })
     return contact
+  }
+
+  async updateContactByIdContact(userId,contact,idContact){
+
+    const contactRef = doc(this._firestore, `/users/${userId}/contacts/${idContact}`);
+    const today = new Date();
+    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    const respUpdate = await updateDoc(contactRef, {
+      email          :contact.emailContact,
+      indicative     :'+'+contact.indicative,
+      phoneNumber    :contact.numberPhone,
+      nickname       :contact.nickName,
+      lastDateUpdate :lastUpdateDate
+    });
+   if(respUpdate === undefined){
+    const contacts = this.contactsDecrypt();
+
+    contacts.forEach(item => {
+      if(item.uid === idContact){
+        item.email          = contact.emailContact;
+        item.indicative     = '+' + contact.indicative;
+        item.nickname       = contact.nickName;
+        item.phoneNumber    = contact.numberPhone;
+        item.lastDateUpdate = lastUpdateDate;
+      }
+    });
+
+    this.contactsEncript(JSON.stringify(contacts));
+    return true;
+   }
+
   }
 }

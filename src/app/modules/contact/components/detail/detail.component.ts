@@ -16,6 +16,7 @@ export class DetailComponent implements OnInit {
   public frmUpdateContact: FormGroup;
   idContact;
   contact;
+  user;
   isDisabledForm = true;
   constructor(
     private _formBuilder: FormBuilder,
@@ -26,6 +27,7 @@ export class DetailComponent implements OnInit {
     private _route: ActivatedRoute,
   ) {
     this.validations();
+    this.user = this._userService.getUserLocal();
   }
 
   ngOnInit(): void {
@@ -58,8 +60,15 @@ getContactsByUserId(uid){
     })
   }
 
-  updateContact() {
+ async updateContact() {
     if (this.frmUpdateContact.invalid) { return; }
+
+   const respond = await this._contactService.updateContactByIdContact(this.user.uid,
+      this.frmUpdateContact.value,
+       this.idContact);
+    if(respond){
+      this._snackBarService.customSnackbar('Contacto editado con exito','ok', 5000);
+    }
   }
 
   isEditContact(){
