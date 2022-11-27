@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateDebtComponent } from './components/create-debt/create-debt.component';
+import { DebtListComponent } from './components/debt-list/debt-list.component';
+import { DetailDebtComponent } from './components/detail-debt/detail-debt.component';
 
 const routes: Routes = [
   {
@@ -10,7 +12,17 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateDebtComponent
+  },
+  {
+    path: 'list:idContact',
+    component: DebtListComponent
   }
+  ,
+  {
+    path: 'detail:id',
+    component: DetailDebtComponent
+  }
+
 ];
 
 @NgModule({

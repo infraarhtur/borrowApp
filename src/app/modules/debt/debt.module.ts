@@ -5,11 +5,15 @@ import { DebtRoutingModule } from './debt-routing.module';
 import { CreateDebtComponent } from './components/create-debt/create-debt.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import { DebtListComponent } from './components/debt-list/debt-list.component';
+import { DetailDebtComponent } from './components/detail-debt/detail-debt.component';
 
 
 @NgModule({
   declarations: [
-    CreateDebtComponent
+    CreateDebtComponent,
+    DebtListComponent,
+    DetailDebtComponent
   ],
   imports: [
     CommonModule,

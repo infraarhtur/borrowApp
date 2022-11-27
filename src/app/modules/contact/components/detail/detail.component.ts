@@ -66,7 +66,9 @@ getContactsByUserId(uid){
    const respond = await this._contactService.updateContactByIdContact(this.user.uid,
       this.frmUpdateContact.value,
        this.idContact);
+
     if(respond){
+      this.isDisabledForm = !this.isDisabledForm;
       this._snackBarService.customSnackbar('Contacto editado con exito','ok', 5000);
     }
   }
