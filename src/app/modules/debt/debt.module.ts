@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DebtRoutingModule } from './debt-routing.module';
@@ -21,6 +21,9 @@ import { DetailDebtComponent } from './components/detail-debt/detail-debt.compon
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
-  ]
+  ],exports:[
+    DetailDebtComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DebtModule { }

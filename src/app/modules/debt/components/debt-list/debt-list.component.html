@@ -1,1 +1,18 @@
-<p>debt-list works!</p>
+
+<h1>eyyyy esta mierda se putio</h1>
+
+<div *ngFor="let item of debts">
+<mat-card  matRipple  matRippleCentered = "true"  matRippleRadius ="900" class="ripple-containe divider" (click)="detailDebtById(item.uid)">
+
+  <mat-card-content align="center">
+    <p>
+      <mat-icon>radio_button_checked</mat-icon> <span class="title">tipo de deuda:</span>   <span class="title">{{item.typeDebt}}</span> <br>
+      <mat-icon>  description</mat-icon><span class="title"> concepto:</span>  <span class="title">{{item.concept}}</span>   <br>
+      <mat-icon>monetization_on</mat-icon><span class="title"> total: </span>    <span class="title">{{item.debtValue | currency}}</span> <br>
+      <mat-icon>event</mat-icon> <span class="title">Fecha de pago acordada :</span> <span class="title">{{item.typeDebt}}</span>
+
+    </p>
+  </mat-card-content>
+</mat-card>
+
+</div>

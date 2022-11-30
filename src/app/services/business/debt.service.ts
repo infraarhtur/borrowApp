@@ -105,8 +105,19 @@ export class DebtService {
       if( item.contacts === contactId){
         totalDebt += item.debtValue;
       }
-
     });
     return totalDebt;
+  }
+
+  getDebtsByIdContact(userId, contactId){
+    let debtsSelects =[];
+    this.verifyDebtsByIdUserWithSession(userId);
+    const debts = this.debtsDecrypt(userId);
+    debts.forEach(item => {
+      if( item.contacts === contactId){
+        debtsSelects.push(item);
+      }
+    });
+    return debtsSelects;
   }
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: CreateDebtComponent
   },
   {
-    path: 'list:idContact',
+    path: 'list',
     component: DebtListComponent
   }
   ,
