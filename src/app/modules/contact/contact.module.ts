@@ -7,6 +7,8 @@ import { ListComponent } from './components/list/list.component';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailComponent } from './components/detail/detail.component';
+import { DebtModule } from '../debt/debt.module';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { DetailComponent } from './components/detail/detail.component';
     CommonModule,
     ContactRoutingModule,
     MaterialModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,DebtModule
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

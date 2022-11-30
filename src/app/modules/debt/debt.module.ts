@@ -22,8 +22,10 @@ import { DetailDebtComponent } from './components/detail-debt/detail-debt.compon
     MaterialModule,
     ReactiveFormsModule,
   ],exports:[
+    CreateDebtComponent,
+    DebtListComponent,
     DetailDebtComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
+
 })
 export class DebtModule { }
