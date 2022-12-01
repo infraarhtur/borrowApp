@@ -1,101 +1,128 @@
 <div class="contenedor">
-  <form [formGroup]="frmUpdateContact" (ngSubmit)="updateContact()">
-    <mat-card>
-      <mat-card-header class="encabezado">
-        <mat-card-title>
-          {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content align="center">
-        <table class="full-width" cellspacing="0" cellpadding="0">
-          <tr>
-            <td class="full-width" colspan="2">
 
-              <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                <mat-label>Nombre del contacto</mat-label>
-                <mat-icon matPrefix>person</mat-icon>
-                <input matInput formControlName="nickName" type="text"  [readonly]="isDisabledForm"  required>
-                <mat-hint align="end"></mat-hint>
 
-                <mat-error *ngIf="frmUpdateContact.controls['nickName'].errors?.['required']">
-                  Campo requerido
-                </mat-error>
-              </mat-form-field>
-            </td>
-          </tr>
-          <tr>
-            <td class="full-width" colspan="2">
-              <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                <mat-label>Email del contacto</mat-label>
-                <mat-icon matPrefix>contact_maily</mat-icon>
-                <input matInput formControlName="emailContact" type="text"  [readonly]="isDisabledForm"  required>
-                <mat-hint align="end"></mat-hint>
+  <mat-accordion >
+    <mat-expansion-panel [expanded] = "panelDetailcontactState" (opened)="panelDetailcontactState = true" (closed)="panelDetailcontactState = false"
+      class="divider">
+      <mat-expansion-panel-header>
 
-                <mat-error *ngIf="frmUpdateContact.controls['emailContact'].errors?.['required']">
-                  Campo requerido
-                </mat-error>
-                <!-- <mat-error *ngIf="frmCreateContact.controls['email'].errors?.['email']">
-              email no valido
-            </mat-error> -->
-              </mat-form-field>
-            </td>
+        <mat-panel-title>
+          <mat-icon>account_circle</mat-icon> &nbsp;  {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
+        </mat-panel-title>
 
-          </tr>
-          <tr>
-            <td class="width-indicative">
-              <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+      </mat-expansion-panel-header>
+      <form [formGroup]="frmUpdateContact" (ngSubmit)="updateContact()">
+        <mat-card>
+          <!-- <mat-card-header class="encabezado">
+            <mat-card-title>
+              {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
+            </mat-card-title>
+          </mat-card-header> -->
+          <mat-card-content align="center">
+            <table class="full-width" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="full-width" colspan="2">
 
-                <mat-icon matPrefix>add</mat-icon>
-                <mat-label>Indicativo</mat-label>
-                <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país"
-                  minlength="2" maxlength="2"  [readonly]="isDisabledForm" required>
-                <mat-icon matSuffix>public</mat-icon>
-                <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['required']">
-                  Campo requerido
-                </mat-error>
-                <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['pattern']">
-                  por favor verifique el indicativo del pais
-                </mat-error>
-              </mat-form-field>
-            </td>
-            <td class="width-cellPhone">
-              <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                <mat-label>Number phone</mat-label>
-                <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234"  [readonly]="isDisabledForm"  required>
-                <mat-icon matSuffix>phone_iphone</mat-icon>
-                <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['required']">
-                  Campo requerido
-                </mat-error>
-                <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['pattern']">
-                  el formato del numero de celular no es correcto
-                </mat-error>
-              </mat-form-field>
+                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+                    <mat-label>Nombre del contacto</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
+                    <input matInput formControlName="nickName" type="text" [readonly]="isDisabledForm" required>
+                    <mat-hint align="end"></mat-hint>
 
-            </td>
-          </tr>
-        </table>
+                    <mat-error *ngIf="frmUpdateContact.controls['nickName'].errors?.['required']">
+                      Campo requerido
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td class="full-width" colspan="2">
+                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+                    <mat-label>Email del contacto</mat-label>
+                    <mat-icon matPrefix>contact_maily</mat-icon>
+                    <input matInput formControlName="emailContact" type="text" [readonly]="isDisabledForm" required>
+                    <mat-hint align="end"></mat-hint>
 
-      </mat-card-content>
-      <mat-card-actions align="center" *ngIf="!isDisabledForm">
+                    <mat-error *ngIf="frmUpdateContact.controls['emailContact'].errors?.['required']">
+                      Campo requerido
+                    </mat-error>
+                    <!-- <mat-error *ngIf="frmCreateContact.controls['email'].errors?.['email']">
+                email no valido
+              </mat-error> -->
+                  </mat-form-field>
+                </td>
 
-      <button mat-button color="warn"   type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
-      <button mat-button color="primary" mat-stroked-button ty>Editar contacto</button>
+              </tr>
+              <tr>
+                <td class="width-indicative">
+                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
 
-      </mat-card-actions>
+                    <mat-icon matPrefix>add</mat-icon>
+                    <mat-label>Indicativo</mat-label>
+                    <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país"
+                      minlength="2" maxlength="2" [readonly]="isDisabledForm" required>
+                    <mat-icon matSuffix>public</mat-icon>
+                    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['required']">
+                      Campo requerido
+                    </mat-error>
+                    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['pattern']">
+                      por favor verifique el indicativo del pais
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+                <td class="width-cellPhone">
+                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+                    <mat-label>Number phone</mat-label>
+                    <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234"
+                      [readonly]="isDisabledForm" required>
+                    <mat-icon matSuffix>phone_iphone</mat-icon>
+                    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['required']">
+                      Campo requerido
+                    </mat-error>
+                    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['pattern']">
+                      el formato del numero de celular no es correcto
+                    </mat-error>
+                  </mat-form-field>
 
-      <mat-card-actions align="end"  *ngIf="isDisabledForm">
+                </td>
+              </tr>
+            </table>
 
-        <button mat-mini-fab color="primary"
-         aria-label="Editar contacto"
-        matTooltip="Editar contacto"
-        matTooltipPosition="above" (click)="isEditContact()">
-          <mat-icon>edit_note</mat-icon>
-        </button>
+          </mat-card-content>
+          <mat-card-actions align="center" *ngIf="!isDisabledForm">
 
-      </mat-card-actions>
-    </mat-card>
-  </form>
-  <br>
-  {{idContact}}
-  <app-debt-list></app-debt-list>
+            <button mat-button color="warn" type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
+            <button mat-button color="primary" mat-stroked-button ty>Editar contacto</button>
+
+          </mat-card-actions>
+
+          <mat-card-actions align="end" *ngIf="isDisabledForm">
+
+            <button mat-mini-fab color="primary" aria-label="Editar contacto" matTooltip="Editar contacto"
+              matTooltipPosition="above" (click)="isEditContact()">
+              <mat-icon>edit_note</mat-icon>
+            </button>
+
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelDebtState = true" (closed)="panelDebtState = false" class="divider">
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Panel deudas
+        </mat-panel-title>
+        <mat-panel-description>
+          Total:{{totalDebt | currency}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-debt-list></app-debt-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+
 </div>

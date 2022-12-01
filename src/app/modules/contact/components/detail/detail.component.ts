@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ContactService } from 'src/app/services/business/contact.service';
+import { DebtService } from 'src/app/services/business/debt.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 
@@ -18,13 +19,17 @@ export class DetailComponent implements OnInit {
   contact;
   user;
   isDisabledForm = true;
+  panelDebtState = false;
+  panelDetailcontactState = true;
+  totalDebt = 0;
   constructor(
-    private _formBuilder: FormBuilder,
-    private _contactService: ContactService,
-    private _userService: UserService,
+    private _formBuilder:     FormBuilder,
+    private _contactService:  ContactService,
+    private _userService:     UserService,
     private _snackBarService: SnackbarService,
-    public router: Router,
-    private _route: ActivatedRoute,
+    public router:            Router,
+    private _route:           ActivatedRoute,
+    private _debtService:     DebtService
   ) {
     this.validations();
     this.user = this._userService.getUserLocal();
@@ -35,6 +40,7 @@ export class DetailComponent implements OnInit {
       this.idContact = String(params['id']);
 
       this.getContactsByUserId(this.idContact);
+      this.getTotalDebts();
 
     })
 
@@ -71,6 +77,10 @@ getContactsByUserId(uid){
       this.isDisabledForm = !this.isDisabledForm;
       this._snackBarService.customSnackbar('Contacto editado con exito','ok', 5000);
     }
+  }
+
+  getTotalDebts(){
+   this.totalDebt = this._debtService.getTotalDebtsByidContact(this.user.uid,this.idContact);
   }
 
   isEditContact(){
