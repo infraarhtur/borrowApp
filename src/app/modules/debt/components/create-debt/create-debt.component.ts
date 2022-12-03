@@ -5,6 +5,7 @@ import { DebtService } from 'src/app/services/business/debt.service';
 import { UserService } from 'src/app/services/shared/user.service';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { typeDebtEnum } from 'src/app/enums/typeDebt.enum';
+import { paymentCycleEnum } from 'src/app/enums/paymentCycle.enum';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
@@ -17,22 +18,25 @@ export class CreateDebtComponent implements OnInit {
   public frmCreateDebt: FormGroup;
   userInfo:any;
 
-  typeDebtEnumKeys = [];
-  contactList = [];
-  typeDebtList =[];
+  typeDebtEnumKeys    = [];
+  pymentCicleEnumKeys = [];
+  contactList         = [];
+  typeDebtList        = [];
+  pymentCiclelist     = [];
 
   constructor(
-   private formBuilder: FormBuilder,
-   private datePipe: DatePipe,
-   private debtService: DebtService,
-   private userService:UserService,
-   private _contactService:ContactService,
-   public router: Router,
-   private _snackBarService: SnackbarService
+   private formBuilder:     FormBuilder,
+   private datePipe:        DatePipe,
+   private debtService:     DebtService,
+   private userService:     UserService,
+   private _contactService: ContactService,
+   public router:           Router,
+   private _snackBarService:SnackbarService
 
   ) {
    this.validations();
    this.getTypeDebt();
+   this.getPaymentCycle();
    this.userInfo = this.userService.getUserLocal();
    }
 
@@ -43,26 +47,35 @@ export class CreateDebtComponent implements OnInit {
   validations(){
 
     this.frmCreateDebt = this.formBuilder.group({
-      isGroupDebt:false,
+      isGroupDebt:    [false],
       debtValue:      [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
       contacts:       [null, [Validators.required]],
       concept:        [null, [Validators.required]],
       typeDebt:       ['sinIntereses', [Validators.required]],
       isFixedFees:    [false],
       payDate:        [null, [Validators.required]],
-      fixedInterest:  [null]
+      fixedInterest:  [null],
+      paymentCycle:   [null],
+      numberFees:     [null],
+      paymentday:     [null]
 
     });
 
     this.frmCreateDebt.get("typeDebt").valueChanges
-      .subscribe(data=> {
+      .subscribe( data => {
         this.onchangetypeDebt();
+      })
+      this.frmCreateDebt.get("isFixedFees").valueChanges
+      .subscribe( data => {
+
+       this.onchangeisFixedFees();
       })
   }
 
  async createDebit(){
 
   if(this.frmCreateDebt.invalid){ return;}
+  debugger;
     const objDebt = this.frmCreateDebt.value;
     const payDate = objDebt.payDate.getFullYear()+'/'+(objDebt.payDate.getMonth()+1)+'/'+objDebt.payDate.getDate();
     objDebt.payDate = payDate;
@@ -93,6 +106,14 @@ export class CreateDebtComponent implements OnInit {
     this.typeDebtList.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
   }
 
+  getPaymentCycle(){
+    this.pymentCicleEnumKeys = Object.keys(paymentCycleEnum).filter(f => f);
+    this.pymentCicleEnumKeys.forEach(item  => {
+      this.pymentCiclelist.push({value: item, viewValue: paymentCycleEnum[item]});
+    });
+    this.pymentCiclelist.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
+  }
+
   onchangetypeDebt(){
     if(this.frmCreateDebt.get('typeDebt').value ==='interesFijo'){
       this.frmCreateDebt.controls['fixedInterest']
@@ -104,5 +125,30 @@ export class CreateDebtComponent implements OnInit {
      }
 
   }
+
+  onchangeisFixedFees(){
+
+    if(this.frmCreateDebt.get('isFixedFees').value){
+
+      this.frmCreateDebt.controls['paymentCycle']
+      .setValidators([ Validators.required]);
+
+      this.frmCreateDebt.controls['numberFees']
+      .setValidators([
+        Validators.required,
+        Validators.pattern(/^[0-9]\d*$/),
+        Validators.maxLength(2)
+      ]);
+
+      this.frmCreateDebt.controls['paymentday']
+      .setValidators([
+        Validators.required,
+        Validators.pattern(/^[0-9]\d*$/),
+        Validators.maxLength(2)
+      ]);
+     }
+
+  }
 }
+
 

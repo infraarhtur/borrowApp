@@ -111,6 +111,62 @@
             <span>{{frmCreateDebt.controls['isFixedFees'].value?'Si': 'No'}}</span>
           </mat-slide-toggle>
         </div>
+
+        <div class="div-forms" *ngIf="frmCreateDebt.controls['isFixedFees'].value">
+          <mat-form-field appearance="fill">
+            <mat-label>Seleccione ciclo de pago</mat-label>
+            <mat-icon matPrefix>payment</mat-icon>
+            <mat-select formControlName="paymentCycle" >
+              <mat-option *ngFor="let type of pymentCiclelist" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="frmCreateDebt.controls['paymentCycle'].errors?.['required']">
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="div-forms"  *ngIf="frmCreateDebt.controls['isFixedFees'].value" >
+
+          <mat-form-field appearance="fill" class="">
+            <mat-label>Numero de cuotas</mat-label>
+            <mat-icon matPrefix>tag</mat-icon>
+            <input matInput formControlName="numberFees" type="number"  step="any" maxlength="2"  required>
+            {{frmCreateDebt.controls['numberFees'].errors | json}}
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['required']">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['pattern']">
+              solo se aceptan numeros
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['maxLength']">
+              maximo 2 digitos
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="div-forms"  *ngIf="frmCreateDebt.controls['isFixedFees'].value" >
+
+          <mat-form-field appearance="fill" class="">
+            <mat-label>Dia de pago</mat-label>
+            <mat-icon matPrefix>tag</mat-icon>
+            <input matInput formControlName="paymentDay" type="number"  step="any" maxlength="2"  required>
+
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['required']">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['pattern']">
+              solo se aceptan numeros
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['maxLength']">
+              maximo 2 digitos
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+
       </mat-card-content>
 
       <mat-card-actions align="center">
