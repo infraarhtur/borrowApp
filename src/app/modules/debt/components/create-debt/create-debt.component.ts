@@ -44,13 +44,20 @@ export class CreateDebtComponent implements OnInit {
 
     this.frmCreateDebt = this.formBuilder.group({
       isGroupDebt:false,
-      debtValue:  [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
-      contacts:   [null, [Validators.required]],
-      concept:    [null, [Validators.required]],
-      typeDebt:   [null, [Validators.required]],
-      isFixedFees:[false],
-      payDate:    [null, [Validators.required]]
-    })
+      debtValue:      [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+      contacts:       [null, [Validators.required]],
+      concept:        [null, [Validators.required]],
+      typeDebt:       ['sinIntereses', [Validators.required]],
+      isFixedFees:    [false],
+      payDate:        [null, [Validators.required]],
+      fixedInterest:  [null]
+
+    });
+
+    this.frmCreateDebt.get("typeDebt").valueChanges
+      .subscribe(data=> {
+        this.onchangetypeDebt();
+      })
   }
 
  async createDebit(){
@@ -85,5 +92,16 @@ export class CreateDebtComponent implements OnInit {
     this.typeDebtList.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
   }
 
+  onchangetypeDebt(){
+    if(this.frmCreateDebt.get('typeDebt').value ==='interesFijo'){
+      this.frmCreateDebt.controls['fixedInterest']
+      .setValidators([
+        Validators.required,
+        Validators.pattern(/^[0-9]\d*$/),
+        Validators.maxLength(2)
+      ]);
+     }
+
+  }
 }
 

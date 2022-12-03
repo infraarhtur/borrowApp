@@ -14,7 +14,7 @@ import { UserService } from 'src/app/services/shared/user.service';
 export class DebtListComponent implements OnInit,OnChanges  {
 
  @Input() idContact:string;
-  idContact1 = 'dc9f3346-6be7-4fb5-99b3-05afa4030b54';
+  // idContact1 = 'dc9f3346-6be7-4fb5-99b3-05afa4030b54';
   debts = [];
 
   constructor(
@@ -39,8 +39,7 @@ export class DebtListComponent implements OnInit,OnChanges  {
 
   getDebtsByIdContact(){
   const user = this._userService.getUserLocal();
-  this.debts = this._debtService.getDebtsByIdContact(user.id,this.idContact1);
-  console.log('this.debts',this.debts);
+  this.debts = this._debtService.getDebtsByIdContact(user.uid,this.idContact);
   }
 
 }

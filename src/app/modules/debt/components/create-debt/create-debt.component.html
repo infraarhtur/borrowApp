@@ -62,7 +62,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Seleccione un tipo de deuda</mat-label>
             <mat-icon matPrefix>payment</mat-icon>
-            <mat-select formControlName="typeDebt">
+            <mat-select formControlName="typeDebt" >
               <mat-option *ngFor="let type of typeDebtList" [value]="type.value">
                 {{type.viewValue}}
               </mat-option>
@@ -85,6 +85,24 @@
           </mat-form-field>
           <br>
           {{frmCreateDebt.controls['payDate'].value}}
+        </div>
+        <div class="div-forms" *ngIf="frmCreateDebt.controls['typeDebt'].value ==='interesFijo'" >
+          <!-- interesFijo -->
+          <mat-form-field appearance="fill" class="">
+            <mat-label>Interes fijo</mat-label>
+            <mat-icon matPrefix>percent</mat-icon>
+            <input matInput formControlName="fixedInterest" type="number"  step="any" maxlength="2"  required>
+
+            <mat-error *ngIf="frmCreateDebt.controls['fixedInterest'].errors?.['required']">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['fixedInterest'].errors?.['pattern']">
+              solo se aceptan numeros
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['fixedInterest'].errors?.['maxLength']">
+              escribiste mas de 2 digitos
+            </mat-error>
+          </mat-form-field>
         </div>
 
         <div class="div-forms">

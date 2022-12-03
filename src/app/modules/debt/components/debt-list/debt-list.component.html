@@ -9,13 +9,15 @@
         <div *ngSwitchCase="'sinIntereses'">
           <button mat-icon-button color="warn" aria-label="">
             <mat-icon>sell</mat-icon>
-          </button> sin Intereses
+          </button> <span>sin Intereses</span>
         </div>
 
         <div *ngSwitchCase="'interesFijo'">
           <button mat-icon-button color="primary" aria-label="">
             <mat-icon>label_important</mat-icon>
-          </button> sin Intereses
+          </button> <span>Interes fijo:</span>
+          <span>  {{item.fixedInterest}}% </span>
+          <span> valor inicial: {{item.debtValue | currency}}</span>
         </div>
 
         <span *ngSwitchDefault>(No eligió operación)</span>
@@ -25,10 +27,9 @@
 
       <p>
 
-
         <mat-icon> description</mat-icon><span class="title"> concepto:</span> <span
           class="title">{{item.concept}}</span> <br>
-        <mat-icon>monetization_on</mat-icon><span class="title"> total: </span> <span class="title">{{item.debtValue |
+        <mat-icon>monetization_on</mat-icon><span class="title"> total: </span> <span class="title">{{item.totalValue |
           currency}}</span> <br>
         <mat-icon>event</mat-icon>  <span class="title">{{item.payDate}}</span>
 
