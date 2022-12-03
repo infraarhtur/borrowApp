@@ -37,16 +37,16 @@ export class DebtService {
 
     const contactTocreate = {
       uid: guid,
-      concept:      debt.concept,
-      contacts:     debt.contacts,
-      debtValue:    debt.debtValue,
-      isFixedFees:  debt.isFixedFees,
-      isGroupDebt:  debt.isGroupDebt,
-      payDate:      debt.payDate,
-      typeDebt:     debt.typeDebt,
-      fixedInterest:debt.fixedInterest,
-      totalValue :  debt.debtTotalValue,
-      createDate:   debt.createDate
+      concept:        debt.concept,
+      contacts:       debt.contacts,
+      debtValue:      debt.debtValue,
+      isFixedFees:    debt.isFixedFees,
+      isGroupDebt:    debt.isGroupDebt,
+      payDate:        debt.payDate,
+      typeDebt:       debt.typeDebt,
+      fixedInterest:  debt.fixedInterest,
+      totalValue :    debt.debtTotalValue,
+      createDate:     debt.createDate
     }
 
     return setDoc(contactRef2, contactTocreate);
@@ -125,10 +125,11 @@ export class DebtService {
   calculateValues(oDebt){
     const today = new Date();
     oDebt.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
     if(oDebt.typeDebt === 'interesFijo'){
       oDebt.debtTotalValue = oDebt.debtValue +((oDebt.fixedInterest / 100) * oDebt.debtValue) ;
-    }else if (oDebt.typeDebt === 'interesFijo'){
-      oDebt.debtTotalValue = oDebt.debtValue
+    }else if (oDebt.typeDebt === 'sinIntereses'){
+      oDebt.debtTotalValue = oDebt.debtValue;
     }
 
     return oDebt;

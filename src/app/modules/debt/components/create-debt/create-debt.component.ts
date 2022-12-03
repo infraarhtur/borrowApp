@@ -69,6 +69,7 @@ export class CreateDebtComponent implements OnInit {
 
     const resp = await this.debtService.addDebt(this.userInfo.uid,objDebt);
     if(resp ===  undefined){
+      localStorage.removeItem('debts');
      this._snackBarService .customSnackbar('Deuda creada con exito', 'ok', 5000);
      this.router.navigate(['dashboard']);
     }
