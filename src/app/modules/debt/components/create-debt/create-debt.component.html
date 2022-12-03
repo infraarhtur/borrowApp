@@ -18,7 +18,7 @@
           <mat-form-field appearance="fill" class="">
             <mat-label>Valor a pagar</mat-label>
             <mat-icon matPrefix>attach_money</mat-icon>
-            <input matInput formControlName="debtValue" type="number"  step="any"  required>
+            <input matInput formControlName="debtValue" type="number" step="any" autocomplete="off"  required>
             <mat-hint align="end">{{frmCreateDebt.controls['debtValue'].value | currency}}</mat-hint>
 
             <mat-error *ngIf="frmCreateDebt.controls['debtValue'].errors?.['required']">
@@ -50,7 +50,7 @@
           <mat-form-field appearance="fill" class="">
             <mat-label>por concepto de</mat-label>
             <mat-icon matPrefix>speaker_notes</mat-icon>
-            <textarea matInput formControlName="concept" required></textarea>
+            <textarea matInput formControlName="concept" autocomplete="off"  required></textarea>
             <mat-hint></mat-hint>
             <mat-error *ngIf="frmCreateDebt.controls['concept'].errors?.['required']">
               Campo requerido
@@ -62,7 +62,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Seleccione un tipo de deuda</mat-label>
             <mat-icon matPrefix>payment</mat-icon>
-            <mat-select formControlName="typeDebt" >
+            <mat-select formControlName="typeDebt">
               <mat-option *ngFor="let type of typeDebtList" [value]="type.value">
                 {{type.viewValue}}
               </mat-option>
@@ -78,7 +78,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Fecha de pago</mat-label>
             <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-            <input matInput [matDatepicker]="picker" formControlName="payDate">
+            <input matInput [matDatepicker]="picker" formControlName="payDate" autocomplete="off" >
             <mat-hint>MM/DD/YYYY</mat-hint>
 
             <mat-datepicker #picker></mat-datepicker>
@@ -86,12 +86,12 @@
           <br>
           {{frmCreateDebt.controls['payDate'].value}}
         </div>
-        <div class="div-forms" *ngIf="frmCreateDebt.controls['typeDebt'].value ==='interesFijo'" >
+        <div class="div-forms" *ngIf="frmCreateDebt.controls['typeDebt'].value ==='interesFijo'">
           <!-- interesFijo -->
           <mat-form-field appearance="fill" class="">
             <mat-label>Interes fijo</mat-label>
             <mat-icon matPrefix>percent</mat-icon>
-            <input matInput formControlName="fixedInterest" type="number"  step="any" maxlength="2"  required>
+            <input matInput formControlName="fixedInterest" type="number" step="any" maxlength="2" required>
 
             <mat-error *ngIf="frmCreateDebt.controls['fixedInterest'].errors?.['required']">
               Campo requerido
@@ -116,7 +116,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Seleccione ciclo de pago</mat-label>
             <mat-icon matPrefix>payment</mat-icon>
-            <mat-select formControlName="paymentCycle" >
+            <mat-select formControlName="paymentCycle">
               <mat-option *ngFor="let type of pymentCiclelist" [value]="type.value">
                 {{type.viewValue}}
               </mat-option>
@@ -129,42 +129,61 @@
 
         </div>
 
-        <div class="div-forms"  *ngIf="frmCreateDebt.controls['isFixedFees'].value" >
+
+        <div class="div-forms" *ngIf="frmCreateDebt.controls['isFixedFees'].value">
+
+          <mat-form-field appearance="fill" class="">
+            <mat-label>Dia de pago</mat-label>
+            <mat-icon matPrefix>payments</mat-icon>
+            <input matInput formControlName="paymentDay" type="number" min="1" max="31" step="1" maxlength="2"
+              autocomplete="off" required>
+
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['required']">
+              Campo requerido
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['pattern']">
+              Solo se aceptan numeros
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['maxlength']">
+              Maximo 2 digitos
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['max']">
+              Valor maximo 31
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['min']">
+              valor minimo 1
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="div-forms" *ngIf="frmCreateDebt.controls['isFixedFees'].value">
 
           <mat-form-field appearance="fill" class="">
             <mat-label>Numero de cuotas</mat-label>
             <mat-icon matPrefix>tag</mat-icon>
-            <input matInput formControlName="numberFees" type="number"  step="any" maxlength="2"  required>
-            {{frmCreateDebt.controls['numberFees'].errors | json}}
+            <input matInput formControlName="numberFees" type="number" min="1" max="99" step="1" autocomplete="off"
+              required>
+
             <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['required']">
               Campo requerido
             </mat-error>
             <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['pattern']">
               solo se aceptan numeros
             </mat-error>
-            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['maxLength']">
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['maxlength']">
               maximo 2 digitos
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['max']">
+              Valor maximo 99
+            </mat-error>
+            <mat-error *ngIf="frmCreateDebt.controls['numberFees'].errors?.['min']">
+              valor minimo 1
             </mat-error>
           </mat-form-field>
         </div>
-        <div class="div-forms"  *ngIf="frmCreateDebt.controls['isFixedFees'].value" >
 
-          <mat-form-field appearance="fill" class="">
-            <mat-label>Dia de pago</mat-label>
-            <mat-icon matPrefix>tag</mat-icon>
-            <input matInput formControlName="paymentDay" type="number"  step="any" maxlength="2"  required>
-
-            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['required']">
-              Campo requerido
-            </mat-error>
-            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['pattern']">
-              solo se aceptan numeros
-            </mat-error>
-            <mat-error *ngIf="frmCreateDebt.controls['paymentDay'].errors?.['maxLength']">
-              maximo 2 digitos
-            </mat-error>
-          </mat-form-field>
-        </div>
 
 
       </mat-card-content>

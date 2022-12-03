@@ -57,7 +57,7 @@ export class CreateDebtComponent implements OnInit {
       fixedInterest:  [null],
       paymentCycle:   [null],
       numberFees:     [null],
-      paymentday:     [null]
+      paymentDay:     [null]
 
     });
 
@@ -137,14 +137,18 @@ export class CreateDebtComponent implements OnInit {
       .setValidators([
         Validators.required,
         Validators.pattern(/^[0-9]\d*$/),
-        Validators.maxLength(2)
+        Validators.maxLength(2),
+        Validators.max(99),
+        Validators.min(1)
       ]);
 
-      this.frmCreateDebt.controls['paymentday']
+      this.frmCreateDebt.controls['paymentDay']
       .setValidators([
         Validators.required,
         Validators.pattern(/^[0-9]\d*$/),
-        Validators.maxLength(2)
+        Validators.maxLength(2),
+        Validators.max(31),
+        Validators.min(1)
       ]);
      }
 
