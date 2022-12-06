@@ -46,7 +46,10 @@ export class DebtService {
       typeDebt:       debt.typeDebt,
       fixedInterest:  debt.fixedInterest,
       totalValue :    debt.debtTotalValue,
-      createDate:     debt.createDate
+      createDate:     debt.createDate,
+      numberFees:     debt.numberFees,
+      paymentDay:     debt.paymentDay,
+      paymentCycle:   debt.paymentCycle
     }
 
     return setDoc(contactRef2, contactTocreate);

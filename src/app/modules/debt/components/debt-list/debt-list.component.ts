@@ -32,14 +32,15 @@ export class DebtListComponent implements OnInit,OnChanges  {
     this.getDebtsByIdContact();
   }
   ngOnChanges(changes: SimpleChanges): void{
-    console.log(changes);
-    debugger;
     this.getDebtsByIdContact();
   }
 
   getDebtsByIdContact(){
   const user = this._userService.getUserLocal();
   this.debts = this._debtService.getDebtsByIdContact(user.uid,this.idContact);
+  }
+  detailDebtById(id){
+
   }
 
 }
