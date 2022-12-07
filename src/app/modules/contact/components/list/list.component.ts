@@ -42,7 +42,7 @@ export class ListComponent implements OnInit {
   }
 
   detailContact(idUser){
-    console.log('detailContact')
+
     setTimeout(() => {
       this.router.navigate(['/contact/detail/',idUser] );
     },500);

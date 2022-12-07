@@ -25,7 +25,7 @@ export class DebtListComponent implements OnInit,OnChanges  {
     private _router: Router,
     private _debtService: DebtService
   ) {
-    console.log('entro que esta pasando aqui')
+
    }
 
   ngOnInit(): void {

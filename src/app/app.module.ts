@@ -44,6 +44,7 @@ import { DialogDynamicTextComponent } from './shared/components/dialog-dynamic-t
 import { DebtModule } from './modules/debt/debt.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { DatePipe } from '@angular/common';
+import { PaymentModule } from './modules/payment/payment.module';
 
 export function playerFactory() {
   return player;
@@ -92,7 +93,7 @@ export function playerFactory() {
     LottieModule.forRoot({ player: playerFactory }),
     UserModule,
     DebtModule,
-    ContactModule
+    ContactModule, PaymentModule
 
   ],
   providers: [MaterialModule, AuthService, DatePipe],

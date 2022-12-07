@@ -25,7 +25,8 @@ import { DetailDebtComponent } from './components/detail-debt/detail-debt.compon
     CreateDebtComponent,
     DebtListComponent,
     DetailDebtComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
 })
 export class DebtModule { }

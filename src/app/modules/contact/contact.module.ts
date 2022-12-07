@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailComponent } from './components/detail/detail.component';
 import { DebtModule } from '../debt/debt.module';
+import { PaymentModule } from '../payment/payment.module';
 
 
 
@@ -21,7 +22,7 @@ import { DebtModule } from '../debt/debt.module';
     CommonModule,
     ContactRoutingModule,
     MaterialModule,
-    ReactiveFormsModule,DebtModule
+    ReactiveFormsModule,DebtModule, PaymentModule
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
