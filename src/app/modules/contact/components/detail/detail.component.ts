@@ -77,6 +77,7 @@ getContactsByUserId(uid){
       this.isDisabledForm = !this.isDisabledForm;
       this._snackBarService.customSnackbar('Contacto editado con exito','ok', 5000);
     }
+
   }
 
   getTotalDebts(){
@@ -89,5 +90,13 @@ getContactsByUserId(uid){
   cancel(){
     this.isDisabledForm = !this.isDisabledForm;
     this.getContactsByUserId(this.idContact);
+  }
+
+  openGeneralPyment(event){
+    console.log('eyyy');
+    event.stopPropagation();
+
+
+
   }
 }
