@@ -10,7 +10,7 @@ import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 })
 export class CreatedPaymentComponent implements OnInit {
 
-  @Input() idC:string;
+  @Input() idContact:string;
   public frmAddPayment: FormGroup;
 
   constructor(
@@ -27,7 +27,7 @@ export class CreatedPaymentComponent implements OnInit {
     console.log('soy app-created-payment ');
   }
   ngOnChanges(changes: SimpleChanges): void{
-   console.log('idContact',this.idC);
+
   }
 
   cancel(){
@@ -43,7 +43,9 @@ export class CreatedPaymentComponent implements OnInit {
 
   addPayment(){
     if(this.frmAddPayment.invalid){ return;}
-    const objPayment = this.frmAddPayment.value;
+    const objPayment        = this.frmAddPayment.value;
+    objPayment.idContact    = this.idContact;
+    objPayment.typePayment  = 'General';
 
     console.log('objPayment',objPayment)
 

@@ -36,7 +36,7 @@ export class DebtService {
     debt = this.calculateValues(debt)
 
     const contactTocreate = {
-      uid: guid,
+      uid:            guid,
       concept:        debt.concept,
       contacts:       debt.contacts,
       debtValue:      debt.debtValue,
