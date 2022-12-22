@@ -14,7 +14,13 @@
     <p>
       <mat-icon>monetization_on</mat-icon> <span style="vertical-align: super; margin-left:5px;">{{item.debtTotalValue | number}}</span>
     </p>
+
+    <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above" color="primary" (click)="pymentAddlModalOpen($event, item.uid)">
+      <mat-icon >add_card</mat-icon>
+    </button>
+
   </mat-card-content>
+
 
 </mat-card>
 

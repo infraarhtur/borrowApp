@@ -4,12 +4,14 @@ import { CreatedPaymentComponent } from './components/created-payment/created-pa
 import { PaymentRoutingModule } from './payment-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import { DialogAddPaymentComponent } from './components/dialog-add-payment/dialog-add-payment.component';
 
 
 
 @NgModule({
   declarations: [
-    CreatedPaymentComponent
+    CreatedPaymentComponent,
+    DialogAddPaymentComponent
   ],
   imports: [
     CommonModule,
