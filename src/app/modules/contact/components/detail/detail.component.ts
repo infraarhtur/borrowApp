@@ -1,7 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/dialog-add-payment/dialog-add-payment.component';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { DebtService } from 'src/app/services/business/debt.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
@@ -29,7 +31,8 @@ export class DetailComponent implements OnInit {
     private _snackBarService: SnackbarService,
     public router:            Router,
     private _route:           ActivatedRoute,
-    private _debtService:     DebtService
+    private _debtService:     DebtService,
+     public dialog :          MatDialog
   ) {
     this.validations();
     this.user = this._userService.getUserLocal();
@@ -93,10 +96,18 @@ getContactsByUserId(uid){
   }
 
   openGeneralPyment(event){
-    console.log('eyyy');
+    const user = { contactId:this.idContact };
+    const dialogComponent = new MatDialogConfig();
+    dialogComponent.autoFocus = true;
+    dialogComponent.disableClose = true;
+    dialogComponent.data = user;
+    dialogComponent.panelClass = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration = '1000ms';
+
+    const dialogRef = this.dialog.open(DialogAddPaymentComponent, dialogComponent,);
+    dialogRef.disableClose = true;
     event.stopPropagation();
-
-
-
   }
+
 }

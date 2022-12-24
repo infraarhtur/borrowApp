@@ -24,10 +24,11 @@
         <span *ngSwitchDefault>(No eligió operación)</span>
       </div>
 
-
-
       <p>
 
+        <button mat-icon-button color="primary" matTooltip="Agregar pago a esta deuda" matTooltipPosition="above" color="primary" (click)="openPyment($event, item.uid)" style="display: block;">
+          <mat-icon >add_card</mat-icon>
+        </button>
         <mat-icon> description</mat-icon><span class="title"> concepto:</span> <span
           class="title">{{item.concept}}</span> <br>
         <mat-icon>monetization_on</mat-icon><span class="title"> total: </span> <span class="title">{{item.totalValue |

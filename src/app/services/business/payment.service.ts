@@ -41,7 +41,8 @@ export class PaymentService {
       commentPayment: oPyment.commentPayment,
       createDate:     oPyment.createDate,
       type:           oPyment.typePayment,
-      contactId:      oPyment.idContact
+      contactId:      oPyment.idContact,
+      debtId:         oPyment.debtId
     };
     return setDoc(paymentRef2, paymentToCreate);
   }

@@ -15,7 +15,8 @@ export class DialogAddPaymentComponent implements OnInit {
 
   public frmAddPayment: FormGroup;
   public user;
-  public idContact
+  public idContact;
+  public debtId = '';
 
   constructor(
     private _formBuilder:     FormBuilder,
@@ -32,8 +33,11 @@ export class DialogAddPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data)
-    this.idContact = this.data.contactId;
-    this.user = this._userService.getUserLocal();
+    this.idContact  = this.data.contactId;
+    this.user       = this._userService.getUserLocal();
+    let keys        = Object.keys(this.data);
+    this.debtId      = keys.includes('debtId')?  this.data.debtId:'';
+    console.log('debtId',this.debtId )
   }
 
   ok(){
@@ -45,11 +49,13 @@ export class DialogAddPaymentComponent implements OnInit {
   }
 
   addPayment(){
+    debugger;
     console.log(this.data)
     if(this.frmAddPayment.invalid){ return;}
     const objPayment        = this.frmAddPayment.value;
     objPayment.idContact    = this.idContact;
-    objPayment.typePayment  = 'General';
+    objPayment.typePayment  = this.debtId === '' ? 'General' : 'Especific';
+    objPayment.debtId       = this.debtId;
 
     this._paymentServices.addPayment(this.user.uid,objPayment );
     this.frmAddPayment.reset();
