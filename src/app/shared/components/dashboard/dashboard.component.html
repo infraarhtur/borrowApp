@@ -33,7 +33,7 @@
 
     <p>
        <mat-icon class="valueGreen">payments</mat-icon>
-        <span class="value-align valueGreen" *ngIf="hideCollected">500.000</span>
+        <span class="value-align valueGreen" *ngIf="hideCollected">{{this.totalPyments | currency}}</span>
         <span class="value-align valueGreen hide-value" *ngIf="!hideCollected">*******</span>
       </p>
   </mat-card-content>
@@ -41,7 +41,7 @@
 
   <mat-card-actions align="end">
 
-    <button mat-icon-button color="primary" matSuffix (click)="hideCollected = !hideCollected" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
+    <button mat-icon-button color="primary" matSuffix (click)="isHideCollected()" matTooltip="Ver u ocultar valores" matTooltipPosition="above"
               [attr.aria-pressed]="hideCollected">
               <mat-icon>{{hideCollected ?'visibility': 'visibility_off'}}</mat-icon>
             </button>

@@ -86,7 +86,6 @@ export class DebtService {
     }else{
       return this.getDebtsByIdUser(userId);
     }
-
   }
 
   getTotalDebtsByidUser(userId) {

@@ -9,6 +9,7 @@ import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { DebtService } from 'src/app/services/business/debt.service';
+import { PaymentService } from 'src/app/services/business/payment.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -23,18 +24,20 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     path: '../../../../assets/lottie/logout.json',
   };
 
-  hideBorrowed = false;
+  hideBorrowed   = false;
   hideCollected  = false;
   user;
-  totalDebt = 0;
+  totalDebt    = 0;
+  totalPyments = 0;
 
   constructor(
-    public authService: AuthService,
-    private _userService: UserService,
-    public router: Router,
-    private contactService: ContactService,
-    private _snackBarService: SnackbarService,
-    private _debtService: DebtService
+    public authService        :AuthService,
+    private _userService      :UserService,
+    public router             :Router,
+    private contactService    :ContactService,
+    private _snackBarService  :SnackbarService,
+    private _debtService      :DebtService,
+    private _paymentsService  :PaymentService
 
   ) {
     this.user = this._userService.getUserLocal();
@@ -44,6 +47,7 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     this._userService.verifyTermns();
     this.getContacts();
     this.getDebts();
+    this.getPayments();
 
   }
   ngAfterViewInit(): void{
@@ -78,8 +82,21 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     }
   }
 
+  async getPayments(){
+    if (localStorage.getItem('payments') === null) {
+      const payments = await this._paymentsService.getPaymentsByIdUser(this.user.uid);
+      this._paymentsService.paymentsEncript(JSON.stringify(payments));
+    }
+  }
+
   isHideBorrowed(){
   this.totalDebt = this._debtService.getTotalDebtsByidUser(this.user.uid);
-   this.hideBorrowed = !this.hideBorrowed;
+
+  this.hideBorrowed = !this.hideBorrowed;
+  }
+
+  isHideCollected(){
+    this.totalPyments = this._paymentsService.getTotalPymentsByidUser(this.user.uid);
+    this.hideCollected  = !this.hideCollected;
   }
 }
