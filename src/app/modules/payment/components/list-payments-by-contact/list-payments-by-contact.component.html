@@ -1,1 +1,13 @@
-<p>list-payments-by-contact works!</p>
+
+<div *ngFor="let item of payments">
+    <mat-card matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider">
+        <mat-card-content align="center">
+
+            <div><span>{{item.type}}</span></div>
+            <div> <span>{{item.valuePayment | currency}}</span> </div>
+            <div><span>{{item.commentPayment}}</span></div>
+            <div><span>Fecha:</span>{{item.createDate}} </div>
+
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -47,10 +47,19 @@ export class PaymentService {
     return setDoc(paymentRef2, paymentToCreate);
   }
 
-  getPaymentsByContactId(contactId){
-
-
+  getPaymentsByContactId(userId,contactId){
+    const paymentList = [];
+    let totalDebt = 0;
+    const payments = this.paymentsDecrypt(userId);
+    payments.forEach(item => {
+      if(item.contactId === contactId){
+        paymentList.push(item);
+      }
+    });
+    return paymentList;
   }
+
+
 
   async getPaymentsByIdUser(userId) {
     let payments = [];

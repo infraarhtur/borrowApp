@@ -41,7 +41,6 @@ export class DebtListComponent implements OnInit, OnChanges {
   }
 
   getDebtsByIdContact() {
-
     this.debts = this._debtService.getDebtsByIdContact(this.user.uid, this.idContact);
   }
   detailDebtById(id) {

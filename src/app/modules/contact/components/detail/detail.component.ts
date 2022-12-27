@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -15,28 +15,29 @@ import { UserService } from 'src/app/services/shared/user.service';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, AfterViewInit {
 
-  public frmUpdateContact: FormGroup;
+  frmUpdateContact: FormGroup;
   idContact;
   contact;
   user;
-  isDisabledForm          = true;
-  panelDebtState          = false;
+  isDisabledForm = true;
+  panelDebtState = false;
   panelDetailcontactState = true;
-  panelPaymentState       = false;
-  totalDebt    = 0;
+  panelPaymentState = false;
+  totalDebt = 0;
   totalPayment = 0;
+  totalCalculate = 0;
 
   constructor(
-    private _formBuilder:     FormBuilder,
-    private _contactService:  ContactService,
-    private _userService:     UserService,
+    private _formBuilder: FormBuilder,
+    private _contactService: ContactService,
+    private _userService: UserService,
     private _snackBarService: SnackbarService,
-    public router:            Router,
-    private _route:           ActivatedRoute,
-    private _debtService:     DebtService,
-    public dialog :           MatDialog,
+    public router: Router,
+    private _route: ActivatedRoute,
+    private _debtService: DebtService,
+    public dialog: MatDialog,
     private _paymentsService: PaymentService
 
   ) {
@@ -52,14 +53,16 @@ export class DetailComponent implements OnInit {
       this.getTotalDebts();
       this.getTotalPayments();
 
-    })
-
+    });
+  }
+  ngAfterViewInit(): void {
+   this.totalCalculate = this.totalDebt - this.totalPayment;
   }
 
-getContactsByUserId(uid){
-    const contact =  this._contactService.getContactbyIdContact(uid);
+  getContactsByUserId(uid) {
+    const contact = this._contactService.getContactbyIdContact(uid);
 
-    contact.indicative = contact.indicative.replace('+','');
+    contact.indicative = contact.indicative.replace('+', '');
     this.frmUpdateContact.controls['nickName'].setValue(contact.nickname);
     this.frmUpdateContact.controls['emailContact'].setValue(contact.email);
     this.frmUpdateContact.controls['numberPhone'].setValue(contact.phoneNumber);
@@ -76,38 +79,38 @@ getContactsByUserId(uid){
     })
   }
 
- async updateContact() {
+  async updateContact() {
     if (this.frmUpdateContact.invalid) { return; }
 
-   const respond = await this._contactService.updateContactByIdContact(this.user.uid,
+    const respond = await this._contactService.updateContactByIdContact(this.user.uid,
       this.frmUpdateContact.value,
-       this.idContact);
+      this.idContact);
 
-    if(respond){
+    if (respond) {
       this.isDisabledForm = !this.isDisabledForm;
-      this._snackBarService.customSnackbar('Contacto editado con exito','ok', 5000);
+      this._snackBarService.customSnackbar('Contacto editado con exito', 'ok', 5000);
     }
 
   }
 
-  getTotalDebts(){
-   this.totalDebt = this._debtService.getTotalDebtsByidContact(this.user.uid,this.idContact);
+  getTotalDebts() {
+    this.totalDebt = this._debtService.getTotalDebtsByidContact(this.user.uid, this.idContact);
   }
 
-  getTotalPayments(){
-    this.totalPayment = this._paymentsService.getTotalPymentsByContactId(this.user.uid,this.idContact);
+  getTotalPayments() {
+    this.totalPayment = this._paymentsService.getTotalPymentsByContactId(this.user.uid, this.idContact);
   }
 
-  isEditContact(){
+  isEditContact() {
     this.isDisabledForm = !this.isDisabledForm;
   }
-  cancel(){
+  cancel() {
     this.isDisabledForm = !this.isDisabledForm;
     this.getContactsByUserId(this.idContact);
   }
 
-  openGeneralPyment(event){
-    const user = { contactId:this.idContact };
+  openGeneralPyment(event) {
+    const user = { contactId: this.idContact };
     const dialogComponent = new MatDialogConfig();
     dialogComponent.autoFocus = true;
     dialogComponent.disableClose = true;

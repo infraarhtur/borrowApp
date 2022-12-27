@@ -1,21 +1,21 @@
 <div class="contenedor">
-
-
-  <mat-accordion >
-
-    <mat-expansion-panel [expanded] = "panelDetailcontactState" (opened)="panelDetailcontactState = true" (closed)="panelDetailcontactState = false"
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="panelDetailcontactState"
+     (opened)="panelDetailcontactState = true"
+      (closed)="panelDetailcontactState = false"
       class="divider">
-      <mat-expansion-panel-header>
 
+      <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-icon>account_circle</mat-icon> &nbsp;  {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
+          <mat-icon>account_circle</mat-icon> &nbsp; {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
 
         </mat-panel-title>
         <mat-panel-description align="end" style="justify-content: space-between">
-          &nbsp;
+          {{totalCalculate | currency}}
 
-          <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above" color="primary" (click)="openGeneralPyment($event)">
-            <mat-icon >add_card</mat-icon>
+          <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above"
+            color="primary" (click)="openGeneralPyment($event)">
+            <mat-icon>add_card</mat-icon>
           </button>
 
         </mat-panel-description>
@@ -134,7 +134,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <app-list-payments-by-contact></app-list-payments-by-contact>
+      <app-list-payments-by-contact [idContact]="this.idContact"></app-list-payments-by-contact>
 
     </mat-expansion-panel>
 
