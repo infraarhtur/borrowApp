@@ -5,13 +5,15 @@ import { PaymentRoutingModule } from './payment-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { DialogAddPaymentComponent } from './components/dialog-add-payment/dialog-add-payment.component';
+import { ListPaymentsByContactComponent } from './components/list-payments-by-contact/list-payments-by-contact.component';
 
 
 
 @NgModule({
   declarations: [
     CreatedPaymentComponent,
-    DialogAddPaymentComponent
+    DialogAddPaymentComponent,
+    ListPaymentsByContactComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,10 @@ import { DialogAddPaymentComponent } from './components/dialog-add-payment/dialo
     ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports:[ CreatedPaymentComponent],
+  exports:[
+    CreatedPaymentComponent,
+    ListPaymentsByContactComponent
+  ],
 
 })
 export class PaymentModule { }

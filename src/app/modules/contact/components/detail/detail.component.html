@@ -124,6 +124,20 @@
 
       <app-debt-list [idContact]="this.idContact"></app-debt-list>
     </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelDebtState = true" (closed)="panelDebtState = false" class="divider">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Panel de pagos
+        </mat-panel-title>
+        <mat-panel-description>
+          Total:{{totalPayment | currency}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-list-payments-by-contact></app-list-payments-by-contact>
+
+    </mat-expansion-panel>
+
   </mat-accordion>
 
 

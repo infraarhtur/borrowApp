@@ -6,6 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/dialog-add-payment/dialog-add-payment.component';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { DebtService } from 'src/app/services/business/debt.service';
+import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 
@@ -20,10 +21,13 @@ export class DetailComponent implements OnInit {
   idContact;
   contact;
   user;
-  isDisabledForm = true;
-  panelDebtState = false;
+  isDisabledForm          = true;
+  panelDebtState          = false;
   panelDetailcontactState = true;
-  totalDebt = 0;
+  panelPaymentState       = false;
+  totalDebt    = 0;
+  totalPayment = 0;
+
   constructor(
     private _formBuilder:     FormBuilder,
     private _contactService:  ContactService,
@@ -32,7 +36,9 @@ export class DetailComponent implements OnInit {
     public router:            Router,
     private _route:           ActivatedRoute,
     private _debtService:     DebtService,
-     public dialog :          MatDialog
+    public dialog :           MatDialog,
+    private _paymentsService: PaymentService
+
   ) {
     this.validations();
     this.user = this._userService.getUserLocal();
@@ -44,6 +50,7 @@ export class DetailComponent implements OnInit {
 
       this.getContactsByUserId(this.idContact);
       this.getTotalDebts();
+      this.getTotalPayments();
 
     })
 
@@ -85,6 +92,10 @@ getContactsByUserId(uid){
 
   getTotalDebts(){
    this.totalDebt = this._debtService.getTotalDebtsByidContact(this.user.uid,this.idContact);
+  }
+
+  getTotalPayments(){
+    this.totalPayment = this._paymentsService.getTotalPymentsByContactId(this.user.uid,this.idContact);
   }
 
   isEditContact(){

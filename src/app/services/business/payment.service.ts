@@ -89,8 +89,19 @@ export class PaymentService {
   getTotalPymentsByidUser(userId) {
     let totalDebt = 0;
     const payments = this.paymentsDecrypt(userId);
+    console.log(payments);
     payments.forEach(item => {
       totalDebt += item.valuePayment;
+    });
+    return totalDebt;
+  }
+  getTotalPymentsByContactId(userId,contactId) {
+    let totalDebt = 0;
+    const payments = this.paymentsDecrypt(userId);
+    payments.forEach(item => {
+      if(item.contactId === contactId){
+        totalDebt += item.valuePayment;
+      }
     });
     return totalDebt;
   }
