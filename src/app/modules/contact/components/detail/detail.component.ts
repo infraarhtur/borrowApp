@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -21,24 +21,26 @@ export class DetailComponent implements OnInit, AfterViewInit {
   idContact;
   contact;
   user;
-  isDisabledForm = true;
-  panelDebtState = false;
+  isChangePays            = false;
+  isDisabledForm          = true;
+  panelDebtState          = false;
   panelDetailcontactState = true;
-  panelPaymentState = false;
-  totalDebt = 0;
-  totalPayment = 0;
-  totalCalculate = 0;
+  panelPaymentState       = false;
+  totalDebt       = 0;
+  totalPayment    = 0;
+  totalCalculate  = 0;
+
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private _contactService: ContactService,
-    private _userService: UserService,
-    private _snackBarService: SnackbarService,
-    public router: Router,
-    private _route: ActivatedRoute,
-    private _debtService: DebtService,
-    public dialog: MatDialog,
-    private _paymentsService: PaymentService
+    private _formBuilder      : FormBuilder,
+    private _contactService   : ContactService,
+    private _userService      : UserService,
+    private _snackBarService  : SnackbarService,
+    public router             : Router,
+    private _route            : ActivatedRoute,
+    private _debtService      : DebtService,
+    public dialog             : MatDialog,
+    private _paymentsService  : PaymentService
 
   ) {
     this.validations();
@@ -52,11 +54,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.getContactsByUserId(this.idContact);
       this.getTotalDebts();
       this.getTotalPayments();
+      this.totalCalculate = this.totalDebt - this.totalPayment;
 
     });
   }
   ngAfterViewInit(): void {
-   this.totalCalculate = this.totalDebt - this.totalPayment;
+
   }
 
   getContactsByUserId(uid) {
@@ -72,10 +75,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   validations() {
     this.frmUpdateContact = this._formBuilder.group({
-      emailContact: [null, [Validators.required]],
-      nickName: [null, [Validators.required]],
-      numberPhone: [null, [Validators.required, Validators.pattern("[0-9]{10}")]],
-      indicative: [null, [Validators.required, Validators.pattern("[0-9]{2}")]]
+      emailContact  : [null, [Validators.required]],
+      nickName      : [null, [Validators.required]],
+      numberPhone   : [null, [Validators.required, Validators.pattern("[0-9]{10}")]],
+      indicative    : [null, [Validators.required, Validators.pattern("[0-9]{2}")]]
     })
   }
 
@@ -97,8 +100,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.totalDebt = this._debtService.getTotalDebtsByidContact(this.user.uid, this.idContact);
   }
 
-  getTotalPayments() {
-    this.totalPayment = this._paymentsService.getTotalPymentsByContactId(this.user.uid, this.idContact);
+  async getTotalPayments() {
+    this.totalPayment = await this._paymentsService.getTotalPymentsByContactId(this.user.uid, this.idContact);
   }
 
   isEditContact() {
@@ -111,17 +114,33 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   openGeneralPyment(event) {
     const user = { contactId: this.idContact };
-    const dialogComponent = new MatDialogConfig();
-    dialogComponent.autoFocus = true;
-    dialogComponent.disableClose = true;
-    dialogComponent.data = user;
-    dialogComponent.panelClass = 'custom-modalbox';
+    const dialogComponent                  = new MatDialogConfig();
+    dialogComponent.autoFocus              = true;
+    dialogComponent.disableClose           = true;
+    dialogComponent.data                   = user;
+    dialogComponent.panelClass             = 'custom-modalbox';
     dialogComponent.enterAnimationDuration = '1000ms';
-    dialogComponent.exitAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration  = '1000ms';
 
     const dialogRef = this.dialog.open(DialogAddPaymentComponent, dialogComponent,);
     dialogRef.disableClose = true;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getTotalDebts();
+        this.getTotalPayments();
+        this.totalCalculate = this.totalDebt - this.totalPayment;
+        this.isChangePays = true;
+      }
+    });
     event.stopPropagation();
+  }
+
+  changeStatusPay(event:boolean){
+    setTimeout(() => {
+      this.isChangePays = event;
+    }, 2000);
+
   }
 
 }

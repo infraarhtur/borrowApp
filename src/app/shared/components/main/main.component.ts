@@ -89,8 +89,6 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataUser = this.authService.getDataUser();
-    console.log(this.dataUser)
-
   }
 
   ngAfterViewInit(){

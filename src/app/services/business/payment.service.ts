@@ -47,10 +47,9 @@ export class PaymentService {
     return setDoc(paymentRef2, paymentToCreate);
   }
 
-  getPaymentsByContactId(userId,contactId){
+  async getPaymentsByContactId(userId,contactId){
     const paymentList = [];
-    let totalDebt = 0;
-    const payments = this.paymentsDecrypt(userId);
+    const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
       if(item.contactId === contactId){
         paymentList.push(item);
@@ -70,7 +69,7 @@ export class PaymentService {
     return payments;
   }
 
-  async verifyPaymentsByIdUserWithSession(userId) {
+  async verifyPaymentsByIdUserWithSession() {
     const user = this._userService.getUserLocal();
 
     if (localStorage.getItem('payments') === null) {
@@ -84,29 +83,28 @@ export class PaymentService {
     localStorage.setItem('payments', paymentsEncrypt);
   }
 
-  paymentsDecrypt(userId) {
+  async paymentsDecrypt(userId) {
     const paymentsEncrypt = localStorage.getItem('payments');
     if(paymentsEncrypt !== null){
       const paymentsDecrypt = this.criptoService.decryptUsingAES256(paymentsEncrypt);
       return JSON.parse(paymentsDecrypt)
     }else{
-      return this.getPaymentsByIdUser(userId);
+      return await this.getPaymentsByIdUser(userId);
     }
   }
 
 
-  getTotalPymentsByidUser(userId) {
+  async getTotalPymentsByidUser(userId) {
     let totalDebt = 0;
-    const payments = this.paymentsDecrypt(userId);
-    console.log(payments);
+    const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
       totalDebt += item.valuePayment;
     });
     return totalDebt;
   }
-  getTotalPymentsByContactId(userId,contactId) {
+  async getTotalPymentsByContactId(userId,contactId) {
     let totalDebt = 0;
-    const payments = this.paymentsDecrypt(userId);
+    const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
       if(item.contactId === contactId){
         totalDebt += item.valuePayment;

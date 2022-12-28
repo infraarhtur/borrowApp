@@ -92,7 +92,6 @@ export class DebtService {
     let totalDebt = 0;
     this.verifyDebtsByIdUserWithSession(userId);
     const debts = this.debtsDecrypt(userId);
-    console.log('debts', debts);
     debts.forEach(item => {
       totalDebt += item.totalValue;
     });

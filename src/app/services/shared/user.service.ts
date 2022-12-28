@@ -59,7 +59,6 @@ export class UserService {
 
   deleteUser(id: string) {
     const userRef = doc(this._firestore, `users/${id}`);
-    console.log('userRef', userRef)
     return deleteDoc(userRef).then(result => {
       return result;
     }).catch(error => {
@@ -80,7 +79,6 @@ export class UserService {
 
   async saveDataAditional(uId) {
     const userInfo = await this.getInfoDoc(uId);
-    console.log(userInfo.data())
     localStorage.setItem('aditionalInfo',this.criptoService.encryptUsingAES256(
       JSON.stringify(userInfo.data())
       ));

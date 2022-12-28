@@ -56,7 +56,6 @@ export class AuthService {
       }
       this.afAuth.authState.subscribe((user) => {
         if (user) {
-          console.log('user', user);
           localStorage.setItem('IsIdentity', 'true');
           this._snackBarServices.customSnackbar('Bienvendo!!', 'info', 5000)
           location.pathname = '/dashboard';

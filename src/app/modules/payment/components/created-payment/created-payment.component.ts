@@ -49,8 +49,6 @@ export class CreatedPaymentComponent implements OnInit {
     objPayment.idContact    = this.idContact;
     objPayment.typePayment  = 'General';
 
-    this._paymentServices.addPayment(this.user.uid,objPayment )
-    console.log('objPayment',objPayment)
-
+    this._paymentServices.addPayment(this.user.uid,objPayment);
   }
 }

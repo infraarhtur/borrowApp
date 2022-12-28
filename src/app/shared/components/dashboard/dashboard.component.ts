@@ -95,8 +95,8 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
   this.hideBorrowed = !this.hideBorrowed;
   }
 
-  isHideCollected(){
-    this.totalPyments = this._paymentsService.getTotalPymentsByidUser(this.user.uid);
+  async isHideCollected(){
+    this.totalPyments = await this._paymentsService.getTotalPymentsByidUser(this.user.uid);
     this.hideCollected  = !this.hideCollected;
   }
 }

@@ -32,15 +32,14 @@ export class DialogAddPaymentComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.idContact  = this.data.contactId;
     this.user       = this._userService.getUserLocal();
     let keys        = Object.keys(this.data);
-    this.debtId      = keys.includes('debtId')?  this.data.debtId:'';
-    console.log('debtId',this.debtId )
+    this.debtId     = keys.includes('debtId')?  this.data.debtId:'';
   }
 
   ok(){
+    this._paymentServices.verifyPaymentsByIdUserWithSession()
     this.dialogRef.close(true);
   }
   cancel(){
@@ -49,18 +48,17 @@ export class DialogAddPaymentComponent implements OnInit {
   }
 
   addPayment(){
-    debugger;
-    console.log(this.data)
+
     if(this.frmAddPayment.invalid){ return;}
     const objPayment        = this.frmAddPayment.value;
     objPayment.idContact    = this.idContact;
     objPayment.typePayment  = this.debtId === '' ? 'General' : 'Especific';
     objPayment.debtId       = this.debtId;
 
-    this._paymentServices.addPayment(this.user.uid,objPayment );
+    this._paymentServices.addPayment(this.user.uid,objPayment);
     this.frmAddPayment.reset();
     this._snackBarService.customSnackbar('Pago agregado correctamente','ok', 5000);
-    console.log('objPayment',objPayment);
+    localStorage.removeItem('payments');
     this.ok();
   }
 

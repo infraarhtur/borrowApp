@@ -118,7 +118,7 @@
           Panel deudas
         </mat-panel-title>
         <mat-panel-description>
-          Total:{{totalDebt | currency}}
+          {{totalDebt | currency}}
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -130,11 +130,11 @@
           Panel de pagos
         </mat-panel-title>
         <mat-panel-description>
-          Total:{{totalPayment | currency}}
+          {{totalPayment | currency}}
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <app-list-payments-by-contact [idContact]="this.idContact"></app-list-payments-by-contact>
+      <app-list-payments-by-contact [idContact]="this.idContact" [isChangePays]="isChangePays" (isPaychange)="changeStatusPay($event)"></app-list-payments-by-contact>
 
     </mat-expansion-panel>
 
