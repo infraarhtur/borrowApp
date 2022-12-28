@@ -54,7 +54,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.getContactsByUserId(this.idContact);
       this.getTotalDebts();
       this.getTotalPayments();
-      this.totalCalculate = this.totalDebt - this.totalPayment;
+      this.calculateTotalgeneral();
 
     });
   }
@@ -130,17 +130,28 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.getTotalDebts();
         this.getTotalPayments();
         this.totalCalculate = this.totalDebt - this.totalPayment;
-        this.isChangePays = true;
+        this.isChangePays   = true;
       }
     });
     event.stopPropagation();
   }
 
   changeStatusPay(event:boolean){
-    setTimeout(() => {
-      this.isChangePays = event;
-    }, 2000);
+    if(!event){
+      setTimeout(() => {
+        this.isChangePays = event;
+      }, 2000);
 
+    }else{
+      this.isChangePays = event;
+    }
+
+  }
+
+  calculateTotalgeneral(){
+    setTimeout(() => {
+      this.totalCalculate = this.totalDebt - this.totalPayment;
+    }, 500);
   }
 
 }

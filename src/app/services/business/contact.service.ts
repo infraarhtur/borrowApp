@@ -44,8 +44,6 @@ export class ContactService {
 
   }
 
-
-
   async getContactsByUserId(userId) {
     let contacts =[];
     const querySnapshot = await getDocs(collection(this._firestore,`users/${userId}/contacts`));

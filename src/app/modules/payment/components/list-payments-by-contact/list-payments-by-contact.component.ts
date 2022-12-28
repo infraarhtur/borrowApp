@@ -25,6 +25,7 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
     public dialog:            MatDialog,
   ) {
     this.user = this._userService.getUserLocal();
+    console.log('user',this.user )
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['isChangePays'].currentValue === true){
@@ -39,6 +40,25 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
 
 
   async getPaymentsByContactId(){
-   this.payments = await this._paymentService.getPaymentsByContactId(this.user.id,this.idContact);
+   this.payments = await this._paymentService.getPaymentsByContactId(this.user.uid,this.idContact);
+  }
+
+  async deletePaymentById(event, paymentId: string) {
+    debugger
+    console.log('paymentId eyyy', paymentId)
+    // const result = await this._paymentService.deletePaymentById(this.user.uid, paymentId);
+    // console.log('paymentId', paymentId)
+    // if (result) {
+      // let index = 0;
+      // this.payments.forEach(item => {
+      //   if (item.uid === paymentId) {
+      //     this.payments.slice(index, 1)
+      //   }
+      //   index++;
+      // })
+
+      // console.log('holaa', this.payments)
+    // }
+    event.stopPropagation();
   }
 }

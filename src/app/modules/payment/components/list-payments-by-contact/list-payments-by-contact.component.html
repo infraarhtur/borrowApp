@@ -1,6 +1,6 @@
 
 <div *ngFor="let item of payments">
-    <mat-card matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider">
+    <mat-card >
         <mat-card-content align="center">
 
             <div><span>{{item.type}}</span></div>
@@ -9,5 +9,9 @@
             <div><span>Fecha:</span>{{item.createDate}} </div>
 
         </mat-card-content>
+        <mat-card-actions align="center">
+            <button mat-button color="primary" mat-stroked-button ty (click)="deletePaymentById($event,item.uid)">Eliminar pago</button>
+        </mat-card-actions>
+
     </mat-card>
 </div>

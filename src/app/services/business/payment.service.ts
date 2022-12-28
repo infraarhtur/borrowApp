@@ -113,5 +113,17 @@ export class PaymentService {
     return totalDebt;
   }
 
+  async deletePaymentById(userId:string,paymentById:string){
+    console.log('ruta:',`users/${userId}/pyments/${paymentById}`)
+    const paymentRef = doc(this._firestore, `users/${userId}/pyments/${paymentById}`);
+    return await deleteDoc(paymentRef).then(result => {
+
+      return true;
+    }).catch(error => {
+      alert(error)
+    })
+  }
+
+
 
 }

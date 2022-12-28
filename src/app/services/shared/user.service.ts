@@ -21,9 +21,9 @@ import { CryptoJsService } from './crypto-js.service';
 export class UserService {
 
   constructor(
-    private _firestore: Firestore,
-    private router: Router,
-    private criptoService: CryptoJsService,
+    private _firestore    : Firestore,
+    private router        : Router,
+    private criptoService : CryptoJsService,
   ) {
 
   }
@@ -33,14 +33,14 @@ export class UserService {
 
     const userRef2 = doc(this._firestore, `users/${user.uid}`,);
     const userTocreate = {
-      uid: user.uid,
-      email: user.email,
-      nickname: user.nickname,
-      phoneNumber: user.phoneNumber,
-      indicative: user.indicative,
-      isTermsConditions: false,
-      rol: 'Client',
-      emailVerified: user.emailVerified
+      uid               : user.uid,
+      email             : user.email,
+      nickname          : user.nickname,
+      phoneNumber       : user.phoneNumber,
+      indicative        : user.indicative,
+      isTermsConditions : false,
+      rol               : 'Client',
+      emailVerified     : user.emailVerified
     }
 
     return setDoc(userRef2, userTocreate);
