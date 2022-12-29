@@ -93,7 +93,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.isDisabledForm = !this.isDisabledForm;
       this._snackBarService.customSnackbar('Contacto editado con exito', 'ok', 5000);
     }
-
   }
 
   getTotalDebts() {
@@ -129,7 +128,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       if(result){
         this.getTotalDebts();
         this.getTotalPayments();
-        this.totalCalculate = this.totalDebt - this.totalPayment;
+        this.calculateTotalgeneral();
         this.isChangePays   = true;
       }
     });
@@ -143,9 +142,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
       }, 2000);
 
     }else{
+      this.getTotalPayments();
+      this.calculateTotalgeneral();
       this.isChangePays = event;
     }
-
   }
 
   calculateTotalgeneral(){

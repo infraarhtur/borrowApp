@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
+import { DialogDynamicTextComponent } from 'src/app/shared/components/dialog-dynamic-text/dialog-dynamic-text.component';
 
 @Component({
   selector: 'app-list-payments-by-contact',
@@ -25,7 +26,6 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
     public dialog:            MatDialog,
   ) {
     this.user = this._userService.getUserLocal();
-    console.log('user',this.user )
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['isChangePays'].currentValue === true){
@@ -43,22 +43,40 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
    this.payments = await this._paymentService.getPaymentsByContactId(this.user.uid,this.idContact);
   }
 
-  async deletePaymentById(event, paymentId: string) {
-    debugger
-    console.log('paymentId eyyy', paymentId)
-    // const result = await this._paymentService.deletePaymentById(this.user.uid, paymentId);
-    // console.log('paymentId', paymentId)
-    // if (result) {
-      // let index = 0;
-      // this.payments.forEach(item => {
-      //   if (item.uid === paymentId) {
-      //     this.payments.slice(index, 1)
-      //   }
-      //   index++;
-      // })
-
-      // console.log('holaa', this.payments)
-    // }
+  async deletePaymentById(event, paymentId: string){
+    const msj = '¿Está seguro de eliminar este pago?';
+    this.confirmModalDeletePaymentOpen(msj,paymentId);
     event.stopPropagation();
+  }
+
+
+  async confirmModalDeletePaymentOpen(message, paymentId) {
+    const dialogComponent        = new MatDialogConfig();
+    dialogComponent.autoFocus    = true;
+    dialogComponent.disableClose = true;
+    dialogComponent.data = {
+      msj       : message ,
+      btnCancel : 'Cancelar' ,
+      btnOk     : 'Eliminar',
+      title     : 'Confirmación'
+      };
+    dialogComponent.panelClass             = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration  = '1000ms'
+    const dialogRef = this.dialog.open(DialogDynamicTextComponent, dialogComponent);
+    dialogRef.disableClose = true;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        const result =  this._paymentService.deletePaymentById(this.user.uid, paymentId)
+        .then(_=> {
+          this._snackBarService.customSnackbar('Pago eliminado', 'ok', 5000);
+          this.getPaymentsByContactId();
+          this.isPaychange.emit(true);
+        });
+      }else{
+        return
+      }
+    });
   }
 }

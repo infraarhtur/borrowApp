@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../shared/user.service';
+import { SnackbarService } from '../shared/snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class PaymentService {
     private _userService:   UserService,
     private _firestore:     Firestore,
     private router:         Router,
-    private criptoService:  CryptoJsService
+    private criptoService:  CryptoJsService,
+    private _snackBarService: SnackbarService,
   ) {
 
   }
@@ -114,15 +116,17 @@ export class PaymentService {
   }
 
   async deletePaymentById(userId:string,paymentById:string){
-    console.log('ruta:',`users/${userId}/pyments/${paymentById}`)
     const paymentRef = doc(this._firestore, `users/${userId}/pyments/${paymentById}`);
-    return await deleteDoc(paymentRef).then(result => {
-
+    return  deleteDoc(paymentRef).then(result => {
+      localStorage.removeItem('payments');
+      this.verifyPaymentsByIdUserWithSession();
       return true;
     }).catch(error => {
-      alert(error)
+      alert(error);
     })
   }
+
+
 
 
 
