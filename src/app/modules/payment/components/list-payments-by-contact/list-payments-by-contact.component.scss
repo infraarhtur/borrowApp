@@ -1,18 +1,19 @@
-.title{
-    vertical-align: super;
-     margin-left:5px;
+.title {
+  vertical-align: super;
+  margin-left: 5px;
 
-  }
+}
 
-  .divider{
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-  .ripple-container{
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
+.divider {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
 
-    -webkit-user-drag: none;
-    -webkit-tap-highlight-color: transparent;
-  }
+.ripple-container {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
