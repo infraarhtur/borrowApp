@@ -49,6 +49,30 @@ export class PaymentService {
     return setDoc(paymentRef2, paymentToCreate);
   }
 
+  async editPayment(userId, oPyment){
+    console.log({oPyment})
+    const paymentRef = doc(this._firestore, `users/${userId}/pyments/${oPyment.uid}`);
+    const today = new Date();
+    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    const respUpdate = await updateDoc(paymentRef, {
+      commentPayment :oPyment.commentPayment,
+      lastDateUpdate :lastUpdateDate
+    });
+    if(respUpdate === undefined){
+      const payments = await this.paymentsDecrypt(userId);
+      payments.forEach(item => {
+        if(item.uid === oPyment.uid){
+          item.commentPayment = oPyment.commentPayment;
+        }
+      });
+      this.paymentsEncript(JSON.stringify(payments));
+      return true;
+    }
+
+
+
+  }
+
   async getPaymentsByContactId(userId,contactId){
     const paymentList = [];
     const payments = await this.paymentsDecrypt(userId);
@@ -126,8 +150,10 @@ export class PaymentService {
     })
   }
 
-
-
+  async getPaymentById(userId:string,paymentById:string){
+    const PaymentRef = doc(this._firestore, `users/${userId}/pyments/${paymentById}`);
+    return  await getDoc(PaymentRef);
+  }
 
 
 }

@@ -1,0 +1,56 @@
+.encabezado {
+    /*  not needed styles to reflect it */
+    //  background: blue;
+    padding: 10px;
+    //  color: white;
+    width: 100%;
+
+    /* needed styles below */
+    display: flex;
+    justify-content: center;
+  }
+
+  .div-forms {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .icon-title {
+    transform: scale(2);
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .width-indicative {
+    width: 20%;
+  }
+
+  .width-cellPhone {
+    width: 80%;
+  }
+
+  table {
+    border-collapse: collapse;
+    border: none;
+  }
+
+  td {
+    padding: 0;
+  }
+
+  .disabled {
+    pointer-events: none;
+    color: rgba(0, 0, 0, 0.38);
+
+  }
+  .divider{
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  .vertical-align{
+    vertical-align: bottom;
+  }
+

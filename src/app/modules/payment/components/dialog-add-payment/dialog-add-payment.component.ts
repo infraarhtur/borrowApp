@@ -42,8 +42,8 @@ export class DialogAddPaymentComponent implements OnInit {
     this._paymentServices.verifyPaymentsByIdUserWithSession()
     this.dialogRef.close(true);
   }
-  cancel(){
 
+  cancel(){
     this.dialogRef.close(false);
   }
 

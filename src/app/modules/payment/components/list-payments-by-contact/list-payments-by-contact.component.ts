@@ -4,6 +4,7 @@ import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 import { DialogDynamicTextComponent } from 'src/app/shared/components/dialog-dynamic-text/dialog-dynamic-text.component';
+import { DialogEditPaymentComponent } from '../dialog-edit-payment/dialog-edit-payment.component';
 
 @Component({
   selector: 'app-list-payments-by-contact',
@@ -24,6 +25,7 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
     private _snackBarService: SnackbarService,
     private _paymentService:  PaymentService,
     public dialog:            MatDialog,
+
   ) {
     this.user = this._userService.getUserLocal();
   }
@@ -79,4 +81,29 @@ export class ListPaymentsByContactComponent implements OnInit, OnChanges {
       }
     });
   }
+
+
+  UpdateCommentPayment(event,item) {
+
+    const user = {
+      contactId :this.idContact,
+      payment :item
+
+    };
+    const dialogComponent                  = new MatDialogConfig();
+    dialogComponent.autoFocus              = true;
+    dialogComponent.disableClose           = true;
+    dialogComponent.data                   = user;
+    dialogComponent.panelClass             = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration  = '1000ms'
+
+    const dialogRef = this.dialog.open(DialogEditPaymentComponent, dialogComponent,);
+    dialogRef.disableClose = true;
+    event.stopPropagation();
+
+
+
+  }
+
 }
