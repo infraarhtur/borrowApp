@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { UserService } from 'src/app/services/shared/user.service';
 export class DebtListComponent implements OnInit, OnChanges {
 
   @Input() idContact: string;
+  @Output() isPaychange = new EventEmitter<boolean>();
   dialogPyment : DialogAddPaymentComponent;
 
   debts = [];
@@ -64,6 +65,10 @@ export class DebtListComponent implements OnInit, OnChanges {
 
     const dialogRef = this.dialog.open(DialogAddPaymentComponent, dialogComponent,);
     dialogRef.disableClose = true;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPaychange.emit(true);
+    });
     event.stopPropagation();
 
 

@@ -122,7 +122,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <app-debt-list [idContact]="this.idContact"></app-debt-list>
+      <app-debt-list [idContact]="this.idContact" (isPaychange)="changeStatusPay($event)"></app-debt-list>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="panelDebtState = true" (closed)="panelDebtState = false" class="divider">
       <mat-expansion-panel-header>
