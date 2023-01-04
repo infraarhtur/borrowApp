@@ -112,11 +112,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   openGeneralPyment(event) {
-    const user = { contactId: this.idContact };
+    const data = { contactId: this.idContact, totalCalculate: this.totalCalculate };
     const dialogComponent                  = new MatDialogConfig();
     dialogComponent.autoFocus              = true;
     dialogComponent.disableClose           = true;
-    dialogComponent.data                   = user;
+    dialogComponent.data                   = data;
     dialogComponent.panelClass             = 'custom-modalbox';
     dialogComponent.enterAnimationDuration = '1000ms';
     dialogComponent.exitAnimationDuration  = '1000ms';

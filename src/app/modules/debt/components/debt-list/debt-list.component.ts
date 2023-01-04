@@ -47,17 +47,17 @@ export class DebtListComponent implements OnInit, OnChanges {
 
   }
 
-  openPyment(event,debtUid) {
+  openPyment(event,debt) {
 
-    const user = {
+    const generalData = {
       contactId:this.idContact,
-      debtId   :debtUid
-
+      debtId   :debt.uid,
+      debt     :debt
     };
     const dialogComponent                  = new MatDialogConfig();
     dialogComponent.autoFocus              = true;
     dialogComponent.disableClose           = true;
-    dialogComponent.data                   = user;
+    dialogComponent.data                   = generalData;
     dialogComponent.panelClass             = 'custom-modalbox';
     dialogComponent.enterAnimationDuration = '1000ms';
     dialogComponent.exitAnimationDuration  = '1000ms'

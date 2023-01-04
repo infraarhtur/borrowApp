@@ -7,16 +7,18 @@ import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 
 @Component({
-  selector: 'app-dialog-add-payment',
-  templateUrl: './dialog-add-payment.component.html',
-  styleUrls: ['./dialog-add-payment.component.scss']
+  selector    : 'app-dialog-add-payment',
+  templateUrl : './dialog-add-payment.component.html',
+  styleUrls   : ['./dialog-add-payment.component.scss']
 })
 export class DialogAddPaymentComponent implements OnInit {
 
   public frmAddPayment: FormGroup;
+  public debt;
   public user;
   public idContact;
-  public debtId = '';
+  public debtId      = '';
+  public validateVal = 0;
 
   constructor(
     private _formBuilder:     FormBuilder,
@@ -33,9 +35,15 @@ export class DialogAddPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.idContact  = this.data.contactId;
+    this.debt       = this.data.debt;
     this.user       = this._userService.getUserLocal();
     let keys        = Object.keys(this.data);
-    this.debtId     = keys.includes('debtId')?  this.data.debtId:'';
+    this.debtId     = keys.includes('debtId')? this.data.debtId:'';
+    this.validateVal= keys.includes('debtId')? this.debt.totalValue:this.data.totalCalculate;
+   setTimeout(() => {
+    this.validations();
+   }, 2000);
+
   }
 
   ok(){
@@ -65,12 +73,10 @@ export class DialogAddPaymentComponent implements OnInit {
   validations(){
     this.frmAddPayment = this._formBuilder.group({
       commentPayment:  [null, [Validators.maxLength(100)]],
-      valuePayment:    [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]]
-    })
+      valuePayment:    [null, [Validators.required,
+                               Validators.pattern(/^[0-9]\d*$/),
+                               Validators.max(this.validateVal)]]
+    });
   }
 
-
-  validateData(){
-    console.log('data',this.data);
-  }
 }
