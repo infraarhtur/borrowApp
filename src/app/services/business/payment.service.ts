@@ -31,38 +31,38 @@ export class PaymentService {
 
   }
 
-  addPayment(userId, oPyment){
+  addPayment(userId, oPayment){
     const guid = uuidv4();
     const today = new Date();
-    oPyment.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    oPayment.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
     const paymentRef2 = doc(this._firestore, `/users/${userId}/payments/${guid}`);
 
     const paymentToCreate = {
       uid:            guid,
-      valuePayment:   oPyment.valuePayment,
-      commentPayment: oPyment.commentPayment,
-      createDate:     oPyment.createDate,
-      type:           oPyment.typePayment,
-      contactId:      oPyment.idContact,
-      debtId:         oPyment.debtId
+      valuePayment:   oPayment.valuePayment,
+      commentPayment: oPayment.commentPayment,
+      createDate:     oPayment.createDate,
+      type:           oPayment.typePayment,
+      contactId:      oPayment.idContact,
+      debtId:         oPayment.debtId
     };
     return setDoc(paymentRef2, paymentToCreate);
   }
 
-  async editPayment(userId, oPyment){
-    console.log({oPyment})
-    const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPyment.uid}`);
+  async editPayment(userId, oPayment){
+    console.log({oPayment})
+    const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPayment.uid}`);
     const today = new Date();
     const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
     const respUpdate = await updateDoc(paymentRef, {
-      commentPayment :oPyment.commentPayment,
+      commentPayment :oPayment.commentPayment,
       lastDateUpdate :lastUpdateDate
     });
     if(respUpdate === undefined){
       const payments = await this.paymentsDecrypt(userId);
       payments.forEach(item => {
-        if(item.uid === oPyment.uid){
-          item.commentPayment = oPyment.commentPayment;
+        if(item.uid === oPayment.uid){
+          item.commentPayment = oPayment.commentPayment;
         }
       });
       this.paymentsEncript(JSON.stringify(payments));

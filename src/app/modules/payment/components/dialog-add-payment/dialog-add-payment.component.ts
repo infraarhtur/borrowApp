@@ -46,9 +46,9 @@ export class DialogAddPaymentComponent implements OnInit {
 
   }
 
-  ok(){
+  ok(oPayment){
     this._paymentServices.verifyPaymentsByIdUserWithSession()
-    this.dialogRef.close(true);
+    this.dialogRef.close(oPayment);
   }
 
   cancel(){
@@ -62,12 +62,13 @@ export class DialogAddPaymentComponent implements OnInit {
     objPayment.idContact    = this.idContact;
     objPayment.typePayment  = this.debtId === '' ? 'General' : 'Especific';
     objPayment.debtId       = this.debtId;
+    objPayment.isPaid       = this.validateVal === objPayment.valuePayment? true:false;
 
     this._paymentServices.addPayment(this.user.uid,objPayment);
     this.frmAddPayment.reset();
     this._snackBarService.customSnackbar('Pago agregado correctamente','ok', 5000);
     localStorage.removeItem('payments');
-    this.ok();
+    this.ok(objPayment);
   }
 
   validations(){
@@ -75,8 +76,13 @@ export class DialogAddPaymentComponent implements OnInit {
       commentPayment:  [null, [Validators.maxLength(100)]],
       valuePayment:    [null, [Validators.required,
                                Validators.pattern(/^[0-9]\d*$/),
-                               Validators.max(this.validateVal)]]
+                               Validators.max(this.validateVal)]],
+      isPaid:           [false ]
     });
+  }
+  changePaid(event){
+    const val = event.checked?this.validateVal:null;
+    this.frmAddPayment.controls['valuePayment'].setValue(val);
   }
 
 }

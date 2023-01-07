@@ -19,10 +19,10 @@ export class CreateDebtComponent implements OnInit {
   userInfo:any;
 
   typeDebtEnumKeys    = [];
-  pymentCicleEnumKeys = [];
+  PaymentCicleEnumKeys = [];
   contactList         = [];
   typeDebtList        = [];
-  pymentCiclelist     = [];
+  PaymentCiclelist     = [];
 
   constructor(
    private formBuilder:     FormBuilder,
@@ -107,11 +107,11 @@ export class CreateDebtComponent implements OnInit {
   }
 
   getPaymentCycle(){
-    this.pymentCicleEnumKeys = Object.keys(paymentCycleEnum).filter(f => f);
-    this.pymentCicleEnumKeys.forEach(item  => {
-      this.pymentCiclelist.push({value: item, viewValue: paymentCycleEnum[item]});
+    this.PaymentCicleEnumKeys = Object.keys(paymentCycleEnum).filter(f => f);
+    this.PaymentCicleEnumKeys.forEach(item  => {
+      this.PaymentCiclelist.push({value: item, viewValue: paymentCycleEnum[item]});
     });
-    this.pymentCiclelist.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
+    this.PaymentCiclelist.sort((a,b) => a.viewValue > b.viewValue ? 1 : -1);
   }
 
   onchangetypeDebt(){

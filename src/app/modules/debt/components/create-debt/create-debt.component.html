@@ -117,7 +117,7 @@
             <mat-label>Seleccione ciclo de pago</mat-label>
             <mat-icon matPrefix>payment</mat-icon>
             <mat-select formControlName="paymentCycle">
-              <mat-option *ngFor="let type of pymentCiclelist" [value]="type.value">
+              <mat-option *ngFor="let type of PaymentCiclelist" [value]="type.value">
                 {{type.viewValue}}
               </mat-option>
             </mat-select>

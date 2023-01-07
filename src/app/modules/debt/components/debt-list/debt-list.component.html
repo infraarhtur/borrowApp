@@ -27,14 +27,16 @@
       <p>
 
         <button mat-icon-button color="primary" matTooltip="Agregar pago a esta deuda" matTooltipPosition="above"
-          color="primary" (click)="openPyment($event, item)" style="display: block;">
+          color="primary" (click)="openPayment($event, item)" style="display: block;">
           <mat-icon >add_card</mat-icon>
         </button>
         <mat-icon> description</mat-icon><span class="title"> concepto:</span> <span
           class="title">{{item.concept}}</span> <br>
         <mat-icon>monetization_on</mat-icon><span class="title"> total: </span> <span class="title">{{item.totalValue |
           currency}}</span> <br>
-        <mat-icon>event</mat-icon>  <span class="title">{{item.payDate}}</span>
+        <mat-icon>event</mat-icon>  <span class="title">{{item.payDate}}</span> <br>
+        <mat-icon>payments</mat-icon> <span class="title"> Abonado:</span><span class="title"> {{item.sumPaid}}</span><br>
+        <span>Es pagado:</span><span>{{item.isPaid}}</span>
 
       </p>
     </mat-card-content>

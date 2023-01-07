@@ -111,7 +111,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.getContactsByUserId(this.idContact);
   }
 
-  openGeneralPyment(event) {
+  openGeneralPayment(event) {
     const data = { contactId: this.idContact, totalCalculate: this.totalCalculate };
     const dialogComponent                  = new MatDialogConfig();
     dialogComponent.autoFocus              = true;

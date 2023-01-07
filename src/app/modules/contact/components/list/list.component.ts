@@ -16,7 +16,7 @@ import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/di
 })
 export class ListComponent implements OnInit {
   contacts = [];
-  dialogPyment : DialogAddPaymentComponent;
+  dialogPayment : DialogAddPaymentComponent;
 
   constructor(
     private formBuilder       :FormBuilder,
@@ -54,7 +54,7 @@ export class ListComponent implements OnInit {
     },500);
   }
 
-  pymentAddlModalOpen(event, contactId){
+  PaymentAddlModalOpen(event, contactId){
 
     const user = { contactId:contactId }
     const dialogComponent = new MatDialogConfig();

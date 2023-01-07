@@ -17,7 +17,7 @@ export class DebtListComponent implements OnInit, OnChanges {
 
   @Input() idContact: string;
   @Output() isPaychange = new EventEmitter<boolean>();
-  dialogPyment : DialogAddPaymentComponent;
+  dialogPayment : DialogAddPaymentComponent;
 
   debts = [];
   user;
@@ -48,7 +48,7 @@ export class DebtListComponent implements OnInit, OnChanges {
 
   }
 
-  openPyment(event,debt) {
+  openPayment(event,debt) {
 
     const generalData = {
       contactId:this.idContact,
@@ -67,6 +67,7 @@ export class DebtListComponent implements OnInit, OnChanges {
     dialogRef.disableClose = true;
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       this.isPaychange.emit(true);
     });
     event.stopPropagation();
