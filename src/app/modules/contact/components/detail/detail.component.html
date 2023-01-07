@@ -14,7 +14,7 @@
           {{totalCalculate | currency}}
 
           <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above"
-            color="primary" (click)="openGeneralPayment($event)">
+            color="primary" (click)="openGeneralPayment($event)" [disabled]="totalCalculate <= 0">
             <mat-icon>add_card</mat-icon>
           </button>
 

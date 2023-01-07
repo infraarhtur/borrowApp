@@ -48,7 +48,7 @@ export class DebtListComponent implements OnInit, OnChanges {
 
   }
 
-  openPayment(event,debt) {
+async openPayment(event,debt) {
 
     const generalData = {
       contactId:this.idContact,
@@ -67,13 +67,17 @@ export class DebtListComponent implements OnInit, OnChanges {
     dialogRef.disableClose = true;
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.isPaychange.emit(true);
+      if(result !== false){
+        console.log('oPayment',result.oPayment );
+        console.log('oDebt',result.oDebt)
+        result.oDebt.sumPaid += result.oPayment.valuePayment;
+        result.oDebt.isPaid   = result.oPayment.isPaid;
+         this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => console.log('updateDebtByUid',r));
+        this.isPaychange.emit(true);
+
+      }
     });
     event.stopPropagation();
-
-
-
   }
 
 }

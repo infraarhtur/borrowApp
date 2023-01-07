@@ -137,4 +137,28 @@ export class DebtService {
 
     return oDebt;
   }
+
+  async updateDebtByUid(userId,oDebt){
+    const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
+    const today = new Date();
+    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    const respUpdate = await updateDoc(debtRef, {
+      sumPaid        :oDebt.sumPaid,
+      isPaid         :oDebt.isPaid,
+      lastDateUpdate :lastUpdateDate
+    });
+    if(respUpdate === undefined){
+      const debts = this.debtsDecrypt(userId);
+      debts.forEach(item => {
+        if(item.uid === oDebt.uid){
+          debugger
+          item.sumPaid = oDebt.sumPaid;
+          item.isPaid  = oDebt.isPaid;
+          item.lastDateUpdate = lastUpdateDate;
+        }
+      });
+      this.debtsEncript(JSON.stringify(debts));
+    }
+    return true;
+  }
 }

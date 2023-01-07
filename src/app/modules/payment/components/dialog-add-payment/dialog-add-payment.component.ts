@@ -39,7 +39,9 @@ export class DialogAddPaymentComponent implements OnInit {
     this.user       = this._userService.getUserLocal();
     let keys        = Object.keys(this.data);
     this.debtId     = keys.includes('debtId')? this.data.debtId:'';
-    this.validateVal= keys.includes('debtId')? this.debt.totalValue:this.data.totalCalculate;
+    this.validateVal= keys.includes('debtId')?
+                      this.debt.totalValue-this.debt.sumPaid
+                      :this.data.totalCalculate;
    setTimeout(() => {
     this.validations();
    }, 2000);
@@ -47,8 +49,8 @@ export class DialogAddPaymentComponent implements OnInit {
   }
 
   ok(oPayment){
-    this._paymentServices.verifyPaymentsByIdUserWithSession()
-    this.dialogRef.close(oPayment);
+    this._paymentServices.verifyPaymentsByIdUserWithSession();
+    this.dialogRef.close({oPayment,oDebt: this.debt});
   }
 
   cancel(){
