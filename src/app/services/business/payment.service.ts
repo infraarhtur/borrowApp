@@ -35,7 +35,7 @@ export class PaymentService {
     const guid = uuidv4();
     const today = new Date();
     oPyment.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
-    const paymentRef2 = doc(this._firestore, `/users/${userId}/pyments/${guid}`);
+    const paymentRef2 = doc(this._firestore, `/users/${userId}/payments/${guid}`);
 
     const paymentToCreate = {
       uid:            guid,
@@ -51,7 +51,7 @@ export class PaymentService {
 
   async editPayment(userId, oPyment){
     console.log({oPyment})
-    const paymentRef = doc(this._firestore, `users/${userId}/pyments/${oPyment.uid}`);
+    const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPyment.uid}`);
     const today = new Date();
     const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
     const respUpdate = await updateDoc(paymentRef, {
@@ -88,7 +88,7 @@ export class PaymentService {
 
   async getPaymentsByIdUser(userId) {
     let payments = [];
-    const querySnapshot = await getDocs(collection(this._firestore, `users/${userId}/pyments`));
+    const querySnapshot = await getDocs(collection(this._firestore, `users/${userId}/payments`));
     querySnapshot.forEach((doc) => {
       payments.push(doc.data());
     });
@@ -120,7 +120,7 @@ export class PaymentService {
   }
 
 
-  async getTotalPymentsByidUser(userId) {
+  async getTotalPaymentsByidUser(userId) {
     let totalDebt = 0;
     const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
@@ -128,7 +128,7 @@ export class PaymentService {
     });
     return totalDebt;
   }
-  async getTotalPymentsByContactId(userId,contactId) {
+  async getTotalPaymentsByContactId(userId,contactId) {
     let totalDebt = 0;
     const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
@@ -140,7 +140,7 @@ export class PaymentService {
   }
 
   async deletePaymentById(userId:string,paymentById:string){
-    const paymentRef = doc(this._firestore, `users/${userId}/pyments/${paymentById}`);
+    const paymentRef = doc(this._firestore, `users/${userId}/payments/${paymentById}`);
     return  deleteDoc(paymentRef).then(result => {
       localStorage.removeItem('payments');
       this.verifyPaymentsByIdUserWithSession();
@@ -151,7 +151,7 @@ export class PaymentService {
   }
 
   async getPaymentById(userId:string,paymentById:string){
-    const PaymentRef = doc(this._firestore, `users/${userId}/pyments/${paymentById}`);
+    const PaymentRef = doc(this._firestore, `users/${userId}/payments/${paymentById}`);
     return  await getDoc(PaymentRef);
   }
 

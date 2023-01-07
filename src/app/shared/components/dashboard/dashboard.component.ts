@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
   hideCollected  = false;
   user;
   totalDebt    = 0;
-  totalPyments = 0;
+  totalPayments = 0;
 
   constructor(
     public authService        :AuthService,
@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
   }
 
   async isHideCollected(){
-    this.totalPyments = await this._paymentsService.getTotalPymentsByidUser(this.user.uid);
+    this.totalPayments = await this._paymentsService.getTotalPaymentsByidUser(this.user.uid);
     this.hideCollected  = !this.hideCollected;
   }
 }

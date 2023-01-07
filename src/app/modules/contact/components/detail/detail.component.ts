@@ -100,7 +100,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   async getTotalPayments() {
-    this.totalPayment = await this._paymentsService.getTotalPymentsByContactId(this.user.uid, this.idContact);
+    this.totalPayment = await this._paymentsService.getTotalPaymentsByContactId(this.user.uid, this.idContact);
   }
 
   isEditContact() {
