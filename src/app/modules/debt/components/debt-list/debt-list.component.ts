@@ -15,7 +15,8 @@ import { UserService } from 'src/app/services/shared/user.service';
 })
 export class DebtListComponent implements OnInit, OnChanges {
 
-  @Input() idContact: string;
+  @Input()  idContact:     string;
+  @Input()  isUpdateDebts: boolean;
   @Output() isPaychange = new EventEmitter<boolean>();
   dialogPayment : DialogAddPaymentComponent;
 
@@ -68,13 +69,10 @@ async openPayment(event,debt) {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result !== false){
-        console.log('oPayment',result.oPayment );
-        console.log('oDebt',result.oDebt)
         result.oDebt.sumPaid += result.oPayment.valuePayment;
         result.oDebt.isPaid   = result.oPayment.isPaid;
          this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => console.log('updateDebtByUid',r));
         this.isPaychange.emit(true);
-
       }
     });
     event.stopPropagation();

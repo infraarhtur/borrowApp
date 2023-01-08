@@ -26,9 +26,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
   panelDebtState          = false;
   panelDetailcontactState = true;
   panelPaymentState       = false;
+  isUpdateDebts           = false;
   totalDebt       = 0;
   totalPayment    = 0;
   totalCalculate  = 0;
+
 
 
   constructor(
@@ -136,15 +138,25 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   changeStatusPay(event:boolean){
+    debugger;
     if(!event){
       setTimeout(() => {
         this.isChangePays = event;
       }, 2000);
 
     }else{
-      this.getTotalPayments();
-      this.calculateTotalgeneral();
-      this.isChangePays = event;
+
+      setTimeout(() => {
+        this.isUpdateDebts = !this.isUpdateDebts;
+        this.isChangePays   = event;
+      }, 100);
+
+      setTimeout(() => {
+        this.getTotalDebts();
+        this.calculateTotalgeneral();
+        this.getTotalPayments();
+      }, 100);
+
     }
   }
 

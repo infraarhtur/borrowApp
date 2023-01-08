@@ -90,6 +90,16 @@ export class DebtService {
     }
   }
 
+  getDebtById(userId,DebtUid){
+    const debtsSelected = [];
+    const debts = this.debtsDecrypt(userId);
+    debts.forEach(item => {
+      if(item.uid === DebtUid){
+        debtsSelected.push(item) ;
+      }
+    });
+    return debtsSelected[0];
+  }
   getTotalDebtsByidUser(userId) {
     let totalDebt = 0;
     this.verifyDebtsByIdUserWithSession(userId);
@@ -151,7 +161,6 @@ export class DebtService {
       const debts = this.debtsDecrypt(userId);
       debts.forEach(item => {
         if(item.uid === oDebt.uid){
-          debugger
           item.sumPaid = oDebt.sumPaid;
           item.isPaid  = oDebt.isPaid;
           item.lastDateUpdate = lastUpdateDate;
