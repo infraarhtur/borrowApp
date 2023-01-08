@@ -71,8 +71,7 @@ async openPayment(event,debt) {
       if(result !== false){
         result.oDebt.sumPaid += result.oPayment.valuePayment;
         result.oDebt.isPaid   = result.oPayment.isPaid;
-         this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => console.log('updateDebtByUid',r));
-        this.isPaychange.emit(true);
+         this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => this.isPaychange.emit(true));
       }
     });
     event.stopPropagation();

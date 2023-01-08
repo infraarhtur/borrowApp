@@ -32,7 +32,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
   totalCalculate  = 0;
 
 
-
   constructor(
     private _formBuilder      : FormBuilder,
     private _contactService   : ContactService,
@@ -138,7 +137,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   changeStatusPay(event:boolean){
-    debugger;
     if(!event){
       setTimeout(() => {
         this.isChangePays = event;
@@ -163,7 +161,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   calculateTotalgeneral(){
     setTimeout(() => {
       this.totalCalculate = this.totalDebt - this.totalPayment;
-    }, 500);
+    }, 200);
   }
 
 }
