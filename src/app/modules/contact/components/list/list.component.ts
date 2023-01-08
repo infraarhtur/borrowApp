@@ -71,4 +71,8 @@ export class ListComponent implements OnInit {
     event.stopPropagation();
   }
 
+  redirectToCreateDebt(idContact){
+    console.log(idContact)
+    this.router.navigate(['debt/create'], { queryParams: { contact: idContact}});
+  }
 }

@@ -6,7 +6,7 @@ import { UserService } from 'src/app/services/shared/user.service';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { typeDebtEnum } from 'src/app/enums/typeDebt.enum';
 import { paymentCycleEnum } from 'src/app/enums/paymentCycle.enum';
-import { Router } from '@angular/router';
+import { ActivatedRoute,  Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 
 @Component({
@@ -15,13 +15,14 @@ import { SnackbarService } from 'src/app/services/shared/snackbar.service';
   styleUrls: ['./create-debt.component.scss']
 })
 export class CreateDebtComponent implements OnInit {
-  public frmCreateDebt: FormGroup;
-  userInfo:any;
+  frmCreateDebt: FormGroup;
+  userInfo:      any;
+  contactParam = null;
 
-  typeDebtEnumKeys    = [];
+  typeDebtEnumKeys     = [];
   PaymentCicleEnumKeys = [];
-  contactList         = [];
-  typeDebtList        = [];
+  contactList          = [];
+  typeDebtList         = [];
   PaymentCiclelist     = [];
 
   constructor(
@@ -31,6 +32,7 @@ export class CreateDebtComponent implements OnInit {
    private userService:     UserService,
    private _contactService: ContactService,
    public router:           Router,
+   public activateRoute:    ActivatedRoute,
    private _snackBarService:SnackbarService
 
   ) {
@@ -41,6 +43,7 @@ export class CreateDebtComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.validateQueryParams();
     this.getContacts();
   }
 
@@ -49,7 +52,7 @@ export class CreateDebtComponent implements OnInit {
     this.frmCreateDebt = this.formBuilder.group({
       isGroupDebt:    [false],
       debtValue:      [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
-      contacts:       [null, [Validators.required]],
+      contacts:       [this.contactParam, [Validators.required]],
       concept:        [null, [Validators.required]],
       typeDebt:       ['sinIntereses', [Validators.required]],
       isFixedFees:    [false],
@@ -153,6 +156,14 @@ export class CreateDebtComponent implements OnInit {
      }
 
   }
-}
 
+  validateQueryParams(){
+    this.activateRoute.queryParams.subscribe(params => {
+      if(params['contact']){
+        this.contactParam = params['contact'];
+        this.validations();
+      }
+    });
+  }
+}
 

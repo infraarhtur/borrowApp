@@ -2,7 +2,7 @@
 
 <mat-card  matRipple  matRippleCentered = "true"  matRippleRadius ="900" class="ripple-containe divider" (click)="detailContact(item.uid)">
   <mat-card-header class="encabezado">
-    <span mat-card-avatar > <mat-icon class="icon-scale2">person_pin</mat-icon></span>
+    <!-- <span mat-card-avatar > <mat-icon class="icon-scale2">person_pin</mat-icon></span> -->
     <mat-card-title>
       {{item.nickname}}
     </mat-card-title>
@@ -15,10 +15,13 @@
       <mat-icon>monetization_on</mat-icon> <span style="vertical-align: super; margin-left:5px;">{{item.debtTotalValue | number}}</span>
     </p>
 
-    <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above" color="primary" (click)="PaymentAddlModalOpen($event, item.uid)">
+    <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above" (click)="PaymentAddlModalOpen($event, item.uid)">
       <mat-icon >add_card</mat-icon>
     </button>
 
+    <button mat-icon-button color="warn" matTooltip="Agregar deuda" matTooltipPosition="above" (click)="redirectToCreateDebt(item.uid)">
+      <mat-icon >addchart</mat-icon>
+    </button>
   </mat-card-content>
 
 
