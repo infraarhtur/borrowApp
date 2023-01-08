@@ -17,6 +17,7 @@ import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/di
 export class ListComponent implements OnInit {
   contacts = [];
   dialogPayment : DialogAddPaymentComponent;
+  user;
 
   constructor(
     private formBuilder       :FormBuilder,
@@ -27,22 +28,22 @@ export class ListComponent implements OnInit {
     public _debtService       :DebtService,
     public dialog             :MatDialog,
   ) {
-
+    this.user = this.userService.getUserLocal();
   }
 
   ngOnInit(): void {
-
-    this.getContacts();
+    this._debtService.verifyDebtsByIdUserWithSession(this.user.uid).then(_=> {
+      this.getContacts();
+    });
   }
   async getContacts() {
-    const user = this.userService.getUserLocal();
     if (localStorage.getItem('contacts') === null) {
-      this.contacts = await this.contactService.getContactsByUserId(user.uid);
+      this.contacts = await this.contactService.getContactsByUserId(this.user.uid);
       this.contactService.contactsEncript(JSON.stringify(this.contacts));
     } else {
       this.contacts = this.contactService.contactsDecrypt();
       this.contacts.forEach(item => {
-        item.debtTotalValue = this._debtService.getTotalDebtsByidContact(user.uid,item.uid)
+        item.debtTotalValue = this._debtService.getTotalDebtsByidContact(this.user.uid,item.uid)
       })
     }
   }

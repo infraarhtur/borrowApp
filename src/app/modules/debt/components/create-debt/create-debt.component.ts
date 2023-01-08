@@ -84,7 +84,7 @@ export class CreateDebtComponent implements OnInit {
     if(resp ===  undefined){
       localStorage.removeItem('debts');
      this._snackBarService .customSnackbar('Deuda creada con exito', 'ok', 5000);
-     this.router.navigate(['dashboard']);
+     this.router.navigate(['contact/list']);
     }
   }
 

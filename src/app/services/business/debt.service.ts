@@ -68,10 +68,8 @@ export class DebtService {
   }
 
   async verifyDebtsByIdUserWithSession(userId) {
-    const user = this._userService.getUserLocal();
-
     if (localStorage.getItem('debts') === null) {
-      const debts = await this.getDebtsByIdUser(user.uid);
+      const debts = await this.getDebtsByIdUser(userId);
       this.debtsEncript(JSON.stringify(debts));
     }
   }
