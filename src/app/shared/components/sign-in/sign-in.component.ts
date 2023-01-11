@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Inject, } from '@angular/core';
 import { AuthService } from 'src/app/services/shared/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { Login } from '../../../models/shared/login.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Route, Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { CryptoJsService } from 'src/app/services/shared/crypto-js.service';
 import { Subscription } from 'rxjs/';

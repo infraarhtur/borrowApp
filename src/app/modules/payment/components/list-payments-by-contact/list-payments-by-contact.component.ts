@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { DebtService } from 'src/app/services/business/debt.service';
 import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';

@@ -15,7 +15,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import {  MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {  MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { NavItem } from '../../../models/shared/navItem.model';
 import { NavService } from 'src/app/services/shared/nav.service';
 import { faBars,faUser,faArrowRight,faSignOut } from '@fortawesome/free-solid-svg-icons';

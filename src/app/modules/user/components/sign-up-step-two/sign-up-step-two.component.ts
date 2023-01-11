@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { CustomValidators } from 'src/app/functions/custom-validators';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef, MatLegacyDialogConfig as MatDialogConfig, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from 'src/app/services/shared/user.service';
 import { User } from 'src/app/models/shared/user';
