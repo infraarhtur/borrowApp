@@ -1,7 +1,7 @@
 <app-created-payment></app-created-payment>
 <div *ngFor="let item of debts">
 
-  <mat-card matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider"
+  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider"
     (click)="detailDebtById(item.uid)">
 
     <mat-card-content align="center">
