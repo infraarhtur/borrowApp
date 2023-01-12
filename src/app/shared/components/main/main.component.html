@@ -27,12 +27,12 @@
     <mat-divider></mat-divider>
     <div routerLink="/dashboard" routerLinkActive="active-link"
     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-    <button mat-button color="primary"> <mat-icon class="icon-style" >home</mat-icon>Inicio</button>
+    <a mat-button color="primary"> <mat-icon class="icon-style" >home</mat-icon>Inicio</a>
   </div>
     <mat-divider></mat-divider>
     <div routerLink="/contact/list" routerLinkActive="active-link"
     class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-    <button mat-button color="primary"> <mat-icon  class="icon-style" >groups_3</mat-icon>conatctos</button>
+    <a mat-button color="primary"> <mat-icon  class="icon-style" >groups_3</mat-icon>conatctos</a>
   </div>
 
   <mat-divider></mat-divider>
@@ -67,9 +67,10 @@ class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md cen
 
   <mat-sidenav-content>
 
-    <mat-toolbar class="menu">
+    <mat-toolbar color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <fa-icon class="mat-icon-singOut" [icon]="faBars"></fa-icon>
+        <!-- <fa-icon class="mat-icon-singOut" [icon]="faBars"></fa-icon> -->
+        <mat-icon>menu</mat-icon>
       </button>
       <!-- <img style="height: 100px; width: 200px;" src="../../../../assets/svg/LasDosRuedasBlanco.png" alt=""> -->
       <span class="division-titulo"></span>
