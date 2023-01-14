@@ -93,9 +93,11 @@
 
           </mat-card-content>
           <mat-card-actions align="center" *ngIf="!isDisabledForm">
+            <div style="text-align: center; width: 100%;">
+              <button mat-button color="warn" type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
+              <button mat-button color="primary" mat-stroked-button ty>Editar contacto</button>
+            </div>
 
-            <button mat-button color="warn" type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
-            <button mat-button color="primary" mat-stroked-button ty>Editar contacto</button>
 
           </mat-card-actions>
 

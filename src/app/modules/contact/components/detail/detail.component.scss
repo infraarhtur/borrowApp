@@ -49,5 +49,8 @@ td {
   margin-top: 5px;
   margin-bottom: 10px;
 }
+::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{
+  color: #5f5d5d;
+}
 
 

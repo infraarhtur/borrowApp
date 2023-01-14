@@ -3,3 +3,6 @@
   color: rgba(0, 0, 0, 0.38);
 
 }
+::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{
+  color: #5f5d5d;
+}
