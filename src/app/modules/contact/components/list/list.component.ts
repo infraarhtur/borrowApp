@@ -7,6 +7,7 @@ import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/dialog-add-payment/dialog-add-payment.component';
+import { PaymentService } from 'src/app/services/business/payment.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ListComponent implements OnInit {
     public router             :Router,
     public _debtService       :DebtService,
     public dialog             :MatDialog,
+    private _paymentsService  :PaymentService
   ) {
     this.user = this.userService.getUserLocal();
   }
@@ -43,7 +45,8 @@ export class ListComponent implements OnInit {
     } else {
       this.contacts = this.contactService.contactsDecrypt();
       this.contacts.forEach(item => {
-        item.debtTotalValue = this._debtService.getTotalDebtsByidContact(this.user.uid,item.uid)
+        item.debtTotalValue = this._debtService.getTotalDebtsByidContact(this.user.uid,item.uid);
+        this._paymentsService.getTotalPaymentsByContactId(this.user.uid,item.uid).then(res => item.paymentTotalValue = res);
       })
     }
   }

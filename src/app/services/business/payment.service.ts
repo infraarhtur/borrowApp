@@ -155,5 +155,4 @@ export class PaymentService {
     return  await getDoc(PaymentRef);
   }
 
-
 }

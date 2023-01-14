@@ -19,6 +19,7 @@ export class DialogAddPaymentComponent implements OnInit {
   public idContact;
   public debtId      = '';
   public validateVal = 0;
+  public title: string;
 
   constructor(
     private _formBuilder:     FormBuilder,
@@ -42,6 +43,7 @@ export class DialogAddPaymentComponent implements OnInit {
     this.validateVal= keys.includes('debtId')?
                       this.debt.totalValue-this.debt.sumPaid
                       :this.data.totalCalculate;
+    this.title      = keys.includes('debtId')? 'Pago especifico':'Pago general';
    setTimeout(() => {
     this.validations();
    }, 2000);
