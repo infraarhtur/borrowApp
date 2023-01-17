@@ -130,6 +130,16 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.getTotalDebts();
         this.getTotalPayments();
         this.calculateTotalgeneral();
+        const listDebts = this._debtService.getDebtsByIsPaid(this.user.uid,this.idContact,false);
+        const isPayTotal = result.oPayment.valuePayment === this.totalDebt?true: false;
+        listDebts.forEach(item => {
+          if(isPayTotal){
+            item.isPaid  = true;
+            item.sumPaid = item.debtValue;
+          }
+          this._debtService.updateDebtByUid(this.user.uid,item);
+          });
+
         this.isChangePays   = true;
       }
     });

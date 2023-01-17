@@ -60,7 +60,6 @@ export class DialogAddPaymentComponent implements OnInit {
   }
 
   addPayment(){
-
     if(this.frmAddPayment.invalid){ return;}
     const objPayment        = this.frmAddPayment.value;
     objPayment.idContact    = this.idContact;

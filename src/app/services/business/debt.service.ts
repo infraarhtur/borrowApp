@@ -133,6 +133,11 @@ export class DebtService {
     return debtsSelects;
   }
 
+  getDebtsByIsPaid(userId, contactId,status){
+    const debts = this.getDebtsByIdContact(userId, contactId);
+    return debts.filter(item => {return item.isPaid === status});
+  }
+
   calculateValues(oDebt){
     const today = new Date();
     oDebt.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
@@ -147,6 +152,30 @@ export class DebtService {
   }
 
   async updateDebtByUid(userId,oDebt){
+    const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
+    const today = new Date();
+    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    const respUpdate = await updateDoc(debtRef, {
+      sumPaid        :oDebt.sumPaid,
+      isPaid         :oDebt.isPaid,
+      lastDateUpdate :lastUpdateDate
+    });
+    if(respUpdate === undefined){
+      const debts = this.debtsDecrypt(userId);
+      debts.forEach(item => {
+        if(item.uid === oDebt.uid){
+          item.sumPaid = oDebt.sumPaid;
+          item.isPaid  = oDebt.isPaid;
+          item.lastDateUpdate = lastUpdateDate;
+        }
+      });
+      this.debtsEncript(JSON.stringify(debts));
+      return true;
+    }
+
+  }
+
+  async updateDebtByUidGeneralPay(userId,oDebt){
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
     const today = new Date();
     const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
