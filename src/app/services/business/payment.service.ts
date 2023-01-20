@@ -15,6 +15,7 @@ import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../shared/user.service';
 import { SnackbarService } from '../shared/snackbar.service';
+import { UtilitiesService } from '../shared/utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +23,19 @@ import { SnackbarService } from '../shared/snackbar.service';
 export class PaymentService {
 
   constructor(
-    private _userService:   UserService,
-    private _firestore:     Firestore,
-    private router:         Router,
-    private criptoService:  CryptoJsService,
+    private _userService:     UserService,
+    private _firestore:       Firestore,
+    private router:           Router,
+    private criptoService:    CryptoJsService,
     private _snackBarService: SnackbarService,
+    private _utilities:       UtilitiesService
   ) {
 
   }
 
   addPayment(userId, oPayment){
     const guid = uuidv4();
-    const today = new Date();
-    oPayment.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    oPayment.createDate = this._utilities.getTodayFormat();
     const paymentRef2 = doc(this._firestore, `/users/${userId}/payments/${guid}`);
 
     const paymentToCreate = {
@@ -52,8 +53,8 @@ export class PaymentService {
   async editPayment(userId, oPayment){
     console.log({oPayment})
     const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPayment.uid}`);
-    const today = new Date();
-    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+    const lastUpdateDate = this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(paymentRef, {
       commentPayment :oPayment.commentPayment,
       lastDateUpdate :lastUpdateDate

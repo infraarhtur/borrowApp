@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
 import { getDocs } from 'firebase/firestore';
+import { UtilitiesService } from '../shared/utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,10 @@ import { getDocs } from 'firebase/firestore';
 export class ContactService {
 
   constructor(
-    private _firestore: Firestore,
-    private router: Router,
-    private criptoService: CryptoJsService
+    private _firestore    : Firestore,
+    private router        : Router,
+    private criptoService : CryptoJsService,
+    private _utilities    : UtilitiesService
   ) {
 
   }
@@ -79,8 +81,8 @@ export class ContactService {
   async updateContactByIdContact(userId,contact,idContact){
 
     const contactRef = doc(this._firestore, `/users/${userId}/contacts/${idContact}`);
-    const today = new Date();
-    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+    const lastUpdateDate =this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(contactRef, {
       email          :contact.emailContact,
       indicative     :'+'+contact.indicative,

@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { CryptoJsService } from '../shared/crypto-js.service';
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from '../shared/user.service';
+import { UtilitiesService } from '../shared/utilities.service';
 
 
 @Injectable({
@@ -22,10 +23,11 @@ import { UserService } from '../shared/user.service';
 export class DebtService {
 
   constructor(
-    private _userService: UserService,
-    private _firestore: Firestore,
-    private router: Router,
-    private criptoService: CryptoJsService
+    private _userService  : UserService,
+    private _firestore    : Firestore,
+    private router        : Router,
+    private criptoService : CryptoJsService,
+    private _utilities    : UtilitiesService
   ) {
 
   }
@@ -139,8 +141,7 @@ export class DebtService {
   }
 
   calculateValues(oDebt){
-    const today = new Date();
-    oDebt.createDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    oDebt.createDate = this._utilities.getTodayFormat();
 
     if(oDebt.typeDebt === 'interesFijo'){
       oDebt.debtTotalValue = oDebt.debtValue +((oDebt.fixedInterest / 100) * oDebt.debtValue) ;
@@ -153,8 +154,9 @@ export class DebtService {
 
   async updateDebtByUid(userId,oDebt){
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
-    const today = new Date();
-    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+    const lastUpdateDate = this._utilities.getTodayFormat();
+
     const respUpdate = await updateDoc(debtRef, {
       sumPaid        :oDebt.sumPaid,
       isPaid         :oDebt.isPaid,
@@ -178,7 +180,7 @@ export class DebtService {
   async updateDebtByUidGeneralPay(userId,oDebt){
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
     const today = new Date();
-    const lastUpdateDate = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    const lastUpdateDate = this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(debtRef, {
       sumPaid        :oDebt.sumPaid,
       isPaid         :oDebt.isPaid,
@@ -188,8 +190,8 @@ export class DebtService {
       const debts = this.debtsDecrypt(userId);
       debts.forEach(item => {
         if(item.uid === oDebt.uid){
-          item.sumPaid = oDebt.sumPaid;
-          item.isPaid  = oDebt.isPaid;
+          item.sumPaid        = oDebt.sumPaid;
+          item.isPaid         = oDebt.isPaid;
           item.lastDateUpdate = lastUpdateDate;
         }
       });
