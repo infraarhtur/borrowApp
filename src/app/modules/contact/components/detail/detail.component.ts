@@ -140,10 +140,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
           }
 
           this._debtService.updateDebtByUid(this.user.uid,item).then(r => {
-            console.log('Actualizo Debt',r )
+            console.log('Actualizo Debt',r );
+            this.changeStatusPay(true);
           }  );
           });
-          this.isChangePays = true
 
 
       }
