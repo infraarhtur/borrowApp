@@ -129,10 +129,11 @@ export class DebtService {
     const debts = this.debtsDecrypt(userId);
     debts.forEach(item => {
       if( item.contacts === contactId){
+        item['dateOrder'] = this._utilities.convertStringToDate(item.createDate);
         debtsSelects.push(item);
       }
     });
-    return debtsSelects;
+    return debtsSelects.sort((x, y) => y.dateOrder - x.dateOrder);
   }
 
   getDebtsByIsPaid(userId, contactId,status){
@@ -179,7 +180,7 @@ export class DebtService {
 
   async updateDebtByUidGeneralPay(userId,oDebt){
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
-    const today = new Date();
+
     const lastUpdateDate = this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(debtRef, {
       sumPaid        :oDebt.sumPaid,

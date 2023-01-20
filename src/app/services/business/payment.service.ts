@@ -75,14 +75,15 @@ export class PaymentService {
   }
 
   async getPaymentsByContactId(userId,contactId){
-    const paymentList = [];
+    let paymentList = [];
     const payments = await this.paymentsDecrypt(userId);
     payments.forEach(item => {
       if(item.contactId === contactId){
+        item['dateOrder'] = this._utilities.convertStringToDate(item.createDate)
         paymentList.push(item);
       }
     });
-    return paymentList;
+    return paymentList.sort((x, y) => y.dateOrder - x.dateOrder);
   }
 
 

@@ -39,7 +39,8 @@
         <mat-icon>event</mat-icon>  <span class="title">{{item.payDate}}</span> <br>
         <mat-icon>payments</mat-icon> <span class="title"> Abonado:</span><span class="title"> {{item.sumPaid  | currency}}</span><br>
         <span>Faltante por pagar {{ item.totalValue - item.sumPaid | currency}}</span><br>
-        <span>Es pagado:</span><span>{{item.isPaid}}</span>
+        <span>Es pagado:</span><span>{{item.isPaid}}</span> <br>
+        <span>created:{{item.createDate}} </span>
 
       </p>
     </mat-card-content>
