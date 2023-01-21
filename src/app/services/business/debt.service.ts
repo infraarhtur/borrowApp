@@ -160,7 +160,6 @@ export class DebtService {
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
 
     const lastUpdateDate = this._utilities.getTodayFormat();
-
     const respUpdate = await updateDoc(debtRef, {
       sumPaid        :oDebt.sumPaid,
       isPaid         :oDebt.isPaid,

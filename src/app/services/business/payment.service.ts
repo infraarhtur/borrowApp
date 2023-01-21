@@ -37,7 +37,6 @@ export class PaymentService {
     const guid = uuidv4();
     oPayment.createDate = this._utilities.getTodayFormat();
     const paymentRef2 = doc(this._firestore, `/users/${userId}/payments/${guid}`);
-
     const paymentToCreate = {
       uid:            guid,
       valuePayment:   oPayment.valuePayment,

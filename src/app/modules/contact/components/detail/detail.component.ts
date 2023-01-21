@@ -136,7 +136,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         listDebts.forEach(item => {
           if(isPayTotal){
             item.isPaid  = true;
-            item.sumPaid = item.debtValue;
+            item.sumPaid = item.typeDebt ==='interesFijo'? item.totalValue: item.debtValue;
           }
 
           this._debtService.updateDebtByUid(this.user.uid,item).then(r => {
