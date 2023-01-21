@@ -13,10 +13,17 @@
         <mat-panel-description align="end" style="justify-content: space-between">
           {{totalCalculate | currency}}
 
+          <span>
+          <button mat-icon-button color="warn" matTooltip="Agregar deuda" matTooltipPosition="above"
+           (click)="redirectToCreateDebt($event)">
+            <mat-icon >addchart</mat-icon>
+          </button>
+
           <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above"
             color="primary" (click)="openGeneralPayment($event)" [disabled]="totalCalculate <= 0">
             <mat-icon>add_card</mat-icon>
           </button>
+        </span>
 
         </mat-panel-description>
 

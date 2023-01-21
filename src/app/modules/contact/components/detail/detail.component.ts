@@ -178,5 +178,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.totalCalculate = this.totalDebt - this.totalPayment;
     }, 200);
   }
-
+  redirectToCreateDebt(event){
+    this.router.navigate(['debt/create'], { queryParams: { contact: this.idContact}});
+    event.stopPropagation();
+  }
 }
