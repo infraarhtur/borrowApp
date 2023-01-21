@@ -50,7 +50,6 @@ export class PaymentService {
   }
 
   async editPayment(userId, oPayment){
-    console.log({oPayment})
     const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPayment.uid}`);
 
     const lastUpdateDate = this._utilities.getTodayFormat();
@@ -68,9 +67,6 @@ export class PaymentService {
       this.paymentsEncript(JSON.stringify(payments));
       return true;
     }
-
-
-
   }
 
   async getPaymentsByContactId(userId,contactId){

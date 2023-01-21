@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit,Inject, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/shared/user.service';
   styleUrls   : ['./dialog-add-payment.component.scss']
 })
 export class DialogAddPaymentComponent implements OnInit {
-
+  @ViewChild('txtValuePayment') valuePaymentElement: ElementRef;
   public frmAddPayment: FormGroup;
   public debt;
   public user;
@@ -46,7 +46,8 @@ export class DialogAddPaymentComponent implements OnInit {
     this.title      = keys.includes('debtId')? 'Pago especifico':'Pago general';
    setTimeout(() => {
     this.validations();
-   }, 2000);
+    this.valuePaymentElement.nativeElement.focus();
+   }, 1500);
 
   }
 
