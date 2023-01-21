@@ -145,7 +145,10 @@ export class DebtService {
     oDebt.createDate = this._utilities.getTodayFormat();
 
     if(oDebt.typeDebt === 'interesFijo'){
-      oDebt.debtTotalValue = oDebt.debtValue +((oDebt.fixedInterest / 100) * oDebt.debtValue) ;
+      oDebt.debtTotalValue = Math.round(oDebt.debtValue +
+                            ((oDebt.fixedInterest / 100) *
+                             oDebt.debtValue));
+
     }else if (oDebt.typeDebt === 'sinIntereses'){
       oDebt.debtTotalValue = oDebt.debtValue;
     }
