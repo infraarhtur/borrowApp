@@ -11,10 +11,12 @@
   <mat-card-content align="center">
 
     <p>
-      <mat-icon>monetization_on</mat-icon> <span style="vertical-align: super; margin-left:5px;">{{item.debtTotalValue - item.paymentTotalValue | number}}</span>
+      <mat-icon >monetization_on</mat-icon> <span style="vertical-align: super; margin-left:5px;">{{item.debtTotalValue - item.paymentTotalValue | number}}</span>
     </p>
 
-    <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above" (click)="PaymentAddlModalOpen($event, item.uid)">
+    <button *ngIf="(item.debtTotalValue - item.paymentTotalValue) > 0"
+          mat-icon-button color="primary" matTooltip="Agregar pago general"
+          matTooltipPosition="above" (click)="PaymentAddlModalOpen($event, item.uid)">
       <mat-icon >add_card</mat-icon>
     </button>
 
