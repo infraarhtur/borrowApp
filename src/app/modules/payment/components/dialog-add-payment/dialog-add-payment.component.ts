@@ -2,6 +2,7 @@ import { Component, OnInit,Inject, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DebtService } from 'src/app/services/business/debt.service';
 import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
@@ -29,6 +30,7 @@ export class DialogAddPaymentComponent implements OnInit {
     private _userService:     UserService,
     private _snackBarService: SnackbarService,
     public dialogRef:         MatDialogRef<DialogAddPaymentComponent>,
+    private _debtService:     DebtService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.validations();
@@ -68,6 +70,10 @@ export class DialogAddPaymentComponent implements OnInit {
     objPayment.debtId       = this.debtId;
     objPayment.isPaid       = this.validateVal === objPayment.valuePayment? true:false;
 
+    objPayment.idsGeneral = objPayment.typePayment === 'General'?
+                            this._debtService.getIdDebtsForGeneralPay( this.user.id, objPayment.valuePayment, this.idContact)
+                            :undefined;
+
     this._paymentServices.addPayment(this.user.uid,objPayment);
     this.frmAddPayment.reset();
     this._snackBarService.customSnackbar('Pago agregado correctamente','ok', 5000);
@@ -88,5 +94,6 @@ export class DialogAddPaymentComponent implements OnInit {
     const val = event.checked?this.validateVal:null;
     this.frmAddPayment.controls['valuePayment'].setValue(val);
   }
+
 
 }

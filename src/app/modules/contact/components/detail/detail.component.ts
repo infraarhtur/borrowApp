@@ -126,42 +126,79 @@ export class DetailComponent implements OnInit, AfterViewInit {
     dialogRef.disableClose = true;
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.getTotalDebts();
         this.getTotalPayments();
         this.calculateTotalgeneral();
-        const listDebts = this._debtService.getDebtsByIsPaid(this.user.uid,this.idContact,false);
-        const isPayTotal = result.oPayment.valuePayment ===  this.totalCalculate? true: false;
+        const listDebts = this._debtService.getDebtsByIsPaid(this.user.uid, this.idContact, false);
+        const isPayTotal = result.oPayment.valuePayment === this.totalCalculate ? true : false;
 
         listDebts.forEach(item => {
-          if(isPayTotal){
-            item.isPaid  = true;
-            item.sumPaid = item.typeDebt ==='interesFijo'? item.totalValue: item.debtValue;
+          if (isPayTotal && result.oDebt !== undefined) {
+            item.isPaid = true;
+            item.sumPaid = item.typeDebt === 'interesFijo' ? item.totalValue : item.debtValue;
+
+            this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
+              console.log('Actualizo Debt', r);
+              this.changeStatusPay(true);
+            });
+          } else {
+            if (isPayTotal && result.oPayment.typePayment === 'General') {
+              if(!item.isPaid){
+                item.isPaid = true;
+                item.sumPaid = item.totalValue;
+                this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
+                  console.log('Actualizo Debt', r);
+                  this.changeStatusPay(true);
+                });
+              }
+
+
+            } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
+
+              result.oPayment.idsGeneral.forEach(element => {
+
+                if (element.uid === item.uid && !isPayTotal) {
+
+                  item.sumPaid = !element.isPayTotal ? item.sumPaid + element.value : element.value;
+                  if (!element.isPayTotal && item.sumPaid === item.totalValue) {
+                    item.isPaid = true;
+                  } else {
+                    item.isPaid = element.isPayTotal;
+                  }
+
+                  this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
+                    console.log('Actualizo Debt', r);
+                    this.changeStatusPay(true);
+                  });
+                }
+              });
+
+            } else {
+              this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
+                console.log('Actualizo Debt', r);
+                this.changeStatusPay(true);
+              });
+            }
           }
 
-          this._debtService.updateDebtByUid(this.user.uid,item).then(r => {
-            console.log('Actualizo Debt',r );
-            this.changeStatusPay(true);
-          }  );
-          });
-
-
+        });
       }
     });
     event.stopPropagation();
   }
 
-  changeStatusPay(event:boolean){
-    if(!event){
+  changeStatusPay(event: boolean) {
+    if (!event) {
       setTimeout(() => {
         this.isChangePays = event;
       }, 2000);
 
-    }else{
+    } else {
 
       setTimeout(() => {
         this.isUpdateDebts = !this.isUpdateDebts;
-        this.isChangePays   = event;
+        this.isChangePays = event;
       }, 100);
 
       setTimeout(() => {
@@ -173,13 +210,13 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  calculateTotalgeneral(){
+  calculateTotalgeneral() {
     setTimeout(() => {
       this.totalCalculate = this.totalDebt - this.totalPayment;
     }, 200);
   }
-  redirectToCreateDebt(event){
-    this.router.navigate(['debt/create'], { queryParams: { contact: this.idContact}});
+  redirectToCreateDebt(event) {
+    this.router.navigate(['debt/create'], { queryParams: { contact: this.idContact } });
     event.stopPropagation();
   }
 }

@@ -202,4 +202,33 @@ export class DebtService {
     }
     return true;
   }
+
+  getIdDebtsForGeneralPay(userId, valuePay, idContact) {
+    let uIds = [];
+    const debts = this.getDebtsByIsPaid(userId, idContact, false).reverse();
+
+    for (let index = 0; index < debts.length; index++) {
+      const item = debts[index];
+      if (valuePay >= item.totalValue && valuePay !== 0) {
+
+        valuePay = Number(valuePay) - Number(item.totalValue);
+        uIds.push({
+          uid       : item.uid.toString(),
+          value     : Number(item.totalValue),
+          isPayTotal: true
+        });
+
+      }else if(valuePay < item.totalValue && valuePay > 0){
+
+        uIds.push({
+          uid       : item.uid.toString(),
+          value     : Number(valuePay),
+          isPayTotal: false
+        });
+        valuePay = 0;
+      }
+    }
+
+    return uIds;
+  }
 }
