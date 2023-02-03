@@ -95,7 +95,7 @@ export class ListComponent implements OnInit {
       const isAsc = event.direction === 'asc';
       switch (event.active) {
         case 'nickname':
-          return compare(a.nickname, b.nickname, isAsc);
+          return compare(a.nickname.toLowerCase(), b.nickname.toLowerCase(), isAsc);
         case 'debtCalculate':
           return compare(a.debtCalculate, b.debtCalculate, isAsc);
 
