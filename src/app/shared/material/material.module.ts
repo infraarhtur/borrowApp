@@ -8,7 +8,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -22,8 +21,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-
-//#endregion
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule} from '@angular/material/dialog';
@@ -36,8 +33,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
-
-
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
+//#endregion
 
 
 @NgModule({
@@ -79,7 +77,9 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatRippleModule
+    MatRippleModule,
+    MatListModule,
+    MatDividerModule
   ],
   exports: [
     MatSliderModule,
@@ -123,7 +123,9 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatRippleModule
+    MatRippleModule,
+    MatListModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule { }
