@@ -1,10 +1,19 @@
+<div style="width: 100%; display: flex; justify-content: space-between;">
+<mat-icon matTooltip="Ordenar por" matTooltipPosition="above">sort</mat-icon>
+<table matSort (matSortChange)="sortData($event)" matSortActive="debtCalculate" matSortDirection="desc">
+  <tr>
+    <th mat-sort-header="nickname">Nombre</th>
+    <th mat-sort-header="debtCalculate">Deuda</th>
+  </tr>
+</table>
+</div>
 <mat-nav-list>
   <mat-divider></mat-divider>
   <mat-list-item [routerLink]="['/contact/detail/',item.uid]" [routerLinkActive]="['active']"
     *ngFor="let item of contacts">
 
     <img matListItemAvatar
-    src="../../../../../assets/svg/person.png"  >
+    src="../../../../../assets/svg/person.png">
     <span matListItemTitle> {{item.nickname}} </span>
 
     <span matListItemMeta style="margin-top: 10px;">
@@ -15,7 +24,7 @@
     </span>
 
     <div matListItemLine>{{item.debtTotalValue
-      - item.paymentTotalValue | number}} </div>
+      - item.paymentTotalValue | number}}</div>
       <mat-divider [inset]="true" style="border-top-color:rgba(0,0,0,.12);"> 1</mat-divider>
   </mat-list-item>
 </mat-nav-list>

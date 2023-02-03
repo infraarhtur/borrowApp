@@ -36,6 +36,14 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this._debtService.verifyDebtsByIdUserWithSession(this.user.uid).then(_=> {
       this.getContacts();
+      setTimeout(() => {
+        this.contacts.forEach(item => {
+          item.debtCalculate = item.debtTotalValue
+                              - item.paymentTotalValue
+        })
+
+        this.sortData ({active: 'debtCalculate', direction: 'desc'})
+      }, 1000);
     });
   }
   async getContacts() {
@@ -77,4 +85,26 @@ export class ListComponent implements OnInit {
   redirectToCreateDebt(idContact){
     this.router.navigate(['debt/create'], { queryParams: { contact: idContact}});
   }
+  sortData(event){
+
+    if (!event.active || event.direction === '') {
+      return;
+    }
+
+    this.contacts.sort((a,b) => {
+      const isAsc = event.direction === 'asc';
+      switch (event.active) {
+        case 'nickname':
+          return compare(a.nickname, b.nickname, isAsc);
+        case 'debtCalculate':
+          return compare(a.debtCalculate, b.debtCalculate, isAsc);
+
+        default:
+          return 0;
+      }
+    });
+  }
+}
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
