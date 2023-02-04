@@ -95,16 +95,16 @@ export class ListComponent implements OnInit {
       const isAsc = event.direction === 'asc';
       switch (event.active) {
         case 'nickname':
-          return compare(a.nickname.toLowerCase(), b.nickname.toLowerCase(), isAsc);
+          return this.compare(a.nickname.toLowerCase(), b.nickname.toLowerCase(), isAsc);
         case 'debtCalculate':
-          return compare(a.debtCalculate, b.debtCalculate, isAsc);
+          return this.compare(a.debtCalculate, b.debtCalculate, isAsc);
 
         default:
           return 0;
       }
     });
   }
-}
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
 }

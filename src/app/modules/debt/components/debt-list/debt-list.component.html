@@ -1,11 +1,8 @@
 <app-created-payment></app-created-payment>
 <div *ngFor="let item of debts">
 
-  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider"
-    (click)="detailDebtById(item.uid)">
-
+  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider">
     <mat-card-content align="center">
-
       <div [ngSwitch]="item.typeDebt" style="width: 100%; text-align: start;">
         <div *ngSwitchCase="'sinIntereses'">
           <button mat-icon-button color="warn" aria-label="">

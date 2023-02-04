@@ -33,7 +33,7 @@ export class PaymentService {
 
   }
 
-  addPayment(userId, oPayment){
+  async addPayment(userId, oPayment){
     const guid = uuidv4();
     oPayment.createDate = this._utilities.getTodayFormat();
     const paymentRef2 = doc(this._firestore, `/users/${userId}/payments/${guid}`);
@@ -46,7 +46,8 @@ export class PaymentService {
       contactId:      oPayment.idContact,
       debtId:         oPayment.debtId
     };
-    return setDoc(paymentRef2, paymentToCreate);
+    const resp = await setDoc(paymentRef2, paymentToCreate);
+    return guid;
   }
 
   async editPayment(userId, oPayment){
@@ -55,6 +56,25 @@ export class PaymentService {
     const lastUpdateDate = this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(paymentRef, {
       commentPayment :oPayment.commentPayment,
+      lastDateUpdate :lastUpdateDate
+    });
+    if(respUpdate === undefined){
+      const payments = await this.paymentsDecrypt(userId);
+      payments.forEach(item => {
+        if(item.uid === oPayment.uid){
+          item.commentPayment = oPayment.commentPayment;
+        }
+      });
+      this.paymentsEncript(JSON.stringify(payments));
+      return true;
+    }
+  }
+
+  async editPaymentGeneralDebtsId(userId, oPayment){
+    const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPayment.uid}`);
+    const lastUpdateDate = this._utilities.getTodayFormat();
+    const respUpdate = await updateDoc(paymentRef, {
+      DebtsAsociate:oPayment.idsGeneral,
       lastDateUpdate :lastUpdateDate
     });
     if(respUpdate === undefined){

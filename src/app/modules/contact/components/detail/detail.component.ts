@@ -152,10 +152,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
                   this.changeStatusPay(true);
                 });
               }
-
+              this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
 
             } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
 
+              this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
               result.oPayment.idsGeneral.forEach(element => {
 
                 if (element.uid === item.uid && !isPayTotal) {
