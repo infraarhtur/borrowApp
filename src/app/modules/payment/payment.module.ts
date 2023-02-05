@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { DialogAddPaymentComponent } from './components/dialog-add-payment/dialog-add-payment.component';
 import { ListPaymentsByContactComponent } from './components/list-payments-by-contact/list-payments-by-contact.component';
 import { DialogEditPaymentComponent } from './components/dialog-edit-payment/dialog-edit-payment.component';
+import { DialogListPaymentComponent } from './components/dialog-list-payment/dialog-list-payment.component';
 
 
 
@@ -15,7 +16,8 @@ import { DialogEditPaymentComponent } from './components/dialog-edit-payment/dia
     CreatedPaymentComponent,
     DialogAddPaymentComponent,
     ListPaymentsByContactComponent,
-    DialogEditPaymentComponent
+    DialogEditPaymentComponent,
+    DialogListPaymentComponent
   ],
   imports: [
     CommonModule,

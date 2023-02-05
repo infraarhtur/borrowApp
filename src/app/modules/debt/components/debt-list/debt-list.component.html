@@ -1,7 +1,8 @@
 <app-created-payment></app-created-payment>
 <div *ngFor="let item of debts">
 
-  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900" class="ripple-containe divider">
+  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900"
+    class="ripple-containe divider">
     <mat-card-content align="center">
       <div [ngSwitch]="item.typeDebt" style="width: 100%; text-align: start;">
         <div *ngSwitchCase="'sinIntereses'">
@@ -14,7 +15,7 @@
           <button mat-icon-button color="primary" aria-label="">
             <mat-icon>label_important</mat-icon>
           </button> <span>Interes fijo:</span>
-          <span>  {{item.fixedInterest}}% </span>
+          <span> {{item.fixedInterest}}% </span>
           <span> valor inicial: {{item.debtValue | currency}}</span>
         </div>
 
@@ -22,19 +23,28 @@
       </div>
 
       <p>
+        <span style="display: block;text-align: start;">
+          <button mat-icon-button matTooltip="Agregar pago a esta deuda" matTooltipPosition="above" color="primary"
+            (click)="openPayment($event, item)" *ngIf="!item.isPaid">
+            <mat-icon>add_card</mat-icon>
+          </button>
 
-        <button mat-icon-button color="primary" matTooltip="Agregar pago a esta deuda" matTooltipPosition="above"
-          color="primary" (click)="openPayment($event, item)" style="display: block;" *ngIf="!item.isPaid">
-          <mat-icon >add_card</mat-icon>
-        </button>
+          <button mat-icon-button matTooltip="ver pagos asociados" matTooltipPosition="above" color="accent"
+          (click)="viewAssociatedPayments($event, item)"
+            *ngIf="item.sumPaid > 0">
+            <mat-icon>receipt_long</mat-icon>
+          </button>
+        </span>
+
         <mat-icon> description</mat-icon><span class="title"> concepto:</span> <span
           class="title">{{item.concept}}</span> <br>
         <mat-icon>monetization_on</mat-icon><span class="title"> total a pagar: </span>
-          <span class="title">
+        <span class="title">
           {{item.totalValue | currency}}
         </span> <br>
-        <mat-icon>event</mat-icon>  <span class="title">{{item.payDate}}</span> <br>
-        <mat-icon>payments</mat-icon> <span class="title"> Abonado:</span><span class="title"> {{item.sumPaid  | currency}}</span><br>
+        <mat-icon>event</mat-icon> <span class="title">{{item.payDate}}</span> <br>
+        <mat-icon>payments</mat-icon> <span class="title"> Abonado:</span><span class="title"> {{item.sumPaid |
+          currency}}</span><br>
         <span>Faltante por pagar {{ item.totalValue - item.sumPaid | currency}}</span><br>
         <span>Es pagado:</span><span>{{item.isPaid}}</span> <br>
         <span>created:{{item.createDate}} </span>

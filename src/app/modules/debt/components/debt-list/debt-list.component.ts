@@ -3,8 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/dialog-add-payment/dialog-add-payment.component';
+import { DialogListPaymentComponent } from 'src/app/modules/payment/components/dialog-list-payment/dialog-list-payment.component';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { DebtService } from 'src/app/services/business/debt.service';
+import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
 
@@ -18,7 +20,8 @@ export class DebtListComponent implements OnInit, OnChanges {
   @Input()  idContact:     string;
   @Input()  isUpdateDebts: boolean;
   @Output() isPaychange = new EventEmitter<boolean>();
-  dialogPayment : DialogAddPaymentComponent;
+  dialogPayment     : DialogAddPaymentComponent;
+  dialogListPayment : DialogListPaymentComponent;
 
   debts = [];
   user;
@@ -31,6 +34,7 @@ export class DebtListComponent implements OnInit, OnChanges {
     private _router:          Router,
     private _debtService:     DebtService,
     public dialog:            MatDialog,
+    public _paymentService:   PaymentService
   ) {
     this.user = this._userService.getUserLocal();
   }
@@ -75,4 +79,22 @@ async openPayment(event,debt) {
     event.stopPropagation();
   }
 
+  async viewAssociatedPayments(event, debt){
+    const data = {user:this.user ,debt};
+    const dialogComponent                  = new MatDialogConfig();
+    dialogComponent.autoFocus              = true;
+    dialogComponent.disableClose           = true;
+    dialogComponent.data                   = data;
+    dialogComponent.panelClass             = 'custom-modalbox';
+    dialogComponent.enterAnimationDuration = '1000ms';
+    dialogComponent.exitAnimationDuration  = '1000ms'
+
+    const dialogRef = this.dialog.open(DialogListPaymentComponent, dialogComponent,);
+    dialogRef.disableClose = true;
+
+    dialogRef.afterClosed().subscribe(result => {
+    console.log('consulto pagos asociados');
+    });
+    event.stopPropagation();
+  }
 }

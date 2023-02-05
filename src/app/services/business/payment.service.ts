@@ -172,4 +172,23 @@ export class PaymentService {
     return  await getDoc(PaymentRef);
   }
 
+  async getPaymentsByIdDebt(userId, uidDebt){
+  const listPayments = await this.paymentsDecrypt(userId);
+  let listPaymentsFiltered = [];
+  listPayments.forEach(element => {
+    element['dateOrder'] = this._utilities.convertStringToDate(element.createDate)
+    if(element.type === "Especific" && element.debtId === uidDebt){
+      listPaymentsFiltered.push(element);
+    }
+    else if(element.type === "General"){
+      element.DebtsAsociate.forEach(itemDebtAssociated => {
+        if(itemDebtAssociated.uid === uidDebt){
+          listPaymentsFiltered.push(element);
+        }
+      });
+    }
+  });
+  return listPaymentsFiltered.sort((x, y) => y.dateOrder - x.dateOrder);
+  }
+
 }
