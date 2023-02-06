@@ -31,7 +31,6 @@ export class DialogListPaymentComponent  implements OnInit{
     this.dialogRef.close(false);
   }
   ok(){
-
     this.dialogRef.close(true);
   }
 }

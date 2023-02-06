@@ -74,14 +74,14 @@ export class PaymentService {
     const paymentRef = doc(this._firestore, `users/${userId}/payments/${oPayment.uid}`);
     const lastUpdateDate = this._utilities.getTodayFormat();
     const respUpdate = await updateDoc(paymentRef, {
-      DebtsAsociate:oPayment.idsGeneral,
+      debtsAsociate  :oPayment.idsGeneral,
       lastDateUpdate :lastUpdateDate
     });
     if(respUpdate === undefined){
       const payments = await this.paymentsDecrypt(userId);
       payments.forEach(item => {
         if(item.uid === oPayment.uid){
-          item.commentPayment = oPayment.commentPayment;
+          item.debtsAsociate = oPayment.idsGeneral;
         }
       });
       this.paymentsEncript(JSON.stringify(payments));
@@ -109,6 +109,7 @@ export class PaymentService {
     querySnapshot.forEach((doc) => {
       payments.push(doc.data());
     });
+    console.log('getPaymentsByIdUser',payments);
     return payments;
   }
 
@@ -130,7 +131,8 @@ export class PaymentService {
     const paymentsEncrypt = localStorage.getItem('payments');
     if(paymentsEncrypt !== null){
       const paymentsDecrypt = this.criptoService.decryptUsingAES256(paymentsEncrypt);
-      return JSON.parse(paymentsDecrypt)
+
+      return JSON.parse(paymentsDecrypt);
     }else{
       return await this.getPaymentsByIdUser(userId);
     }
@@ -173,6 +175,7 @@ export class PaymentService {
   }
 
   async getPaymentsByIdDebt(userId, uidDebt){
+
   const listPayments = await this.paymentsDecrypt(userId);
   let listPaymentsFiltered = [];
   listPayments.forEach(element => {
@@ -181,7 +184,7 @@ export class PaymentService {
       listPaymentsFiltered.push(element);
     }
     else if(element.type === "General"){
-      element.DebtsAsociate.forEach(itemDebtAssociated => {
+      element.debtsAsociate.forEach(itemDebtAssociated => {
         if(itemDebtAssociated.uid === uidDebt){
           listPaymentsFiltered.push(element);
         }

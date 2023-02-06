@@ -4,9 +4,9 @@
 
 <div mat-dialog-content>
   <mat-nav-list>
-    <mat-list-item *ngFor="let item of payments">
-      <span matListItemTitle>{{item.type}}</span>
-      <span matListItemLine>{{item.commentPayment}} </span>
+    <mat-list-item *ngFor="let item of payments" class="list">
+      <span matListItemTitle>{{item.commentPayment}} </span>
+      <span matListItemLine>{{item.type}}</span>
       <span matListItemLine>{{item.createDate}}</span>
       <span matListItemLine *ngIf="item.type === 'General'">
        Total:{{item.valuePayment | currency}}
@@ -16,7 +16,7 @@
         {{item.valuePayment | currency}}
       </span>
       <span matListItemMeta *ngIf="item.type === 'General'">
-        <span *ngFor="let itemGeneral of item.DebtsAsociate">
+        <span *ngFor="let itemGeneral of item.debtsAsociate">
 
         <span  *ngIf="itemGeneral.uid === data.debt.uid">
           {{itemGeneral.value | currency}}</span>
@@ -27,6 +27,6 @@
   </mat-nav-list>
 </div>
 
-<div mat-dialog-actions layout="row" style="display: flex; justify-content: center;">
+<div mat-dialog-actions layout="row" class="center-action">
   <button mat-stroked-button  type="button" color="primary" (click)="cancel()" cdkFocusInitial>Ok</button>
 </div>

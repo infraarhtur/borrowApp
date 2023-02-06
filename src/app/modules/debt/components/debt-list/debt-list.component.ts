@@ -87,7 +87,8 @@ async openPayment(event,debt) {
     dialogComponent.data                   = data;
     dialogComponent.panelClass             = 'custom-modalbox';
     dialogComponent.enterAnimationDuration = '1000ms';
-    dialogComponent.exitAnimationDuration  = '1000ms'
+    dialogComponent.exitAnimationDuration  = '1000ms';
+    dialogComponent.width                 = '95%'
 
     const dialogRef = this.dialog.open(DialogListPaymentComponent, dialogComponent,);
     dialogRef.disableClose = true;
