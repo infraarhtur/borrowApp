@@ -8,10 +8,7 @@
       <span matListItemTitle>{{item.commentPayment}} </span>
       <span matListItemLine>{{item.type}}</span>
       <span matListItemLine>{{item.createDate}}</span>
-      <span matListItemLine *ngIf="item.type === 'General'">
-       Total:{{item.valuePayment | currency}}
 
-      </span>
       <span matListItemMeta *ngIf="item.type === 'Especific'">
         {{item.valuePayment | currency}}
       </span>
