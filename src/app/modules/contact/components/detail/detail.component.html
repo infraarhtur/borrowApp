@@ -124,31 +124,32 @@
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Panel deudas
+          <mat-icon>calculate</mat-icon> &nbsp; Panel de calculos
         </mat-panel-title>
-        <mat-panel-description>
-          {{totalDebt | currency}}
-        </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <app-debt-list [idContact]="this.idContact" (isPaychange)="changeStatusPay($event)" [isUpdateDebts]="this.isUpdateDebts"></app-debt-list>
-    </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelDebtState = true" (closed)="panelDebtState = false"  class="divider">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Panel de pagos
-        </mat-panel-title>
-        <mat-panel-description>
-          {{totalPayment | currency}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Deudas  {{totalDebt | currency}}
+          </ng-template>
 
-      <app-list-payments-by-contact [idContact]="this.idContact" [isChangePays]="isChangePays" (isPaychange)="changeStatusPay($event)"></app-list-payments-by-contact>
+          <app-debt-list [idContact]="this.idContact" (isPaychange)="changeStatusPay($event)" [isUpdateDebts]="this.isUpdateDebts"></app-debt-list>
+
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            Pagos {{totalPayment | currency}}
+          </ng-template>
+
+
+          <app-list-payments-by-contact [idContact]="this.idContact" [isChangePays]="isChangePays" (isPaychange)="changeStatusPay($event)"></app-list-payments-by-contact>
+        </mat-tab>
+      </mat-tab-group>
 
     </mat-expansion-panel>
 
   </mat-accordion>
-
-
 
 </div>

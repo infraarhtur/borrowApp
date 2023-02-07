@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
 
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="'side'" [opened]="(isHandset$ | async) === false">
+    [mode]="'over'" [opened]="(isHandset$ | async) === false">
     <div>
 
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg ">
