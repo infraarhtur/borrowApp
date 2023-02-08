@@ -1,3 +1,5 @@
+@import "./../../../../../styles.scss";
+
 .encabezado {
   /*  not needed styles to reflect it */
   //  background: blue;
@@ -45,12 +47,55 @@ td {
   color: rgba(0, 0, 0, 0.38);
 
 }
-.divider{
+
+.divider {
   margin-top: 5px;
   margin-bottom: 10px;
 }
-::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{
+
+::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
   color: #5f5d5d;
 }
 
+#contactPanelDescription {
+  justify-content: space-between;
+}
+@include xs {
+  .options-panel {
+
+    justify-content: space-between;
+    display: flex;
+   grid-row: 1;
+  }
+  #opt-item {
+    margin-top: 15px;
+  }
+  #contactPanelDescription {
+  display: none;
+  }
+}
+@include sm {
+  .options-panel {
+    display: none;
+  }
+  #contactPanelDescription {
+    display: flex;
+  }
+}
+@include lg {
+  .options-panel {
+    display: none;
+  }
+  #contactPanelDescription {
+    display: flex;
+  }
+}
+@include xl {
+  .options-panel {
+    display: none;
+  }
+  #contactPanelDescription {
+    display: flex;
+  }
+}
 

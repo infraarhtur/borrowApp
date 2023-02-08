@@ -1,4 +1,20 @@
 <div class="contenedor">
+  <div class="options-panel"  layout="row" >
+    <span id="opt-item"> {{totalCalculate | currency}}</span>
+      <span>
+      <button mat-icon-button color="warn" matTooltip="Agregar deuda" matTooltipPosition="above"
+       (click)="redirectToCreateDebt($event)">
+        <mat-icon >addchart</mat-icon>
+      </button>
+
+      <button mat-icon-button color="primary" matTooltip="Agregar pago general" matTooltipPosition="above"
+        color="primary" (click)="openGeneralPayment($event)" [disabled]="totalCalculate <= 0">
+        <mat-icon>add_card</mat-icon>
+      </button>
+    </span>
+
+
+  </div>
   <mat-accordion>
     <mat-expansion-panel [expanded]="panelDetailcontactState"
      (opened)="panelDetailcontactState = true"
@@ -10,7 +26,7 @@
           <mat-icon>account_circle</mat-icon> &nbsp; {{isDisabledForm ? 'Detalle del ' : 'Edicion del'}} contacto
 
         </mat-panel-title>
-        <mat-panel-description align="end" style="justify-content: space-between">
+        <mat-panel-description id="contactPanelDescription">
           {{totalCalculate | currency}}
 
           <span>
