@@ -82,6 +82,14 @@ td {
     display: flex;
   }
 }
+@include md {
+  .options-panel {
+    display: none;
+  }
+  #contactPanelDescription {
+    display: flex;
+  }
+}
 @include lg {
   .options-panel {
     display: none;

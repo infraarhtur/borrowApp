@@ -155,13 +155,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
 
             } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
-
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
               result.oPayment.idsGeneral.forEach(element => {
 
                 if (element.uid === item.uid && !isPayTotal) {
 
-                  item.sumPaid = !element.isPayTotal ? item.sumPaid + element.value : element.value;
+                  item.sumPaid = item.sumPaid + element.value;
                   if (!element.isPayTotal && item.sumPaid === item.totalValue) {
                     item.isPaid = true;
                   } else {

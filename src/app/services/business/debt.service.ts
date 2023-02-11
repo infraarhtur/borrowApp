@@ -160,6 +160,7 @@ export class DebtService {
     const debtRef = doc(this._firestore, `/users/${userId}/debts/${oDebt.uid}`);
 
     const lastUpdateDate = this._utilities.getTodayFormat();
+
     const respUpdate = await updateDoc(debtRef, {
       sumPaid        :oDebt.sumPaid,
       isPaid         :oDebt.isPaid,
@@ -209,20 +210,25 @@ export class DebtService {
 
     for (let index = 0; index < debts.length; index++) {
       const item = debts[index];
-      if (valuePay >= item.totalValue && valuePay !== 0) {
+      const total = Number(item.sumPaid) + Number(valuePay);
+      if (total >= item.totalValue && valuePay !== 0) {
 
-        valuePay = Number(valuePay) - Number(item.totalValue);
+        let valueRegister = 0;
+
+        valueRegister = Number(item.totalValue) - Number(item.sumPaid);
+        valuePay -= valueRegister;
         uIds.push({
-          uid       : item.uid.toString(),
-          value     : Number(item.totalValue),
+          uid: item.uid.toString(),
+          value: valueRegister,
           isPayTotal: true
         });
 
-      }else if(valuePay < item.totalValue && valuePay > 0){
+      }
+      else if (valuePay < item.totalValue && valuePay > 0) {
 
         uIds.push({
-          uid       : item.uid.toString(),
-          value     : Number(valuePay),
+          uid: item.uid.toString(),
+          value: Number(valuePay),
           isPayTotal: false
         });
         valuePay = 0;
