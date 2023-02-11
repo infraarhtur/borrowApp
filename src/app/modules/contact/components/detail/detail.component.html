@@ -48,71 +48,66 @@
         <mat-card appearance="outlined">
 
           <mat-card-content align="center">
-            <table class="full-width" cellspacing="0" cellpadding="0">
-              <tr>
-                <td class="full-width" colspan="2">
 
-                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                    <mat-label>Nombre del contacto</mat-label>
-                    <mat-icon matPrefix>person</mat-icon>
-                    <input matInput formControlName="nickName" type="text" [readonly]="isDisabledForm" required>
-                    <mat-hint align="end"></mat-hint>
+<div  class="full-width">
+  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+    <mat-label>Nombre del contacto</mat-label>
+    <mat-icon matPrefix>person</mat-icon>
+    <input matInput formControlName="nickName" type="text" [readonly]="isDisabledForm" required>
+    <mat-hint align="end"></mat-hint>
 
-                    <mat-error *ngIf="frmUpdateContact.controls['nickName'].errors?.['required']">
-                      Campo requerido
-                    </mat-error>
-                  </mat-form-field>
-                </td>
-              </tr>
-              <tr>
-                <td class="full-width" colspan="2">
-                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                    <mat-label>Email del contacto</mat-label>
-                    <mat-icon matPrefix>contact_maily</mat-icon>
-                    <input matInput formControlName="emailContact" type="text" [readonly]="isDisabledForm" required>
-                    <mat-hint align="end"></mat-hint>
+    <mat-error *ngIf="frmUpdateContact.controls['nickName'].errors?.['required']">
+      Campo requerido
+    </mat-error>
+  </mat-form-field>
+</div>
 
-                    <mat-error *ngIf="frmUpdateContact.controls['emailContact'].errors?.['required']">
-                      Campo requerido
-                    </mat-error>
-                  </mat-form-field>
-                </td>
+<div class="full-width">
+  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+    <mat-label>Email del contacto</mat-label>
+    <mat-icon matPrefix>contact_maily</mat-icon>
+    <input matInput formControlName="emailContact" type="text" [readonly]="isDisabledForm" required>
+    <mat-hint align="end"></mat-hint>
 
-              </tr>
-              <tr>
-                <td class="width-indicative">
-                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
+    <mat-error *ngIf="frmUpdateContact.controls['emailContact'].errors?.['required']">
+      Campo requerido
+    </mat-error>
+  </mat-form-field>
+</div>
 
-                    <mat-icon matPrefix>add</mat-icon>
-                    <mat-label>Indicativo</mat-label>
-                    <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país"
-                      minlength="2" maxlength="2" [readonly]="isDisabledForm" required>
-                    <mat-icon matSuffix>public</mat-icon>
-                    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['required']">
-                      Campo requerido
-                    </mat-error>
-                    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['pattern']">
-                      por favor verifique el indicativo del pais
-                    </mat-error>
-                  </mat-form-field>
-                </td>
-                <td class="width-cellPhone">
-                  <mat-form-field appearance="outline" class="full-width" [class.disabled]="isDisabledForm">
-                    <mat-label>Number phone</mat-label>
-                    <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234"
-                      [readonly]="isDisabledForm" required>
-                    <mat-icon matSuffix>phone_iphone</mat-icon>
-                    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['required']">
-                      Campo requerido
-                    </mat-error>
-                    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['pattern']">
-                      el formato del numero de celular no es correcto
-                    </mat-error>
-                  </mat-form-field>
+<div>
+  <mat-form-field appearance="outline" id = "frm-indicative" [class.disabled]="isDisabledForm">
 
-                </td>
-              </tr>
-            </table>
+    <mat-icon matPrefix>add</mat-icon>
+    <mat-label>Indicativo</mat-label>
+    <input matInput type="number" formControlName="indicative" placeholder="Indicativo de país"
+      minlength="2" maxlength="2" [readonly]="isDisabledForm" required>
+    <mat-icon matSuffix>public</mat-icon>
+    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['required']">
+      Campo requerido
+    </mat-error>
+    <mat-error *ngIf="frmUpdateContact.controls['indicative'].errors?.['pattern']">
+      por favor verifique el indicativo del pais
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline"  id = "frm-numberPhone" [class.disabled]="isDisabledForm">
+    <mat-label>Number phone</mat-label>
+    <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234"
+      [readonly]="isDisabledForm" required>
+    <mat-icon matSuffix>phone_iphone</mat-icon>
+    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['required']">
+      Campo requerido
+    </mat-error>
+    <mat-error *ngIf="frmUpdateContact.controls['numberPhone'].errors?.['pattern']">
+      el formato del numero de celular no es correcto
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<div>
+
+</div>
 
           </mat-card-content>
           <mat-card-actions align="center" *ngIf="!isDisabledForm">
@@ -120,7 +115,6 @@
               <button mat-button color="warn" type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
               <button mat-button color="primary" mat-stroked-button ty>Editar contacto</button>
             </div>
-
 
           </mat-card-actions>
 

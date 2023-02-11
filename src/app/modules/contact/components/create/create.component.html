@@ -11,12 +11,12 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content align="center">
-      <div class="div-forms" style="margin-bottom: 10px;">
-        <mat-icon class="icon-title">person_add_alt</mat-icon>
+      <div  style="margin-bottom: 10px;">
+        <mat-icon class="icon-title">person_addt</mat-icon>
       </div>
 
-      <div class="div-forms">
-        <mat-form-field appearance="fill" class="">
+      <div >
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre del contacto</mat-label>
           <mat-icon matPrefix>person</mat-icon>
           <input matInput formControlName="nickName" type="text"   required>
@@ -29,8 +29,8 @@
         </mat-form-field>
       </div>
 
-      <div class="div-forms">
-        <mat-form-field appearance="fill" class="">
+      <div >
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email del contacto</mat-label>
           <mat-icon matPrefix>contact_maily</mat-icon>
           <input matInput formControlName="emailContact" type="text"   required>
@@ -44,8 +44,8 @@
 
       </div>
 
-      <div class="div-forms">
-        <mat-form-field appearance="fill" class="example-full-width">
+      <div >
+        <mat-form-field appearance="outline" class="" id = "frm-indicative">
 
           <mat-icon matPrefix>add</mat-icon>
           <mat-label>Indicativo</mat-label>
@@ -59,10 +59,8 @@
             por favor verifique el indicativo del pais
           </mat-error>
         </mat-form-field>
-      </div>
 
-      <div class="div-forms">
-        <mat-form-field appearance="fill" class="example-full-width">
+        <mat-form-field appearance="outline" class="" id = "frm-numberPhone">
           <mat-label>Number phone</mat-label>
           <input type="text" matInput formControlName="numberPhone" placeholder="555-555-1234" required>
           <mat-icon matSuffix>phone_iphone</mat-icon>

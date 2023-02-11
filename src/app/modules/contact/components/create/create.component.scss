@@ -1,8 +1,11 @@
-.encabezado{
+@import "./../../../../../styles.scss";
+
+
+.encabezado {
   /*  not needed styles to reflect it */
- //  background: blue;
+  //  background: blue;
   padding: 10px;
- //  color: white;
+  //  color: white;
   width: 100%;
 
   /* needed styles below */
@@ -10,11 +13,46 @@
   justify-content: center;
 }
 
-.div-forms{
-  display: block;
-  margin-bottom: 5px;
-}
-
 .icon-title {
   transform: scale(2);
+}
+
+.full-width {
+  width: 100%;
+}
+
+#frm-indicative {
+  width: 20%;
+  margin-right: 1%;
+}
+
+#frm-numberPhone {
+  width: 79%;
+}
+
+@include xs {
+
+  #frm-indicative {
+    width: 100%;
   }
+
+  #frm-numberPhone {
+    width: 100%;
+  }
+}
+
+@include sm {
+  #frm-indicative {
+    width: 100%;
+  }
+
+  #frm-numberPhone {
+    width: 100%;
+  }
+}
+
+@include md {}
+
+@include lg {}
+
+@include xl {}

@@ -28,7 +28,7 @@
           </tr>
           <tr>
 
-            <td class="full-width" colspan="">
+            <td class="full-width" colspan="" style="padding-top:15px;">
               <mat-form-field appearance="outline" class="full-width" [class.disabled] = "frmAddPayment.controls['isPaid'].value === true">
                 <mat-label>Valor a pagar</mat-label>
                 <mat-icon matPrefix>attach_money</mat-icon>
@@ -52,7 +52,7 @@
 
               <mat-form-field appearance="outline" class="full-width" [class.disabled]="">
                 <mat-label>Comentario</mat-label>
-                <mat-icon matPrefix>comment</mat-icon>
+                <mat-icon matPrefix>chat</mat-icon>
                 <textarea matInput formControlName="commentPayment" #comment></textarea>
                 <mat-hint align="end">
                   {{comment.value.length }}

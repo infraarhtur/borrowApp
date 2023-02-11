@@ -53,6 +53,14 @@ td {
   margin-bottom: 10px;
 }
 
+#frm-indicative {
+  width: 20%;
+  margin-right: 1%;
+}
+#frm-numberPhone{
+  width: 79%;
+}
+
 ::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
   color: #5f5d5d;
 }
@@ -73,6 +81,13 @@ td {
   #contactPanelDescription {
   display: none;
   }
+
+  #frm-indicative {
+    width: 100%;
+  }
+  #frm-numberPhone{
+    width: 100%;
+  }
 }
 @include sm {
   .options-panel {
@@ -80,6 +95,12 @@ td {
   }
   #contactPanelDescription {
     display: flex;
+  }
+  #frm-indicative {
+    width: 100%;
+  }
+  #frm-numberPhone{
+    width: 100%;
   }
 }
 @include md {
