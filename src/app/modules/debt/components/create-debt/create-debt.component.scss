@@ -18,3 +18,16 @@
 .full-width {
   width: 100%;
 }
+.disabled {
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.38);
+}
+
+
+.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
+  color:#3f51b5;
+}
+
+.mat-datepicker-toggle-active {
+  color: #ff4081;
+}

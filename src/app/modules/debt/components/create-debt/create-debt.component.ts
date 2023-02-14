@@ -18,6 +18,7 @@ export class CreateDebtComponent implements OnInit {
   frmCreateDebt: FormGroup;
   userInfo:      any;
   contactParam = null;
+  isDisabledPaymentDay = true;
 
   typeDebtEnumKeys     = [];
   PaymentCicleEnumKeys = [];

@@ -77,11 +77,11 @@
         <div class="div-forms">
           <mat-form-field appearance="outline" class= "full-width">
             <mat-label>Fecha de pago</mat-label>
-            <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
-            <input matInput [matDatepicker]="picker" formControlName="payDate" autocomplete="off" >
+            <mat-datepicker-toggle matPrefix [for]="picker" color="warm" id="canlendar"></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker" formControlName="payDate" autocomplete="off" (click)="picker.open()">
             <mat-hint>MM/DD/YYYY</mat-hint>
 
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
           </mat-form-field>
           <br>
           {{frmCreateDebt.controls['payDate'].value}}
