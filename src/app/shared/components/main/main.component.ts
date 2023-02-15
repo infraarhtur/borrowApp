@@ -19,7 +19,8 @@ import {  MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NavItem } from '../../../models/shared/navItem.model';
 import { NavService } from 'src/app/services/shared/nav.service';
 import { faBars,faUser,faArrowRight,faSignOut } from '@fortawesome/free-solid-svg-icons';
-
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/shared/auth.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
@@ -37,6 +38,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('drawer')
   appDrawer!: ElementRef;
   @Output() cierreSesion = new EventEmitter();
+  destroyed = new Subject<void>();
+  currentScreenSize: string;
+
   navItems: NavItem[] = [];
   nombre:string;
   email:string;
@@ -52,17 +56,25 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   faArrowRight = faArrowRight;
   dataUser:any;
 
+    // Create a map to display breakpoint names for demonstration purposes.
+    displayNameMap = new Map([
+      [Breakpoints.XSmall, 'XSmall'],
+      [Breakpoints.Small, 'Small'],
+      [Breakpoints.Medium, 'Medium'],
+      [Breakpoints.Large, 'Large'],
+      [Breakpoints.XLarge, 'XLarge'],
+    ]);
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
-      map((result) => result.matches),
+      map((result) =>  result.matches),
       shareReplay()
     );
 
   showSubmenu: boolean = false;
   showSubmenuEjemplos: boolean = false;
-  panelOpenState = false;
+  panelOpenState = true;
 
   lottielogoutOptions: AnimationOptions = {
     path: '../../../../assets/lottie/logout.json',
@@ -78,7 +90,22 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     public authService: AuthService,
     private _snackBarService:SnackbarService
   ) {
-
+    breakpointObserver
+    .observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ])
+    .pipe(takeUntil(this.destroyed))
+    .subscribe(result => {
+      for (const query of Object.keys(result.breakpoints)) {
+        if (result.breakpoints[query]) {
+          this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+        }
+      }
+    });
 
     this.matIconRegistry.addSvgIcon(
       'user',

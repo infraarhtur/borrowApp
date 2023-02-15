@@ -1,9 +1,8 @@
-<mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="currentScreenSize.includes('Small')?true:false">
 
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="'over'" [opened]="(isHandset$ | async) === false">
+    [mode]="currentScreenSize.includes('Small')?'over':'side'" [opened]="(isHandset$ | async) === false">
     <div>
-
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg ">
         <div *ngIf="dataUser.photoURL != null">
           <img class="image-profile" [src]="this.dataUser.photoURL" >
@@ -35,34 +34,7 @@
     <a mat-button color="primary"> <mat-icon  class="icon-style" >groups_3</mat-icon>conatctos</a>
   </div>
 
-  <mat-divider></mat-divider>
-  <div routerLink="/contact/create" routerLinkActive="active-link"
-  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-  <button mat-button color="primary"> <mat-icon  class="icon-style" >person_add</mat-icon> crear conatctos</button>
-</div>
 
-  <mat-divider></mat-divider>
-  <div routerLink="/debt" routerLinkActive="active-link"
-  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-  <button mat-button color="primary"> <mat-icon  class="icon-style" >stacked_bar_chart</mat-icon>Reporte GRL</button>
-</div>
-<mat-divider></mat-divider>
-<div [routerLink]="['debt','list']" routerLinkActive="active-link"
-class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-<button mat-button color="primary"> <mat-icon  class="icon-style" >payments</mat-icon>debt by contact</button>
-</div>
-
-
-    <!-- este es el menu clasico -->
-    <!-- <mat-nav-list class="sidebar-menu"> -->
-
-
-    <!-- <app-menu-list-items
-
-          *ngFor="let item of navItems"
-          [item]="item"
-        ></app-menu-list-items> -->
-    <!-- </mat-nav-list> -->
   </mat-sidenav>
 
   <mat-sidenav-content>

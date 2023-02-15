@@ -1,11 +1,18 @@
 <div style="width: 100%; display: flex; justify-content: space-between;">
-<mat-icon matTooltip="Ordenar por" matTooltipPosition="above">sort</mat-icon>
-<table matSort (matSortChange)="sortData($event)" matSortActive="debtCalculate" matSortDirection="desc">
+ <span>
+<mat-icon matTooltip="Ordenar por" matTooltipPosition="below">filter_list</mat-icon>
+<table matSort (matSortChange)="sortData($event)" matSortActive="debtCalculate"
+ matSortDirection="desc" style="display: inline; margin-left: 10px;;">
   <tr>
     <th mat-sort-header="nickname">Nombre</th>
     <th mat-sort-header="debtCalculate">Deuda</th>
   </tr>
 </table>
+</span>
+<button mat-icon-button color="accent" matTooltip="Crear usuario" matTooltipPosition="below"
+ (click)="redirectToCreateContact()">
+  <mat-icon>person_add</mat-icon>
+</button>
 </div>
 <mat-nav-list>
   <mat-divider></mat-divider>
