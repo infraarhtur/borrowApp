@@ -129,3 +129,6 @@ $screen-xl-max: 5000px;
 .mat-mdc-snack-bar-action{
     color: white;
 }
+::ng-deep .mat-toolbar.mat-primary{
+  z-index: 3 !important;
+}
