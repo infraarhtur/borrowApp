@@ -5,7 +5,7 @@
     <div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg ">
         <div *ngIf="dataUser.photoURL != null">
-          <img class="image-profile" [src]="this.dataUser.photoURL" >
+          <img class="image-profile" [src]="this.dataUser.photoURL">
         </div>
         <div *ngIf="dataUser.photoURL == null">
           <img class="image-profile" src="../../../../assets/svg/account.svg" alt="">
@@ -17,23 +17,33 @@
       <p>{{dataUser.email}}</p>
 
     </div>
-    <mat-divider></mat-divider>
-    <div routerLinkActive="active-link" *ngIf="this.identity === 'Administrator'"
-      class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-      <a routerLink="/Admin/list">Vehiculos</a>
-    </div>
 
-    <mat-divider></mat-divider>
-    <div routerLink="/dashboard" routerLinkActive="active-link"
-    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-    <a mat-button color="primary"> <mat-icon class="icon-style" >home</mat-icon>Inicio</a>
-  </div>
-    <mat-divider></mat-divider>
-    <div routerLink="/contact/list" routerLinkActive="active-link"
-    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 center-xs center-sm center-md center-lg link-menu">
-    <a mat-button color="primary"> <mat-icon  class="icon-style" >groups_3</mat-icon>conatctos</a>
-  </div>
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active']"
+        *ngIf="this.identity === 'Administrator'">
+        <a routerLink="/Admin/list">Administrador</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active']" class="center">
+        <span matListItemTitle>
+          <mat-icon color="primary">home</mat-icon>
+        </span>
+        <span matListItemLine>
+          <label color="primary">Home </label>
+        </span>
 
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item [routerLink]="['/contact/list']" [routerLinkActive]="['active']"  class="center" >
+        <span matListItemTitle>
+          <mat-icon color="primary">groups_3</mat-icon>
+        </span>
+        <span matListItemLine>
+          <label color="primary">Contactos </label>
+        </span>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-nav-list>
 
   </mat-sidenav>
 
@@ -41,7 +51,6 @@
 
     <mat-toolbar color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <!-- <fa-icon class="mat-icon-singOut" [icon]="faBars"></fa-icon> -->
         <mat-icon>menu</mat-icon>
       </button>
       <!-- <img style="height: 100px; width: 200px;" src="../../../../assets/svg/LasDosRuedasBlanco.png" alt=""> -->
@@ -61,7 +70,8 @@
 
         <button *ngIf="!this.isIdentity" mat-button matTooltip="Cerrar sesión" (click)="logUp()">
 
-          <ng-lottie [options]="lottielogoutOptions" width="25px" height="25px" (animationCreated)="animationCreated($event)">
+          <ng-lottie [options]="lottielogoutOptions" width="25px" height="25px"
+            (animationCreated)="animationCreated($event)">
           </ng-lottie>
 
         </button>
