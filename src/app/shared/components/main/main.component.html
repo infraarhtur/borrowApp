@@ -15,16 +15,15 @@
     <div class="center-xs center-sm center-md center-lg">
       <p>{{dataUser.displayName}}</p>
       <p>{{dataUser.email}}</p>
-
     </div>
 
     <mat-nav-list>
-      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active']"
+      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active-link']"
         *ngIf="this.identity === 'Administrator'">
         <a routerLink="/Admin/list">Administrador</a>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active']" class="center">
+      <mat-list-item [routerLink]="['/dashboard']" [routerLinkActive]="['active-link']" class="center">
         <span matListItemTitle>
           <mat-icon color="primary">home</mat-icon>
         </span>
@@ -34,7 +33,9 @@
 
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item [routerLink]="['/contact/list']" [routerLinkActive]="['active']"  class="center" >
+      <mat-list-item [routerLink]="['/contact/list']"
+      [routerLinkActive]="['active-link']"
+       class="center">
         <span matListItemTitle>
           <mat-icon color="primary">groups_3</mat-icon>
         </span>
@@ -44,9 +45,7 @@
       </mat-list-item>
       <mat-divider></mat-divider>
     </mat-nav-list>
-
   </mat-sidenav>
-
   <mat-sidenav-content>
 
     <mat-toolbar color="primary">
