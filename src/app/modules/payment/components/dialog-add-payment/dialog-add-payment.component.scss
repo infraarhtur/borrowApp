@@ -3,14 +3,21 @@
   color: rgba(0, 0, 0, 0.38);
 
 }
-::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input{
+
+::ng-deep .disabled .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
   color: #5f5d5d;
 }
 
-::ng-deep .mat-mdc-card-header-text{
+::ng-deep .mat-mdc-card-header-text {
   width: 100%;
   text-align: center;
 }
-.full-width{
-  width: 100%;
+
+.full-width {
+  width: 98%;
+}
+
+.center-action {
+  display: flex;
+  justify-content: end;
 }

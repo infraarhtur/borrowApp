@@ -36,12 +36,6 @@ export class DialogEditPaymentComponent implements OnInit {
 
     this.validations(this.data.payment.valuePayment,this.data.payment.commentPayment);
     this.user = this._userService.getUserLocal();
-
-    setTimeout(() => {
-      this.commentElement.nativeElement.focus();
-    }, 2000);
-
-
   }
 
   ok(){

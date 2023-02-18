@@ -46,11 +46,6 @@ export class DialogAddPaymentComponent implements OnInit {
                       this.debt.totalValue-this.debt.sumPaid
                       :this.data.totalCalculate;
     this.title      = keys.includes('debtId')? 'Pago especifico':'Pago general';
-   setTimeout(() => {
-    this.validations();
-    this.valuePaymentElement.nativeElement.focus();
-   }, 1500);
-
   }
 
   ok(oPayment){
