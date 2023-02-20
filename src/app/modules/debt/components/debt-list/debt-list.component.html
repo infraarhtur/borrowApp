@@ -1,56 +1,62 @@
 <app-created-payment></app-created-payment>
 <div *ngFor="let item of debts">
 
-  <mat-card appearance="outlined" matRipple matRippleCentered="true" matRippleRadius="900"
-    class="ripple-containe divider">
-    <mat-card-content align="center">
-      <div [ngSwitch]="item.typeDebt" style="width: 100%; text-align: start;">
+  <mat-card appearance="outlined" style="margin-top:5px;">
+    <mat-card-content>
+
+      <p matListItemTitle align="center" style="font-size: 14px;">
+        {{item.concept}}
+      </p>
+
+      <p>
+        <span matListItemLine>
+          Deuda:<label style="color: red;">{{item.totalValue | currency}} </label>
+          - Abonado: <label style="color: green;">{{item.sumPaid | currency}}</label>
+        </span>
+        <span matListItemLine>
+          falta por pagar: <label style="color: red;">{{ item.totalValue - item.sumPaid | currency}}</label>
+        </span>
+        <span matListItemLine>
+          Fecha de pago: <label style="color: #3f51b5;">{{item.payDate}}</label>
+        </span>
+        <span matListItemLine>
+          creada: {{item.createDate}}
+        </span>
+        <span matListItemLine *ngIf="item.typeDebt==='interesFijo'" style="color:#3f51b5">
+          interes de {{item.fixedInterest}}% valor inicial: {{item.debtValue | currency}}
+        </span>
+
+      </p>
+    </mat-card-content>
+    <mat-card-actions layout="row" style="justify-content: space-between;">
+      <div [ngSwitch]="item.typeDebt" class="etiqueta">
         <div *ngSwitchCase="'sinIntereses'">
-          <button mat-icon-button color="warn" aria-label="">
-            <mat-icon>sell</mat-icon>
-          </button> <span>sin Intereses</span>
+          <span>sin Intereses</span>
         </div>
 
-        <div *ngSwitchCase="'interesFijo'">
-          <button mat-icon-button color="primary" aria-label="">
-            <mat-icon>label_important</mat-icon>
-          </button> <span>Interes fijo:</span>
-          <span> {{item.fixedInterest}}% </span>
-          <span> valor inicial: {{item.debtValue | currency}}</span>
+        <div *ngSwitchCase="'interesFijo'" class="etiqueta">
+          <span>Interes fijo</span>
+
         </div>
 
         <span *ngSwitchDefault>(No eligió operación)</span>
       </div>
 
-      <p>
-        <span style="display: block;text-align: start;">
-          <button mat-icon-button matTooltip="Agregar pago a esta deuda" matTooltipPosition="above" color="primary"
-            (click)="openPayment($event, item)" *ngIf="!item.isPaid">
-            <mat-icon>add_card</mat-icon>
-          </button>
+      <span>
 
-          <button mat-icon-button matTooltip="ver pagos asociados" matTooltipPosition="above" color="accent"
-          (click)="viewAssociatedPayments($event, item)"
-            *ngIf="item.sumPaid > 0">
-            <mat-icon>receipt_long</mat-icon>
-          </button>
-        </span>
+          <mat-icon  *ngIf="item.isPaid" fontIcon="task_alt" color="primary"  matTooltip="Deuda Pagada" matTooltipPosition="above"></mat-icon>
 
-        <mat-icon> description</mat-icon><span class="title"> concepto:</span> <span
-          class="title">{{item.concept}}</span> <br>
-        <mat-icon>monetization_on</mat-icon><span class="title"> total a pagar: </span>
-        <span class="title">
-          {{item.totalValue | currency}}
-        </span> <br>
-        <mat-icon>event</mat-icon> <span class="title">{{item.payDate}}</span> <br>
-        <mat-icon>payments</mat-icon> <span class="title"> Abonado:</span><span class="title"> {{item.sumPaid |
-          currency}}</span><br>
-        <span>Faltante por pagar {{ item.totalValue - item.sumPaid | currency}}</span><br>
-        <span>Es pagado:</span><span>{{item.isPaid}}</span> <br>
-        <span>created:{{item.createDate}} </span>
+        <button mat-icon-button matTooltip="Agregar pago a esta deuda" matTooltipPosition="above" color="primary"
+          (click)="openPayment($event, item)" *ngIf="!item.isPaid">
+          <mat-icon>add_card</mat-icon>
+        </button>
 
-      </p>
-    </mat-card-content>
+        <button mat-icon-button matTooltip="Ver pagos asociados" matTooltipPosition="above" color="accent"
+          (click)="viewAssociatedPayments($event, item)" *ngIf="item.sumPaid > 0">
+          <mat-icon>receipt_long</mat-icon>
+        </button>
+      </span>
+    </mat-card-actions>
   </mat-card>
 
 </div>
