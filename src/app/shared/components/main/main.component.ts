@@ -79,6 +79,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   lottielogoutOptions: AnimationOptions = {
     path: '../../../../assets/lottie/logout.json',
   };
+  isContactSelected = false;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -116,6 +117,10 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataUser = this.authService.getDataUser();
+    // this.isContactSelected=
+    console.log('router');
+
+
   }
 
   ngAfterViewInit(){
