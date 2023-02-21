@@ -52,7 +52,6 @@ export class DebtListComponent implements OnInit, OnChanges {
 
 
 async openPayment(event,debt) {
-
     const generalData = {
       contactId:this.idContact,
       debtId   :debt.uid,
@@ -88,8 +87,7 @@ async openPayment(event,debt) {
     dialogComponent.panelClass             = 'custom-modalbox';
     dialogComponent.enterAnimationDuration = '1000ms';
     dialogComponent.exitAnimationDuration  = '1000ms';
-    dialogComponent.width                 = '95%'
-
+    dialogComponent.width                 = '100%'
     const dialogRef = this.dialog.open(DialogListPaymentComponent, dialogComponent,);
     dialogRef.disableClose = true;
 

@@ -30,11 +30,11 @@
         solo se aceptan numeros
       </mat-error>
       <mat-error *ngIf="frmAddPayment.controls['valuePayment'].errors?.['max']">
-        El pago no puede ser mayor a la deuda
+       Pago mayor a {{this.validateVal | currency}}
       </mat-error>
     </mat-form-field>
     </div>
-    <div>
+    <div style="margin-top: 5px;">
       <mat-form-field appearance="outline" class="full-width" [class.disabled]="">
         <mat-label>Comentario</mat-label>
         <mat-icon matPrefix>chat</mat-icon>

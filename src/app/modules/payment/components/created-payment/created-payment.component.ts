@@ -32,9 +32,7 @@ export class CreatedPaymentComponent implements OnInit {
 
   }
 
-  cancel(){
-
-  }
+  cancel(){}
 
   validations(){
     this.frmAddPayment = this._formBuilder.group({

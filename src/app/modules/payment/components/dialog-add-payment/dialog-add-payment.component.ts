@@ -46,6 +46,7 @@ export class DialogAddPaymentComponent implements OnInit {
                       this.debt.totalValue-this.debt.sumPaid
                       :this.data.totalCalculate;
     this.title      = keys.includes('debtId')? 'Pago especifico':'Pago general';
+    this.validations();
   }
 
   ok(oPayment){
@@ -66,7 +67,7 @@ export class DialogAddPaymentComponent implements OnInit {
     objPayment.isPaid       = this.validateVal === objPayment.valuePayment? true:false;
 
     objPayment.idsGeneral = objPayment.typePayment === 'General'?
-                            this._debtService.getIdDebtsForGeneralPay( this.user.id, objPayment.valuePayment, this.idContact)
+                            this._debtService.getIdDebtsForGeneralPay(this.user.id, objPayment.valuePayment, this.idContact)
                             :undefined;
 
     objPayment.uid= await this._paymentServices.addPayment(this.user.uid,objPayment);
