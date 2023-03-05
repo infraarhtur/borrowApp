@@ -45,6 +45,7 @@ import { DebtModule } from './modules/debt/debt.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { DatePipe } from '@angular/common';
 import { PaymentModule } from './modules/payment/payment.module';
+import { HttpClientModule } from '@angular/common/http';
 
 export function playerFactory() {
   return player;
@@ -93,7 +94,9 @@ export function playerFactory() {
     LottieModule.forRoot({ player: playerFactory }),
     UserModule,
     DebtModule,
-    ContactModule, PaymentModule
+    ContactModule,
+    PaymentModule,
+    HttpClientModule
 
   ],
   providers: [MaterialModule, AuthService, DatePipe],

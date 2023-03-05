@@ -8,6 +8,7 @@ import { typeDebtEnum } from 'src/app/enums/typeDebt.enum';
 import { paymentCycleEnum } from 'src/app/enums/paymentCycle.enum';
 import { ActivatedRoute,  Router } from '@angular/router';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
+import { EmailService } from 'src/app/services/business/email.service';
 
 @Component({
   selector: 'app-create-debt',
@@ -34,7 +35,8 @@ export class CreateDebtComponent implements OnInit {
    private _contactService: ContactService,
    public router:           Router,
    public activateRoute:    ActivatedRoute,
-   private _snackBarService:SnackbarService
+   private _snackBarService:SnackbarService,
+   private _emailServices:  EmailService
 
   ) {
    this.validations();
@@ -76,7 +78,7 @@ export class CreateDebtComponent implements OnInit {
       })
   }
 
- async createDebit(){
+ async createDebt(){
 
   if(this.frmCreateDebt.invalid){ return;}
 
@@ -86,7 +88,11 @@ export class CreateDebtComponent implements OnInit {
 
     const resp = await this.debtService.addDebt(this.userInfo.uid,objDebt);
     if(resp ===  undefined){
+
+     let contactInfo = this._contactService.getContactbyIdContact(objDebt.contacts)
+      this._emailServices.firsEmail(this.userInfo,contactInfo,objDebt)
       localStorage.removeItem('debts');
+
      this._snackBarService .customSnackbar('Deuda creada con exito', 'ok', 5000);
      this.router.navigate(['contact/list']);
     }

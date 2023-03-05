@@ -10,6 +10,8 @@ import { ContactService } from 'src/app/services/business/contact.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { DebtService } from 'src/app/services/business/debt.service';
 import { PaymentService } from 'src/app/services/business/payment.service';
+import { EmailService } from 'src/app/services/business/email.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -37,7 +39,8 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
     private contactService    :ContactService,
     private _snackBarService  :SnackbarService,
     private _debtService      :DebtService,
-    private _paymentsService  :PaymentService
+    private _paymentsService  :PaymentService,
+    public emailService       :EmailService
 
   ) {
     this.user = this._userService.getUserLocal();
@@ -98,5 +101,8 @@ export class DashboardComponent implements OnInit,AfterViewInit  {
   async isHideCollected(){
     this.totalPayments = await this._paymentsService.getTotalPaymentsByidUser(this.user.uid);
     this.hideCollected  = !this.hideCollected;
+  }
+  test(){
+
   }
 }
