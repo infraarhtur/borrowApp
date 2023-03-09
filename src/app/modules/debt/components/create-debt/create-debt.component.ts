@@ -90,7 +90,7 @@ export class CreateDebtComponent implements OnInit {
     if(resp ===  undefined){
 
      let contactInfo = this._contactService.getContactbyIdContact(objDebt.contacts)
-      this._emailServices.firsEmail(this.userInfo,contactInfo,objDebt)
+      this._emailServices.emailCreateDebt(this.userInfo,contactInfo,objDebt)
       localStorage.removeItem('debts');
 
      this._snackBarService .customSnackbar('Deuda creada con exito', 'ok', 5000);
