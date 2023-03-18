@@ -6,6 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/dialog-add-payment/dialog-add-payment.component';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { DebtService } from 'src/app/services/business/debt.service';
+import { EmailService } from 'src/app/services/business/email.service';
 import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
@@ -21,6 +22,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   idContact;
   contact;
   user;
+  oPaymentGeneral;
   isChangePays            = false;
   isDisabledForm          = true;
   panelDebtState          = false;
@@ -30,7 +32,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   totalDebt       = 0;
   totalPayment    = 0;
   totalCalculate  = 0;
-
+  debtsAsociate   = [];
 
   constructor(
     private _formBuilder      : FormBuilder,
@@ -41,7 +43,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     private _route            : ActivatedRoute,
     private _debtService      : DebtService,
     public dialog             : MatDialog,
-    private _paymentsService  : PaymentService
+    private _paymentsService  : PaymentService,
+    private _emailService     : EmailService,
 
   ) {
     this.validations();
@@ -126,6 +129,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     dialogRef.disableClose = true;
 
     dialogRef.afterClosed().subscribe(result => {
+
       if (result) {
         this.getTotalDebts();
         this.getTotalPayments();
@@ -155,7 +159,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
 
             } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
+              this.oPaymentGeneral = result.oPayment;
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
+
               result.oPayment.idsGeneral.forEach(element => {
 
                 if (element.uid === item.uid && !isPayTotal) {
@@ -166,6 +172,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
                   } else {
                     item.isPaid = element.isPayTotal;
                   }
+                  this.debtsAsociate.push(item);
 
                   this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
                     console.log('Actualizo Debt', r);
@@ -192,6 +199,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
     if (!event) {
       setTimeout(() => {
         this.isChangePays = event;
+        console.log('Paso aqui 1',this.isChangePays);
+        if(this.debtsAsociate.length > 0){
+          this._emailService.emailAddPayGeneral(this.user,this.debtsAsociate,this.idContact,this.oPaymentGeneral);
+        }
       }, 2000);
 
     } else {

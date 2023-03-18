@@ -50,6 +50,7 @@ export class DialogAddPaymentComponent implements OnInit {
   }
 
   ok(oPayment){
+
     this._paymentServices.verifyPaymentsByIdUserWithSession();
     this.dialogRef.close({oPayment,oDebt: this.debt});
   }
@@ -70,8 +71,7 @@ export class DialogAddPaymentComponent implements OnInit {
                             this._debtService.getIdDebtsForGeneralPay(this.user.id, objPayment.valuePayment, this.idContact)
                             :undefined;
 
-    objPayment.uid= await this._paymentServices.addPayment(this.user.uid,objPayment);
-
+    objPayment.uid = await this._paymentServices.addPayment(this.user.uid,objPayment);
     this.frmAddPayment.reset();
     this._snackBarService.customSnackbar('Pago agregado correctamente','ok', 5000);
     localStorage.removeItem('payments');

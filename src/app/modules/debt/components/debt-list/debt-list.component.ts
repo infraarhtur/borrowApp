@@ -6,6 +6,7 @@ import { DialogAddPaymentComponent } from 'src/app/modules/payment/components/di
 import { DialogListPaymentComponent } from 'src/app/modules/payment/components/dialog-list-payment/dialog-list-payment.component';
 import { ContactService } from 'src/app/services/business/contact.service';
 import { DebtService } from 'src/app/services/business/debt.service';
+import { EmailService } from 'src/app/services/business/email.service';
 import { PaymentService } from 'src/app/services/business/payment.service';
 import { SnackbarService } from 'src/app/services/shared/snackbar.service';
 import { UserService } from 'src/app/services/shared/user.service';
@@ -34,7 +35,8 @@ export class DebtListComponent implements OnInit, OnChanges {
     private _router:          Router,
     private _debtService:     DebtService,
     public dialog:            MatDialog,
-    public _paymentService:   PaymentService
+    public _paymentService:   PaymentService,
+    private _emailService:    EmailService,
   ) {
     this.user = this._userService.getUserLocal();
   }
@@ -70,9 +72,11 @@ async openPayment(event,debt) {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result !== false){
+
         result.oDebt.sumPaid += result.oPayment.valuePayment;
         result.oDebt.isPaid   = result.oPayment.isPaid;
-         this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => this.isPaychange.emit(true));
+        this._debtService.updateDebtByUid(this.user.uid,result.oDebt).then(r => this.isPaychange.emit(true));
+        this._emailService.emailAddPay(this.user,result)
       }
     });
     event.stopPropagation();
