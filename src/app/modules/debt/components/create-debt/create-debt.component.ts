@@ -85,7 +85,6 @@ export class CreateDebtComponent implements OnInit {
     const objDebt = this.frmCreateDebt.value;
     const payDate = objDebt.payDate.getFullYear()+'/'+(objDebt.payDate.getMonth()+1)+'/'+objDebt.payDate.getDate();
     objDebt.payDate = payDate;
-
     const resp = await this.debtService.addDebt(this.userInfo.uid,objDebt);
     if(resp ===  undefined){
 
