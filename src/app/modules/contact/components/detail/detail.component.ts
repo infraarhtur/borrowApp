@@ -135,7 +135,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.getTotalPayments();
         this.calculateTotalgeneral();
         const listDebts = this._debtService.getDebtsByIsPaid(this.user.uid, this.idContact, false);
-        const isPayTotal = result.oPayment.valuePayment === this.totalCalculate ? true : false;
+        const isPayTotal = result.oPayment.valuePayment === this.totalCalculate && result.oPayment.typePayment !== "General" ? true : false;
 
         listDebts.forEach(item => {
           if (isPayTotal && result.oDebt !== undefined) {
@@ -143,10 +143,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
             item.sumPaid = item.typeDebt === 'interesFijo' ? item.totalValue : item.debtValue;
 
             this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
-              console.log('Actualizo Debt', r);
               this.changeStatusPay(true);
             });
           } else {
+
             if (isPayTotal && result.oPayment.typePayment === 'General') {
               if(!item.isPaid){
                 item.isPaid = true;
@@ -159,6 +159,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
 
             } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
+
               this.oPaymentGeneral = result.oPayment;
               this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
 
@@ -199,7 +200,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
     if (!event) {
       setTimeout(() => {
         this.isChangePays = event;
-        console.log('Paso aqui 1',this.isChangePays);
         if(this.debtsAsociate.length > 0){
           this._emailService.emailAddPayGeneral(this.user,this.debtsAsociate,this.idContact,this.oPaymentGeneral);
         }

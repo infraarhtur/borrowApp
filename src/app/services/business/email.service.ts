@@ -38,7 +38,11 @@ export class EmailService {
   }
 
 emailAddPay(user,objInfo){
-  const url = `https://j8ymbipx0l.execute-api.us-east-1.amazonaws.com/prod/emailcreatedebt`;
+  let url = `https://1o7mjxqcdd.execute-api.us-east-1.amazonaws.com/dev/`;
+  url = url + 'emailpays';
+  const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+
   const infoContact = this._contactServices.getContactbyIdContact(objInfo['oPayment']['idContact'])
   const body ={
     debt: objInfo['oDebt'],
@@ -46,16 +50,18 @@ emailAddPay(user,objInfo){
     user: {displayName:user['displayName'] },
     contact:{ email:infoContact['email']}
   };
-  console.log('body');
-  console.log(JSON.stringify(body));
-  // this.http.post(url,body).subscribe(result => {
-  //   console.log('Envio correo de pago especifico');
-  //   console.log(result);
-  // })
+   this.http.post(url,body,{headers}).subscribe(result => {
+     console.log('Envio correo de pago especifico');
+     console.log(result);
+   },
+    error => {
+      console.log('No se que pasooo')
+   })
 }
 
 emailAddPayGeneral(user,listDebts,idContact, oPayment){
-  const url = `https://j8ymbipx0l.execute-api.us-east-1.amazonaws.com/prod/emailcreatedebt`;
+  let url = `https://1o7mjxqcdd.execute-api.us-east-1.amazonaws.com/dev/`;
+  url = url + 'emailpays';
   const infoContact = this._contactServices.getContactbyIdContact(idContact);
   const body ={
     debts: listDebts,
@@ -63,12 +69,18 @@ emailAddPayGeneral(user,listDebts,idContact, oPayment){
     contact:{ email:infoContact['email']},
     payment:oPayment
   }
+  console.log('emailAddPayGeneral',body);
 
-  console.log(JSON.stringify(body))
-  // this.http.post(url,body).subscribe(result => {
-  //   console.log('Envio correo de pago general');
-  //   console.log(result);
-  // })
+  this.http.post(url,body).subscribe(result => {
+    console.log('Envio correo de pago general');
+    console.log(result);
+  }
+  // ,
+  // err =>{
+  //   console.log('Se murio esta mondiuu');
+  // },
+  // ()=> console.log('Finalizoo')
+  )
 }
 
 }

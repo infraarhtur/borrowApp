@@ -65,7 +65,11 @@ export class DialogAddPaymentComponent implements OnInit {
     objPayment.idContact    = this.idContact;
     objPayment.typePayment  = this.debtId === '' ? 'General' : 'Especific';
     objPayment.debtId       = this.debtId;
-    objPayment.isPaid       = this.validateVal === objPayment.valuePayment? true:false;
+    // objPayment.isPaid       = this.validateVal === objPayment.valuePayment? true:false;
+    objPayment.isPaid       = false;
+    if(objPayment.typePayment === 'Especific'){
+      objPayment.isPaid = this.validateVal === objPayment.valuePayment? true:false;
+    }
 
     objPayment.idsGeneral = objPayment.typePayment === 'General'?
                             this._debtService.getIdDebtsForGeneralPay(this.user.id, objPayment.valuePayment, this.idContact)
