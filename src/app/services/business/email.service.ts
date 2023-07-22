@@ -59,7 +59,7 @@ emailAddPay(user,objInfo){
    })
 }
 
-emailAddPayGeneral(user,listDebts,idContact, oPayment){
+emailAddPayGeneral(user,listDebts,idContact, oPayment, totalCalculate){
   let url = `https://1o7mjxqcdd.execute-api.us-east-1.amazonaws.com/dev/`;
   url = url + 'emailpays';
   const infoContact = this._contactServices.getContactbyIdContact(idContact);
@@ -67,7 +67,8 @@ emailAddPayGeneral(user,listDebts,idContact, oPayment){
     debts: listDebts,
     user: {displayName:user['displayName'] },
     contact:{ email:infoContact['email']},
-    payment:oPayment
+    payment:oPayment,
+    totalCalculate:totalCalculate
   }
   console.log('emailAddPayGeneral',body);
 

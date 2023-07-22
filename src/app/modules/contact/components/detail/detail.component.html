@@ -144,7 +144,7 @@
             Deudas  {{totalDebt | currency}}
           </ng-template>
 
-          <app-debt-list [idContact]="this.idContact" (isPaychange)="changeStatusPay($event)" [isUpdateDebts]="this.isUpdateDebts"></app-debt-list>
+          <app-debt-list [idContact]="this.idContact" (isPaychange)="changeStatusPay($event)" [isUpdateDebts]="this.isUpdateDebts" [totalCalculate]="this.totalCalculate"></app-debt-list>
 
         </mat-tab>
 

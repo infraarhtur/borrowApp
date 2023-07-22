@@ -20,6 +20,7 @@ export class DebtListComponent implements OnInit, OnChanges {
 
   @Input()  idContact:     string;
   @Input()  isUpdateDebts: boolean;
+  @Input()  totalCalculate:number;
   @Output() isPaychange = new EventEmitter<boolean>();
   dialogPayment     : DialogAddPaymentComponent;
   dialogListPayment : DialogListPaymentComponent;
@@ -42,9 +43,11 @@ export class DebtListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
     this.getDebtsByIdContact();
   }
   ngOnChanges(changes: SimpleChanges): void {
+    debugger;
     this.getDebtsByIdContact();
   }
 

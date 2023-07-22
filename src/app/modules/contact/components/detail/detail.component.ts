@@ -201,7 +201,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.isChangePays = event;
         if(this.debtsAsociate.length > 0){
-          this._emailService.emailAddPayGeneral(this.user,this.debtsAsociate,this.idContact,this.oPaymentGeneral);
+          this._emailService.emailAddPayGeneral(this.user,this.debtsAsociate,this.idContact,this.oPaymentGeneral,this.totalCalculate);
         }
       }, 2000);
 
