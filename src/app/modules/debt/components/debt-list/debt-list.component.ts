@@ -47,7 +47,6 @@ export class DebtListComponent implements OnInit, OnChanges {
     this.getDebtsByIdContact();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     this.getDebtsByIdContact();
   }
 

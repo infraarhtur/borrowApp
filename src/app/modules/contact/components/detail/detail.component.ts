@@ -161,12 +161,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
             } else if (result.oDebt === undefined && result.oPayment.typePayment === 'General') {
 
               this.oPaymentGeneral = result.oPayment;
-              this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment);
+              this._paymentsService.editPaymentGeneralDebtsId(this.user.uid,result.oPayment)
 
               result.oPayment.idsGeneral.forEach(element => {
-
                 if (element.uid === item.uid && !isPayTotal) {
-
                   item.sumPaid = item.sumPaid + element.value;
                   if (!element.isPayTotal && item.sumPaid === item.totalValue) {
                     item.isPaid = true;
@@ -174,7 +172,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
                     item.isPaid = element.isPayTotal;
                   }
                   this.debtsAsociate.push(item);
-
                   this._debtService.updateDebtByUid(this.user.uid, item).then(r => {
                     console.log('Actualizo Debt', r);
                     this.changeStatusPay(true);
@@ -202,6 +199,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.isChangePays = event;
         if(this.debtsAsociate.length > 0){
           this._emailService.emailAddPayGeneral(this.user,this.debtsAsociate,this.idContact,this.oPaymentGeneral,this.totalCalculate);
+          setTimeout(() => {
+            this.debtsAsociate = [];
+            this.debtsAsociate = [];
+          },0)
+
         }
       }, 2000);
 
