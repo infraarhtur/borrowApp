@@ -19,7 +19,7 @@
       [class.disabled]="frmAddPayment.controls['isPaid'].value === true">
       <mat-label>Valor a pagar</mat-label>
       <mat-icon matPrefix>attach_money</mat-icon>
-      <input matInput formControlName="valuePayment" type="number" step="any" autocomplete="off" #txtValuePayment
+      <input matInput formControlName="valuePayment" type="number" step="any" autocomplete="off" (keypress)="validationOnlyNumberAndLength($event, 7)" #txtValuePayment
         required cdkFocusInitial>
       <mat-hint align="end">{{frmAddPayment.controls['valuePayment'].value | currency}}</mat-hint>
 

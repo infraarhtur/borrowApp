@@ -18,7 +18,8 @@
           <mat-form-field appearance="outline" class= "full-width" >
             <mat-label>Valor a pagar</mat-label>
             <mat-icon matPrefix>attach_money</mat-icon>
-            <input matInput formControlName="debtValue" type="number" step="any" autocomplete="off"  required>
+            <input matInput formControlName="debtValue" type="number" step="any" autocomplete="off"
+            (keypress)="validationOnlyNumberAndLength($event, 7)"   required>
             <mat-hint align="end">{{frmCreateDebt.controls['debtValue'].value | currency}}</mat-hint>
 
             <mat-error *ngIf="frmCreateDebt.controls['debtValue'].errors?.['required']">
@@ -77,9 +78,9 @@
         <div class="div-forms">
           <mat-form-field appearance="outline" class= "full-width">
             <mat-label>Fecha de pago</mat-label>
-            <mat-datepicker-toggle matPrefix [for]="picker" color="warm" id="canlendar"></mat-datepicker-toggle>
-            <input matInput [matDatepicker]="picker" formControlName="payDate" autocomplete="off" (click)="picker.open()">
-            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matPrefix [for]="picker" color="warm" id="canlendar" ></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker" formControlName="payDate" autocomplete="off" [min]="minDate" [max]="maxDate" (click)="picker.open()"  (keypress)="validationPress($event)" disabled>
+            <mat-hint>MM/DD/YYYY{{minDate}}</mat-hint>
 
             <mat-datepicker #picker disabled="false"></mat-datepicker>
           </mat-form-field>
@@ -91,7 +92,7 @@
           <mat-form-field appearance="outline" class= "full-width" >
             <mat-label>Interes fijo</mat-label>
             <mat-icon matPrefix>percent</mat-icon>
-            <input matInput formControlName="fixedInterest" type="number" step="any" maxlength="2" required>
+            <input matInput formControlName="fixedInterest" type="number" step="any" (keypress)="validationOnlyNumberAndLength($event, 1)" maxlength="2" required>
 
             <mat-error *ngIf="frmCreateDebt.controls['fixedInterest'].errors?.['required']">
               Campo requerido

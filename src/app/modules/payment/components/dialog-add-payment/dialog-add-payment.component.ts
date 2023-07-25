@@ -96,5 +96,12 @@ export class DialogAddPaymentComponent implements OnInit {
     this.frmAddPayment.controls['valuePayment'].setValue(val);
   }
 
-
+  validationOnlyNumberAndLength(event, number) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar) || event.target.value.length > number ) {
+        // invalid character, prevent input
+        event.preventDefault();
+    }
+  }
 }

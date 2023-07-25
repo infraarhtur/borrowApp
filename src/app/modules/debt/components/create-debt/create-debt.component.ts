@@ -21,6 +21,9 @@ export class CreateDebtComponent implements OnInit {
   contactParam = null;
   isDisabledPaymentDay = true;
 
+  minDate = new Date(Date.now());
+  maxDate = new Date(2030,0,1);
+
   typeDebtEnumKeys     = [];
   PaymentCicleEnumKeys = [];
   contactList          = [];
@@ -54,7 +57,8 @@ export class CreateDebtComponent implements OnInit {
 
     this.frmCreateDebt = this.formBuilder.group({
       isGroupDebt:    [false],
-      debtValue:      [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+      debtValue:      [null, [Validators.maxLength(8),Validators.required, Validators.pattern(/^[0-9]\d*$/)
+                      ]],
       contacts:       [this.contactParam, [Validators.required]],
       concept:        [null, [Validators.required]],
       typeDebt:       ['sinIntereses', [Validators.required]],
@@ -171,5 +175,18 @@ export class CreateDebtComponent implements OnInit {
       }
     });
   }
+
+  validationOnlyNumberAndLength(event, number) {
+    const pattern = /[0-9]/;
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar) || event.target.value.length > number ) {
+        // invalid character, prevent input
+        event.preventDefault();
+    }
+}
+
+validationPress(event){
+  event.preventDefault();
+}
 }
 
